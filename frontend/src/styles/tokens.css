@@ -1,0 +1,75 @@
+/* Proxam AI — Design Tokens */
+:root {
+  /* Base Surfaces */
+  --color-background: #F8F6F2;
+  --color-surface: #FFFFFF;
+  --color-surface-soft: #F1EEE8;
+
+  /* Typography */
+  --color-text-primary: #111111;
+  --color-text-secondary: #686868;
+  --color-text-muted: #969696;
+
+  /* Borders */
+  --color-border: #E8E4DD;
+  --color-border-strong: #D8D2C9;
+
+  /* Brand Primary */
+  --color-primary: #111111;
+  --color-primary-hover: #292929;
+
+  /* Pastel Accents */
+  --color-mint: #B9EAD8;
+  --color-mint-strong: #8FD5BD;
+  --color-lavender: #D5D0FF;
+  --color-peach: #F8D9B5;
+  --color-pink-pastel: #F4B9C2;
+  --color-blue: #C8E2F5;
+  --color-yellow: #F4E6A8;
+
+  /* Semantic Alerts */
+  --color-success: #9BD9BD;
+  --color-warning: #F3C58E;
+  --color-danger: #E9A4A4;
+  --color-info: #BFDDF2;
+
+  /* Border Radii */
+  --radius-small: 10px;
+  --radius-medium: 16px;
+  --radius-large: 24px;
+  --radius-xl: 32px;
+  --radius-pill: 999px;
+
+  /* Shadows */
+  --shadow-card: 0 8px 30px rgba(20, 20, 20, 0.04);
+  --shadow-card-md: 0 4px 16px rgba(20, 20, 20, 0.06);
+}
+
+[data-theme="dark"] {
+  --color-background: #171716;
+  --color-surface: #222220;
+  --color-surface-soft: #2B2A27;
+
+  --color-text-primary: #F5F2EC;
+  --color-text-secondary: #B9B5AE;
+  --color-text-muted: #85817A;
+
+  --color-border: #3A3833;
+  --color-border-strong: #4A4740;
+
+  --color-primary: #F5F2EC;
+  --color-primary-hover: #FFFFFF;
+
+  --color-mint: #6DB89C;
+  --color-mint-strong: #4DA07E;
+  --color-lavender: #8A84CC;
+  --color-peach: #C4975A;
+  --color-pink-pastel: #C07080;
+  --color-blue: #6EA8C8;
+  --color-yellow: #B8A448;
+
+  --color-success: #4DA07E;
+  --color-warning: #C4975A;
+  --color-danger: #B86060;
+  --color-info: #6EA8C8;
+}

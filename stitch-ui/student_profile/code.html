@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+
+<html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Manrope:wght@600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = { darkMode: "class", theme: { extend: { "colors": { "error": "#ba1a1a", "on-background": "#1b1c1a", "surface-container-high": "#eae8e4", "mint-strong": "#8FD5BD", "on-error-container": "#93000a", "surface-soft": "#F1EEE8", "mint": "#B9EAD8", "primary-fixed": "#e5e2e1", "on-primary-fixed": "#1c1b1b", "on-primary-container": "#858383", "on-surface": "#1b1c1a", "tertiary-fixed-dim": "#c6c2f0", "background": "#fbf9f5", "on-primary": "#ffffff", "tertiary-fixed": "#e4dfff", "danger": "#E9A4A4", "on-tertiary-container": "#837faa", "on-tertiary-fixed": "#1a173b", "tertiary": "#000000", "on-tertiary-fixed-variant": "#454269", "surface-container-highest": "#e4e2de", "pink": "#F4B9C2", "primary-hover": "#292929", "surface-container-lowest": "#ffffff", "on-secondary": "#ffffff", "on-surface-variant": "#444748", "info": "#BFDDF2", "secondary-fixed": "#bceddb", "primary-container": "#1c1b1b", "on-secondary-fixed-variant": "#204f42", "on-tertiary": "#ffffff", "on-primary-fixed-variant": "#474646", "primary-fixed-dim": "#c8c6c5", "tertiary-container": "#1a173b", "on-secondary-fixed": "#002018", "text-secondary": "#686868", "blue": "#C8E2F5", "surface-bright": "#fbf9f5", "on-secondary-container": "#3e6b5d", "peach": "#F8D9B5", "success": "#9BD9BD", "yellow": "#F4E6A8", "surface": "#FFFFFF", "surface-dim": "#dbdad6", "surface-container": "#efeeea", "inverse-surface": "#30312e", "surface-tint": "#5f5e5e", "secondary-fixed-dim": "#a0d1bf", "secondary": "#396759", "border-strong": "#D8D2C9", "warning": "#F3C58E", "inverse-on-surface": "#f2f0ec", "outline": "#747878", "on-error": "#ffffff", "surface-variant": "#e4e2de", "error-container": "#ffdad6", "outline-variant": "#c4c7c7", "inverse-primary": "#c8c6c5", "lavender": "#D5D0FF", "border": "#E8E4DD", "text-muted": "#969696", "surface-container-low": "#f5f3ef", "text-primary": "#111111", "secondary-container": "#b9ead8", "primary": "#000000" }, "borderRadius": { "DEFAULT": "1rem", "lg": "2rem", "xl": "3rem", "full": "9999px" }, "spacing": { "space-xs": "0.25rem", "space-md": "1rem", "space-sm": "0.5rem", "gutter": "1.5rem", "space-lg": "1.5rem", "margin": "2rem", "space-xl": "2rem", "margin-sm": "1rem", "gutter-sm": "1rem" }, "fontFamily": { "display-lg": [ "Manrope" ], "headline-lg": [ "Manrope" ], "body-md": [ "Inter" ], "label-lg": [ "Inter" ], "body-sm": [ "Inter" ], "body-lg": [ "Inter" ], "label-sm": [ "Inter" ], "code-md": [ "JetBrains Mono" ], "headline-md": [ "Manrope" ], "headline-sm": [ "Manrope" ], "label-md": [ "Inter" ], "display-lg-mobile": [ "Manrope" ] }, "fontSize": { "display-lg": [ "40px", { "lineHeight": "48px", "letterSpacing": "-0.02em", "fontWeight": "700" } ], "headline-lg": [ "32px", { "lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600" } ], "body-md": [ "14px", { "lineHeight": "22px", "fontWeight": "400" } ], "label-lg": [ "14px", { "lineHeight": "20px", "fontWeight": "600" } ], "body-sm": [ "12px", { "lineHeight": "18px", "fontWeight": "400" } ], "body-lg": [ "16px", { "lineHeight": "26px", "fontWeight": "400" } ], "label-sm": [ "11px", { "lineHeight": "14px", "fontWeight": "500" } ], "code-md": [ "13px", { "lineHeight": "20px", "fontWeight": "400" } ], "headline-md": [ "24px", { "lineHeight": "32px", "fontWeight": "600" } ], "headline-sm": [ "20px", { "lineHeight": "28px", "fontWeight": "600" } ], "label-md": [ "12px", { "lineHeight": "16px", "fontWeight": "500" } ], "display-lg-mobile": [ "30px", { "lineHeight": "38px", "letterSpacing": "-0.02em", "fontWeight": "700" } ] } } } };</script></head><body class="bg-background font-body-md text-on-surface antialiased min-h-screen"><aside class="fixed left-0 top-0 h-full w-72 bg-surface-container-low z-50 flex flex-col justify-between py-space-lg px-space-md shadow-[0_1px_8px_rgba(0,0,0,0.04)]"><div class="flex flex-col gap-space-lg"><div class="flex items-center gap-space-sm px-space-sm"><img alt="Brand logo. - Primary color: #111111 - Font: manrope - Mode: light - Roundness: rounded-full" class="h-8 w-auto object-contain" src="https://lh3.googleusercontent.com/aida/AEtjO1Vq5gYJu3JEyXGjZL0cy0tnA69OCtZuuTQkVrNZEj_ohuLJxrFtblD3YBWkPdoiRY5Hy-lkt3TXHMxkYm2xvOpyY7h47ASVC77YTKpUEvsyPo4YAYsh7rNKfzgFhDqUT5yWipsWcZDRuB1dkvGDbYf1Y4lPRIC3oF0ViWT8XUGJL2T7l7vklvVQXthAMcv_71BW6W5fcIe0j40z4eb7czx2THmKalxg_EZP3m2OMfY5KaZzEwfuSry9Sg"/><div class="flex flex-col"><span class="font-headline-sm text-headline-sm text-text-primary leading-tight tracking-tight">Proxam AI</span><span class="font-label-sm text-label-sm text-text-muted">Intelligent Proctoring</span></div></div><div class="px-space-sm"><div class="inline-flex items-center gap-space-xs bg-surface-container-highest px-3 py-1 rounded-full"><span class="w-2 h-2 rounded-full bg-secondary"></span><span class="font-label-sm text-label-sm text-on-surface font-semibold">Student Workspace</span></div></div><nav class="flex flex-col gap-1" data-active-classes="bg-primary text-on-primary font-semibold shadow-sm"><a aria-current="page" class="flex items-center gap-space-sm px-space-md py-3 rounded-full transition-colors bg-primary text-on-primary font-semibold shadow-sm" data-path="dashboard" href="#"><span class="material-symbols-outlined text-[20px]">grid_view</span><span>Dashboard</span></a><a class="flex items-center gap-space-sm px-space-md py-3 rounded-full font-label-md text-label-md text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="enter-code" href="#"><span class="material-symbols-outlined text-[20px]">pin</span><span>Enter Code</span></a><a class="flex items-center gap-space-sm px-space-md py-3 rounded-full font-label-md text-label-md text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="my-records" href="#"><span class="material-symbols-outlined text-[20px]">folder_shared</span><span>My Records</span></a><a class="flex items-center gap-space-sm px-space-md py-3 rounded-full font-label-md text-label-md text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="results" href="#"><span class="material-symbols-outlined text-[20px]">verified</span><span>Results</span></a><a class="flex items-center gap-space-sm px-space-md py-3 rounded-full font-label-md text-label-md text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="system-check" href="#"><span class="material-symbols-outlined text-[20px]">vital_signs</span><span>System Check</span></a><a class="flex items-center gap-space-sm px-space-md py-3 rounded-full font-label-md text-label-md text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="help-and-support" href="#"><span class="material-symbols-outlined text-[20px]">support_agent</span><span>Help &amp; Support</span></a></nav></div><div class="flex flex-col gap-space-md pt-space-md bg-surface p-space-md rounded-lg shadow-[0_8px_30px_rgba(20,20,20,0.04)]"><div class="flex items-center justify-between"><div class="flex items-center gap-space-sm"><img alt="Profile" class="w-8 h-8 rounded-full object-cover" src="https://lh3.googleusercontent.com/aida/AEtjO1Xr-T_Q5jEqi4HXrePeJ7hkKn_x6HldcEagPeudbQyjZrpOnLAXoug5pG_cgbbpQ3ZBr1IVebxLFtlUEEDFmopFrbAaXpQe_hlAn3MJ7alzmOZSh-obKOPpQuWHO7d5fTVbPI4D6AcwXHJqVhuB8v1QXzYgN0wkV6rxBli0nSSRjqEYlOBDfXDhH4RNuSdHnqlUEPHsJM6uYYamUTM11eZ8gF1_-xdVFCILLRZdqDaaF21I4L2eXFRMP70"/><div class="flex flex-col"><span class="font-label-md text-label-md text-text-primary leading-tight">Alex Rivera</span><span class="font-label-sm text-label-sm text-text-muted leading-tight">Candidate #4829</span></div></div><button class="p-1 text-on-surface-variant hover:text-on-surface transition-colors rounded-full hover:bg-surface-container"><span class="material-symbols-outlined text-[18px]">settings</span></button></div><div class="flex items-center gap-space-xs bg-secondary-container px-3 py-1.5 rounded-full"><span class="w-2 h-2 rounded-full bg-secondary animate-pulse"></span><span class="font-label-sm text-label-sm text-on-secondary-fixed-variant font-medium">AI Proctor Guard Ready</span></div></div></aside><div class="pl-72 flex flex-col min-h-screen"><header class="fixed top-0 left-72 right-0 h-16 bg-surface/85 backdrop-blur-xl z-40 flex items-center justify-between px-space-xl shadow-[0_1px_8px_rgba(0,0,0,0.04)]"><div class="flex items-center gap-space-md"><span class="font-headline-sm text-headline-sm text-text-primary">Proxam Session Workspace</span><div class="flex items-center gap-1.5 bg-surface-container px-3 py-1 rounded-full"><span class="material-symbols-outlined text-[16px] text-secondary">lock</span><span class="font-label-sm text-label-sm text-on-secondary-container font-medium">256-bit Encrypted</span></div></div><div class="flex items-center gap-space-md"><button class="p-2 text-on-surface-variant hover:text-on-surface hover:bg-surface-container rounded-full transition-colors relative"><span class="material-symbols-outlined text-[20px]">notifications</span><span class="absolute top-2 right-2 w-2 h-2 rounded-full bg-error"></span></button><div class="flex items-center gap-space-sm pl-space-sm"><img alt="Profile" class="w-8 h-8 rounded-full object-cover" src="https://lh3.googleusercontent.com/aida/AEtjO1Xr-T_Q5jEqi4HXrePeJ7hkKn_x6HldcEagPeudbQyjZrpOnLAXoug5pG_cgbbpQ3ZBr1IVebxLFtlUEEDFmopFrbAaXpQe_hlAn3MJ7alzmOZSh-obKOPpQuWHO7d5fTVbPI4D6AcwXHJqVhuB8v1QXzYgN0wkV6rxBli0nSSRjqEYlOBDfXDhH4RNuSdHnqlUEPHsJM6uYYamUTM11eZ8gF1_-xdVFCILLRZdqDaaF21I4L2eXFRMP70"/><span class="font-label-md text-label-md text-text-primary hidden sm:inline-block">Alex Rivera</span></div></div></header><main class="w-full pt-16 px-space-xl py-space-xl bg-background flex-1"><div class="flex flex-col w-full gap-space-xl">
+<!-- Page Header & Status Bar -->
+<div class="flex flex-col md:flex-row md:items-center justify-between gap-space-md">
+<div class="flex flex-col">
+<div class="flex items-center gap-space-xs text-secondary font-label-sm mb-1">
+<span class="material-symbols-outlined text-[16px]">verified_user</span>
+<span>Identity &amp; Biometrics Vault</span>
+<span class="text-text-muted">•</span>
+<span class="text-text-muted font-code-md text-code-md">UID: CS-2024-8831</span>
+</div>
+<h1 class="font-headline-lg text-headline-lg text-text-primary tracking-tight">Student Account &amp; Security Profile</h1>
+<p class="font-body-md text-body-md text-text-secondary mt-1">Manage your verified institutional identity, proctoring privacy configurations, and security credentials.</p>
+</div>
+<div class="flex items-center gap-space-sm self-start md:self-auto">
+<div class="bg-surface py-2 px-4 rounded-full shadow-sm flex items-center gap-2">
+<span class="w-2.5 h-2.5 rounded-full bg-secondary"></span>
+<span class="font-label-md text-label-md text-text-primary">SSO Bound</span>
+</div>
+<button class="bg-primary text-on-primary font-label-md text-label-md px-5 py-2.5 rounded-full shadow-sm hover:bg-primary-hover transition-colors flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[18px]">download</span>
+<span>Export Audit Ledger</span>
+</button>
+</div>
+</div>
+<!-- Primary Identity Card -->
+<div class="relative overflow-hidden bg-surface rounded-[28px] p-space-xl shadow-[0_8px_30px_rgba(20,20,20,0.04)]">
+<div class="absolute -right-16 -top-16 w-80 h-80 rounded-full bg-mint/20 blur-3xl pointer-events-none"></div>
+<div class="absolute right-60 -bottom-16 w-64 h-64 rounded-full bg-lavender/30 blur-2xl pointer-events-none"></div>
+<div class="relative z-10 flex flex-col lg:flex-row items-start lg:items-center justify-between gap-space-xl">
+<div class="flex flex-col sm:flex-row items-start sm:items-center gap-space-lg">
+<!-- Avatar Wrapper -->
+<div class="relative group">
+<div class="w-28 h-28 rounded-full overflow-hidden p-1 bg-surface-container-low shadow-sm">
+<img alt="Sarah Jenkins portrait" class="w-full h-full object-cover rounded-full" src="https://lh3.googleusercontent.com/aida/AEtjO1Xr-T_Q5jEqi4HXrePeJ7hkKn_x6HldcEagPeudbQyjZrpOnLAXoug5pG_cgbbpQ3ZBr1IVebxLFtlUEEDFmopFrbAaXpQe_hlAn3MJ7alzmOZSh-obKOPpQuWHO7d5fTVbPI4D6AcwXHJqVhuB8v1QXzYgN0wkV6rxBli0nSSRjqEYlOBDfXDhH4RNuSdHnqlUEPHsJM6uYYamUTM11eZ8gF1_-xdVFCILLRZdqDaaF21I4L2eXFRMP70"/>
+</div>
+<span class="absolute -bottom-1 -right-1 bg-mint text-on-secondary-fixed-variant font-label-sm text-label-sm font-semibold px-2.5 py-1 rounded-full shadow-sm flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
+            Active Student
+          </span>
+</div>
+<!-- Identity Details -->
+<div class="flex flex-col gap-1.5">
+<div class="flex flex-wrap items-center gap-space-sm">
+<h2 class="font-headline-md text-headline-md text-text-primary">Sarah Jenkins</h2>
+<span class="font-label-sm text-label-sm bg-surface-container px-2.5 py-0.5 rounded-full text-text-secondary">Candidate #8831</span>
+<span class="font-label-sm text-label-sm bg-lavender text-text-primary px-2.5 py-0.5 rounded-full">Class of 2026</span>
+</div>
+<div class="flex flex-col sm:flex-row sm:items-center gap-y-1 gap-x-space-md text-text-secondary font-body-md text-body-md">
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[18px] text-secondary">mark_email_read</span>
+<span>sarah.jenkins@university.edu</span>
+<span class="bg-mint-strong/30 text-on-secondary-fixed font-label-sm text-label-sm px-2 py-0.2 rounded-full">Institutional SAML Verified</span>
+</div>
+</div>
+<div class="flex flex-wrap items-center gap-y-1 gap-x-space-md text-text-muted font-body-sm text-body-sm mt-1">
+<span class="flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]">school</span>
+              School of Computer Science &amp; Engineering
+            </span>
+<span>•</span>
+<span class="flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]">badge</span>
+              Undergraduate Candidate
+            </span>
+</div>
+</div>
+</div>
+<!-- Quick Actions -->
+<div class="flex sm:flex-row lg:flex-col xl:flex-row items-center gap-space-sm w-full lg:w-auto">
+<button class="flex-1 lg:flex-none bg-primary text-on-primary font-label-lg text-label-lg px-6 py-3 rounded-full hover:bg-primary-hover shadow-sm transition-all flex items-center justify-center gap-2" id="editProfileBtn">
+<span class="material-symbols-outlined text-[18px]">edit_note</span>
+<span>Edit Profile Details</span>
+</button>
+<button class="bg-surface-container hover:bg-surface-container-high text-text-primary font-label-lg text-label-lg px-5 py-3 rounded-full transition-colors flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-[18px]">qr_code_scanner</span>
+<span class="hidden sm:inline">Re-verify Face ID</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Two-Column Workspace Grid -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-space-xl">
+<!-- LEFT COLUMN: Academic & Exam Information (7 Cols) -->
+<div class="lg:col-span-7 flex flex-col gap-space-xl">
+<!-- Academic Credentials & Institution -->
+<div class="bg-surface rounded-lg p-space-xl shadow-[0_8px_30px_rgba(20,20,20,0.04)] flex flex-col gap-space-lg">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-space-sm">
+<div class="w-10 h-10 rounded-full bg-peach flex items-center justify-center text-text-primary">
+<span class="material-symbols-outlined text-[22px]">account_balance</span>
+</div>
+<div>
+<h3 class="font-headline-sm text-headline-sm text-text-primary">Academic &amp; Enrollment Status</h3>
+<p class="font-body-sm text-body-sm text-text-muted">Federated identity authorized through regional registrar</p>
+</div>
+</div>
+<span class="font-label-sm text-label-sm bg-mint px-3 py-1 rounded-full text-on-secondary-fixed font-semibold">Active Term</span>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-space-md pt-space-xs">
+<div class="bg-surface-container-low p-space-md rounded-DEFAULT flex flex-col justify-between gap-2">
+<span class="font-label-sm text-label-sm text-text-muted uppercase tracking-wider">Enrolled Institution</span>
+<p class="font-headline-sm text-headline-sm text-text-primary leading-snug">Stanford Department of Informatics &amp; Engineering</p>
+<div class="flex items-center gap-1.5 text-secondary font-label-sm text-label-sm pt-2">
+<span class="material-symbols-outlined text-[16px]">domain_verification</span>
+<span>EduID: #US-STN-9942</span>
+</div>
+</div>
+<div class="bg-surface-container-low p-space-md rounded-DEFAULT flex flex-col justify-between gap-2">
+<span class="font-label-sm text-label-sm text-text-muted uppercase tracking-wider">Cohort Group</span>
+<p class="font-headline-sm text-headline-sm text-text-primary leading-snug">Distributed Systems &amp; Security Honors Track</p>
+<div class="flex items-center gap-1.5 text-text-secondary font-label-sm text-label-sm pt-2">
+<span class="material-symbols-outlined text-[16px]">groups</span>
+<span>42 Students enrolled</span>
+</div>
+</div>
+</div>
+<!-- Metrics Bento Inset -->
+<div class="grid grid-cols-1 sm:grid-cols-3 gap-space-md">
+<div class="bg-surface-soft p-space-md rounded-DEFAULT flex flex-col gap-1">
+<span class="font-label-sm text-label-sm text-text-muted">Proctored Exams</span>
+<div class="flex items-baseline gap-1 mt-1">
+<span class="font-headline-lg text-headline-lg text-text-primary">4</span>
+<span class="font-body-sm text-body-sm text-text-muted">Completed</span>
+</div>
+<div class="w-full bg-surface-container-high h-1.5 rounded-full mt-2 overflow-hidden">
+<div class="bg-primary h-full rounded-full" style="width: 80%"></div>
+</div>
+</div>
+<div class="bg-surface-soft p-space-md rounded-DEFAULT flex flex-col gap-1">
+<span class="font-label-sm text-label-sm text-text-muted">Cumulative Average</span>
+<div class="flex items-baseline gap-1 mt-1">
+<span class="font-headline-lg text-headline-lg text-text-primary">88.3</span>
+<span class="font-headline-sm text-headline-sm text-text-primary">%</span>
+</div>
+<div class="w-full bg-surface-container-high h-1.5 rounded-full mt-2 overflow-hidden">
+<div class="bg-secondary h-full rounded-full" style="width: 88.3%"></div>
+</div>
+</div>
+<div class="bg-surface-soft p-space-md rounded-DEFAULT flex flex-col gap-1">
+<span class="font-label-sm text-label-sm text-text-muted">Integrity Score</span>
+<div class="flex items-baseline gap-1 mt-1">
+<span class="font-headline-lg text-headline-lg text-secondary">99.8</span>
+<span class="font-headline-sm text-headline-sm text-secondary">%</span>
+</div>
+<div class="w-full bg-surface-container-high h-1.5 rounded-full mt-2 overflow-hidden">
+<div class="bg-mint-strong h-full rounded-full" style="width: 99.8%"></div>
+</div>
+</div>
+</div>
+</div>
+<!-- Proctoring Dignity Standard & Privacy Charter -->
+<div class="bg-mint/40 rounded-lg p-space-xl flex flex-col gap-space-md">
+<div class="flex items-start justify-between gap-space-md">
+<div class="flex items-center gap-space-sm">
+<div class="w-10 h-10 rounded-full bg-surface flex items-center justify-center text-secondary shadow-sm">
+<span class="material-symbols-outlined text-[22px]">privacy_tip</span>
+</div>
+<div>
+<span class="font-label-sm text-label-sm text-on-secondary-container font-semibold uppercase tracking-wider">Privacy Architecture</span>
+<h3 class="font-headline-sm text-headline-sm text-text-primary">Proctoring Dignity Standard</h3>
+</div>
+</div>
+<span class="font-label-md text-label-md bg-surface text-secondary px-3.5 py-1.5 rounded-full font-semibold shadow-sm">Charter v3.2 Enforced</span>
+</div>
+<p class="font-body-md text-body-md text-text-secondary leading-relaxed">
+          Proxam AI adheres strictly to the Zero Persistent Cloud Video standard. Real-time telemetry, facial landmark processing, and gaze estimation run locally in your browser sandbox. Audio or visual buffers are cryptographically purged after 48 hours postctoring review.
+        </p>
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-space-sm pt-2">
+<div class="bg-surface/80 backdrop-blur-sm p-3.5 rounded-DEFAULT flex items-center gap-space-sm">
+<span class="material-symbols-outlined text-secondary text-[20px]">no_photography</span>
+<div class="flex flex-col">
+<span class="font-label-md text-label-md text-text-primary">Zero Cloud Storage</span>
+<span class="font-body-sm text-body-sm text-text-muted">Edge-evaluated stream metrics</span>
+</div>
+</div>
+<div class="bg-surface/80 backdrop-blur-sm p-3.5 rounded-DEFAULT flex items-center gap-space-sm">
+<span class="material-symbols-outlined text-secondary text-[20px]">enhanced_encryption</span>
+<div class="flex flex-col">
+<span class="font-label-md text-label-md text-text-primary">Zero Third-Party APIs</span>
+<span class="font-body-sm text-body-sm text-text-muted">Self-hosted university clusters</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Past Exam Verification History -->
+<div class="bg-surface rounded-lg p-space-xl shadow-[0_8px_30px_rgba(20,20,20,0.04)] flex flex-col gap-space-md">
+<div class="flex items-center justify-between">
+<h3 class="font-headline-sm text-headline-sm text-text-primary">Proctored Assessment Ledger</h3>
+<span class="font-label-sm text-label-sm text-text-muted">4/4 Validated Clean</span>
+</div>
+<div class="flex flex-col gap-space-sm">
+<!-- Item 1 -->
+<div class="flex items-center justify-between p-space-md bg-surface-container-low rounded-DEFAULT hover:bg-surface-container transition-colors">
+<div class="flex items-center gap-space-sm">
+<div class="w-8 h-8 rounded-full bg-blue flex items-center justify-center text-text-primary">
+<span class="material-symbols-outlined text-[18px]">terminal</span>
+</div>
+<div class="flex flex-col">
+<span class="font-label-lg text-label-lg text-text-primary">CS 240: Advanced Operating Systems</span>
+<span class="font-body-sm text-body-sm text-text-muted">Final Exam • Oct 14, 2024 • 120 mins</span>
+</div>
+</div>
+<div class="flex items-center gap-space-md">
+<span class="font-headline-sm text-headline-sm text-text-primary">94.5%</span>
+<span class="material-symbols-outlined text-secondary text-[20px]">check_circle</span>
+</div>
+</div>
+<!-- Item 2 -->
+<div class="flex items-center justify-between p-space-md bg-surface-container-low rounded-DEFAULT hover:bg-surface-container transition-colors">
+<div class="flex items-center gap-space-sm">
+<div class="w-8 h-8 rounded-full bg-lavender flex items-center justify-center text-text-primary">
+<span class="material-symbols-outlined text-[18px]">memory</span>
+</div>
+<div class="flex flex-col">
+<span class="font-label-lg text-label-lg text-text-primary">EE 108: Digital System Design</span>
+<span class="font-body-sm text-body-sm text-text-muted">Midterm Assessment • Nov 02, 2024 • 90 mins</span>
+</div>
+</div>
+<div class="flex items-center gap-space-md">
+<span class="font-headline-sm text-headline-sm text-text-primary">86.0%</span>
+<span class="material-symbols-outlined text-secondary text-[20px]">check_circle</span>
+</div>
+</div>
+<!-- Item 3 -->
+<div class="flex items-center justify-between p-space-md bg-surface-container-low rounded-DEFAULT hover:bg-surface-container transition-colors">
+<div class="flex items-center gap-space-sm">
+<div class="w-8 h-8 rounded-full bg-peach flex items-center justify-center text-text-primary">
+<span class="material-symbols-outlined text-[18px]">functions</span>
+</div>
+<div class="flex flex-col">
+<span class="font-label-lg text-label-lg text-text-primary">MATH 115: Real Analysis II</span>
+<span class="font-body-sm text-body-sm text-text-muted">Comprehensive Exam • Nov 20, 2024 • 180 mins</span>
+</div>
+</div>
+<div class="flex items-center gap-space-md">
+<span class="font-headline-sm text-headline-sm text-text-primary">84.2%</span>
+<span class="material-symbols-outlined text-secondary text-[20px]">check_circle</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- RIGHT COLUMN: Security & Password Management (5 Cols) -->
+<div class="lg:col-span-5 flex flex-col gap-space-xl">
+<!-- Change Password Card -->
+<div class="bg-surface rounded-lg p-space-xl shadow-[0_8px_30px_rgba(20,20,20,0.04)] flex flex-col gap-space-md">
+<div class="flex items-center gap-space-sm">
+<div class="w-10 h-10 rounded-full bg-surface-container flex items-center justify-center text-text-primary">
+<span class="material-symbols-outlined text-[20px]">password</span>
+</div>
+<div>
+<h3 class="font-headline-sm text-headline-sm text-text-primary">Change Password</h3>
+<p class="font-body-sm text-body-sm text-text-muted">Last changed 42 days ago</p>
+</div>
+</div>
+<form class="flex flex-col gap-space-md mt-1" id="passwordForm" onsubmit="event.preventDefault();">
+<!-- Current Password -->
+<div class="flex flex-col gap-1.5">
+<label class="font-label-sm text-label-sm text-text-secondary">Current Password</label>
+<div class="relative">
+<input class="w-full h-12 bg-surface-container-low rounded-[14px] px-4 font-body-md text-body-md text-text-primary outline-none focus:bg-surface focus:shadow-sm transition-all pr-10" id="currentPass" placeholder="••••••••••••" type="password"/>
+<button class="absolute right-3 top-3 text-text-muted hover:text-text-primary" onclick="togglePassVisibility('currentPass', this)" type="button">
+<span class="material-symbols-outlined text-[20px]">visibility</span>
+</button>
+</div>
+</div>
+<!-- New Password -->
+<div class="flex flex-col gap-1.5">
+<label class="font-label-sm text-label-sm text-text-secondary">New Password</label>
+<div class="relative">
+<input class="w-full h-12 bg-surface-container-low rounded-[14px] px-4 font-body-md text-body-md text-text-primary outline-none focus:bg-surface focus:shadow-sm transition-all pr-10" id="newPass" placeholder="Enter secure password" type="password"/>
+<button class="absolute right-3 top-3 text-text-muted hover:text-text-primary" onclick="togglePassVisibility('newPass', this)" type="button">
+<span class="material-symbols-outlined text-[20px]">visibility</span>
+</button>
+</div>
+</div>
+<!-- Requirements Checklist -->
+<div class="p-3 bg-surface-soft rounded-DEFAULT flex flex-col gap-2">
+<span class="font-label-sm text-label-sm text-text-muted">Complexity Requirements</span>
+<div class="grid grid-cols-2 gap-1.5 text-text-secondary font-label-sm text-label-sm">
+<span class="flex items-center gap-1.5 text-text-muted" id="req-length">
+<span class="material-symbols-outlined text-[16px]">radio_button_unchecked</span>
+                Min. 12 characters
+              </span>
+<span class="flex items-center gap-1.5 text-text-muted" id="req-num">
+<span class="material-symbols-outlined text-[16px]">radio_button_unchecked</span>
+                Includes numbers
+              </span>
+<span class="flex items-center gap-1.5 text-text-muted" id="req-sym">
+<span class="material-symbols-outlined text-[16px]">radio_button_unchecked</span>
+                Symbols (!@#$)
+              </span>
+<span class="flex items-center gap-1.5 text-text-muted" id="req-case">
+<span class="material-symbols-outlined text-[16px]">radio_button_unchecked</span>
+                Upper &amp; lower case
+              </span>
+</div>
+</div>
+<!-- Confirm Password -->
+<div class="flex flex-col gap-1.5">
+<label class="font-label-sm text-label-sm text-text-secondary">Confirm New Password</label>
+<div class="relative">
+<input class="w-full h-12 bg-surface-container-low rounded-[14px] px-4 font-body-md text-body-md text-text-primary outline-none focus:bg-surface focus:shadow-sm transition-all pr-10" id="confirmPass" placeholder="Re-enter password" type="password"/>
+<button class="absolute right-3 top-3 text-text-muted hover:text-text-primary" onclick="togglePassVisibility('confirmPass', this)" type="button">
+<span class="material-symbols-outlined text-[20px]">visibility</span>
+</button>
+</div>
+</div>
+<button class="mt-2 w-full h-12 bg-primary text-on-primary font-label-lg text-label-lg rounded-full hover:bg-primary-hover shadow-sm transition-all flex items-center justify-center gap-2" id="updatePasswordBtn" type="submit">
+<span class="material-symbols-outlined text-[18px]">lock_reset</span>
+<span>Update Password</span>
+</button>
+</form>
+</div>
+<!-- Active Sessions & Device Management -->
+<div class="bg-surface rounded-lg p-space-xl shadow-[0_8px_30px_rgba(20,20,20,0.04)] flex flex-col gap-space-md">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-space-sm">
+<div class="w-10 h-10 rounded-full bg-surface-container flex items-center justify-center text-text-primary">
+<span class="material-symbols-outlined text-[20px]">devices</span>
+</div>
+<div>
+<h3 class="font-headline-sm text-headline-sm text-text-primary">Session &amp; Devices</h3>
+<p class="font-body-sm text-body-sm text-text-muted">Hardware fingerprints allowed for testing</p>
+</div>
+</div>
+</div>
+<div class="flex flex-col gap-space-sm">
+<!-- Current Active Device -->
+<div class="p-3.5 bg-surface-container-low rounded-DEFAULT flex items-center justify-between">
+<div class="flex items-center gap-space-sm">
+<span class="material-symbols-outlined text-secondary text-[24px]">laptop_mac</span>
+<div class="flex flex-col">
+<div class="flex items-center gap-2">
+<span class="font-label-md text-label-md text-text-primary">macOS 15.1 · Chrome 128</span>
+<span class="w-2 h-2 rounded-full bg-secondary"></span>
+</div>
+<span class="font-body-sm text-body-sm text-text-muted">Current Session • IP: 172.56.21.90</span>
+</div>
+</div>
+<span class="font-label-sm text-label-sm bg-mint text-on-secondary-fixed font-semibold px-2.5 py-1 rounded-full">Active Now</span>
+</div>
+<!-- Institutional 2FA / Duo -->
+<div class="p-3.5 bg-surface-container-low rounded-DEFAULT flex items-center justify-between">
+<div class="flex items-center gap-space-sm">
+<span class="material-symbols-outlined text-text-primary text-[24px]">phonelink_lock</span>
+<div class="flex flex-col">
+<span class="font-label-md text-label-md text-text-primary">Institutional 2FA / SSO</span>
+<span class="font-body-sm text-body-sm text-text-muted">Active via Duo Security Push</span>
+</div>
+</div>
+<span class="font-label-sm text-label-sm bg-surface-container-highest text-on-surface px-3 py-1 rounded-full font-medium">Configured</span>
+</div>
+</div>
+</div>
+<!-- Danger Zone / Sign Out Card -->
+<div class="bg-peach/30 rounded-lg p-space-xl flex flex-col gap-space-md">
+<div class="flex items-center gap-space-sm">
+<div class="w-9 h-9 rounded-full bg-surface flex items-center justify-center text-error shadow-sm">
+<span class="material-symbols-outlined text-[20px]">logout</span>
+</div>
+<div>
+<h4 class="font-headline-sm text-headline-sm text-text-primary">Session Clearance</h4>
+<p class="font-body-sm text-body-sm text-text-secondary">Terminate proctoring lock states &amp; local browser caches</p>
+</div>
+</div>
+<p class="font-body-sm text-body-sm text-text-secondary">
+          Logging out will invalidate current cryptographic handshake tokens on this workstation. You will need multi-factor reauthorization before taking any proctored exams.
+        </p>
+<button class="mt-1 w-full py-3 px-6 rounded-full bg-surface text-error hover:bg-error-container hover:text-on-error-container font-label-md text-label-md font-semibold transition-all shadow-sm flex items-center justify-center gap-2" id="openSignoutModalBtn">
+<span class="material-symbols-outlined text-[18px]">power_settings_new</span>
+<span>Sign out of Proxam AI</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Signout Confirmation Modal (Hidden by default) -->
+<div class="fixed inset-0 bg-inverse-surface/40 backdrop-blur-sm z-50 hidden items-center justify-center p-space-md" id="signoutModal">
+<div class="bg-surface rounded-xl max-w-md w-full p-space-xl shadow-xl flex flex-col gap-space-lg relative animate-in fade-in zoom-in duration-200">
+<div class="flex items-center gap-space-sm">
+<div class="w-12 h-12 rounded-full bg-danger/30 flex items-center justify-center text-error">
+<span class="material-symbols-outlined text-[26px]">warning</span>
+</div>
+<div>
+<h3 class="font-headline-sm text-headline-sm text-text-primary">End Proctoring Session?</h3>
+<p class="font-body-sm text-body-sm text-text-muted">Student Account: Sarah Jenkins</p>
+</div>
+</div>
+<p class="font-body-md text-body-md text-text-secondary">
+        Are you sure you want to log out? Any unstaged environmental calibration checks will be discarded, and you must verify your identity via institutional SSO upon returning.
+      </p>
+<div class="flex items-center justify-end gap-space-sm pt-2">
+<button class="px-5 py-2.5 rounded-full bg-surface-container font-label-md text-label-md text-text-primary hover:bg-surface-container-high transition-colors" id="cancelSignoutBtn">
+          Cancel
+        </button>
+<button class="px-6 py-2.5 rounded-full bg-primary text-on-primary font-label-md text-label-md hover:bg-primary-hover shadow-sm transition-colors flex items-center gap-1.5" id="confirmSignoutBtn">
+<span>Yes, Sign Out</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Toast Notification -->
+<div class="fixed bottom-8 right-8 bg-inverse-surface text-inverse-on-surface px-5 py-3 rounded-full shadow-lg font-label-md text-label-md flex items-center gap-2 transition-all duration-300 opacity-0 pointer-events-none translate-y-4 z-50" id="toastNotification">
+<span class="material-symbols-outlined text-[18px] text-mint">check_circle</span>
+<span id="toastMessage">Changes saved successfully.</span>
+</div>
+</div>
+<script>
+  // Simple interactive logic for UX enhancements
+  const signoutModal = document.getElementById('signoutModal');
+  const openSignoutBtn = document.getElementById('openSignoutModalBtn');
+  const cancelSignoutBtn = document.getElementById('cancelSignoutBtn');
+  const confirmSignoutBtn = document.getElementById('confirmSignoutBtn');
+  const toast = document.getElementById('toastNotification');
+  const toastMsg = document.getElementById('toastMessage');
+
+  function showToast(msg) {
+    if (!toast) return;
+    toastMsg.textContent = msg;
+    toast.classList.remove('opacity-0', 'pointer-events-none', 'translate-y-4');
+    toast.classList.add('opacity-100', 'translate-y-0');
+    setTimeout(() => {
+      toast.classList.add('opacity-0', 'pointer-events-none', 'translate-y-4');
+      toast.classList.remove('opacity-100', 'translate-y-0');
+    }, 3200);
+  }
+
+  if (openSignoutBtn && signoutModal) {
+    openSignoutBtn.addEventListener('click', () => {
+      signoutModal.classList.remove('hidden');
+      signoutModal.classList.add('flex');
+    });
+  }
+
+  if (cancelSignoutBtn && signoutModal) {
+    cancelSignoutBtn.addEventListener('click', () => {
+      signoutModal.classList.add('hidden');
+      signoutModal.classList.remove('flex');
+    });
+  }
+
+  if (confirmSignoutBtn && signoutModal) {
+    confirmSignoutBtn.addEventListener('click', () => {
+      signoutModal.classList.add('hidden');
+      signoutModal.classList.remove('flex');
+      showToast('Securely signed out. Redirecting to SSO portal...');
+    });
+  }
+
+  // Password visibility toggle
+  function togglePassVisibility(inputId, btn) {
+    const input = document.getElementById(inputId);
+    if (!input) return;
+    const icon = btn.querySelector('.material-symbols-outlined');
+    if (input.type === 'password') {
+      input.type = 'text';
+      if (icon) icon.textContent = 'visibility_off';
+    } else {
+      input.type = 'password';
+      if (icon) icon.textContent = 'visibility';
+    }
+  }
+
+  // Live password checklist validation
+  const newPassInput = document.getElementById('newPass');
+  if (newPassInput) {
+    newPassInput.addEventListener('input', (e) => {
+      const val = e.target.value;
+      const reqLen = document.getElementById('req-length');
+      const reqNum = document.getElementById('req-num');
+      const reqSym = document.getElementById('req-sym');
+      const reqCase = document.getElementById('req-case');
+
+      const updateReq = (el, condition) => {
+        if (!el) return;
+        const icon = el.querySelector('.material-symbols-outlined');
+        if (condition) {
+          el.className = 'flex items-center gap-1.5 text-secondary font-semibold';
+          if (icon) icon.textContent = 'check_circle';
+        } else {
+          el.className = 'flex items-center gap-1.5 text-text-muted';
+          if (icon) icon.textContent = 'radio_button_unchecked';
+        }
+      };
+
+      updateReq(reqLen, val.length >= 12);
+      updateReq(reqNum, /\d/.test(val));
+      updateReq(reqSym, /[!@#$%^&*(),.?":{}|<>]/.test(val));
+      updateReq(reqCase, /[a-z]/.test(val) && /[A-Z]/.test(val));
+    });
+  }
+
+  const updatePassBtn = document.getElementById('updatePasswordBtn');
+  if (updatePassBtn) {
+    updatePassBtn.addEventListener('click', () => {
+      showToast('Password credentials updated successfully.');
+    });
+  }
+
+  const editProfileBtn = document.getElementById('editProfileBtn');
+  if (editProfileBtn) {
+    editProfileBtn.addEventListener('click', () => {
+      showToast('Profile editing mode enabled.');
+    });
+  }
+</script></main></div></body></html>

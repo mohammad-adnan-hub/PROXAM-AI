@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+
+<html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500&amp;family=Manrope:wght@600;700&amp;display=swap" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config={darkMode:"class",theme:{extend:{colors:{"yellow":"#F4E6A8","text-primary":"#111111","on-primary-container":"#858383","on-tertiary-fixed":"#1a173b","border-strong":"#D8D2C9","primary-hover":"#292929","blue":"#C8E2F5","tertiary-fixed":"#e4dfff","surface-variant":"#e4e2de","surface":"#FFFFFF","on-tertiary":"#ffffff","on-surface":"#1b1c1a","surface-dim":"#dbdad6","on-tertiary-fixed-variant":"#454269","surface-container-high":"#eae8e4","error-container":"#ffdad6","primary":"#000000","outline-variant":"#c4c7c7","on-primary-fixed-variant":"#474646","surface-container-highest":"#e4e2de","inverse-surface":"#30312e","lavender":"#D5D0FF","on-secondary-container":"#3e6b5d","pink":"#F4B9C2","secondary":"#396759","on-secondary-fixed":"#002018","inverse-primary":"#c8c6c5","warning":"#F3C58E","surface-container":"#efeeea","peach":"#F8D9B5","on-error":"#ffffff","text-secondary":"#686868","tertiary-container":"#1a173b","surface-soft":"#F1EEE8","outline":"#747878","mint-strong":"#8FD5BD","surface-tint":"#5f5e5e","tertiary-fixed-dim":"#c6c2f0","tertiary":"#000000","on-error-container":"#93000a","border":"#E8E4DD","on-tertiary-container":"#837faa","surface-container-lowest":"#ffffff","primary-fixed":"#e5e2e1","on-primary":"#ffffff","inverse-on-surface":"#f2f0ec","on-primary-fixed":"#1c1b1b","secondary-fixed-dim":"#a0d1bf","on-secondary-fixed-variant":"#204f42","error":"#ba1a1a","mint":"#B9EAD8","secondary-container":"#b9ead8","surface-container-low":"#f5f3ef","text-muted":"#969696","danger":"#E9A4A4","on-background":"#1b1c1a","on-secondary":"#ffffff","info":"#BFDDF2","background":"#fbf9f5","primary-fixed-dim":"#c8c6c5","on-surface-variant":"#444748","surface-bright":"#fbf9f5","secondary-fixed":"#bceddb","primary-container":"#1c1b1b","success":"#9BD9BD"},borderRadius:{"DEFAULT":"1rem","lg":"2rem","xl":"3rem","full":"9999px"},spacing:{"gutter":"1.5rem","space-xs":"0.25rem","gutter-sm":"1rem","margin-sm":"1rem","space-md":"1rem","margin":"2rem","space-xl":"2rem","space-sm":"0.5rem","space-lg":"1.5rem"},fontFamily:{"label-lg":["Inter"],"display-lg":["Manrope"],"headline-lg":["Manrope"],"body-lg":["Inter"],"label-md":["Inter"],"headline-sm":["Manrope"],"code-md":["JetBrains Mono"],"label-sm":["Inter"],"headline-md":["Manrope"],"body-md":["Inter"],"body-sm":["Inter"],"display-lg-mobile":["Manrope"]},fontSize:{"label-lg":["14px",{"lineHeight":"20px","fontWeight":"600"}],"display-lg":["40px",{"lineHeight":"48px","letterSpacing":"-0.02em","fontWeight":"700"}],"headline-lg":["32px",{"lineHeight":"40px","letterSpacing":"-0.01em","fontWeight":"600"}],"body-lg":["16px",{"lineHeight":"26px","fontWeight":"400"}],"label-md":["12px",{"lineHeight":"16px","fontWeight":"500"}],"headline-sm":["20px",{"lineHeight":"28px","fontWeight":"600"}],"code-md":["13px",{"lineHeight":"20px","fontWeight":"400"}],"label-sm":["11px",{"lineHeight":"14px","fontWeight":"500"}],"headline-md":["24px",{"lineHeight":"32px","fontWeight":"600"}],"body-md":["14px",{"lineHeight":"22px","fontWeight":"400"}],"body-sm":["12px",{"lineHeight":"18px","fontWeight":"400"}],"display-lg-mobile":["30px",{"lineHeight":"38px","letterSpacing":"-0.02em","fontWeight":"700"}]}}}};</script></head><body class="bg-background font-body-md text-on-surface antialiased"><aside class="fixed left-0 top-0 h-full w-72 bg-surface-container-low z-50 flex flex-col justify-between shadow-[0_1px_8px_rgba(0,0,0,0.04)]"><div class="flex flex-col"><div class="px-6 pt-6 pb-4 flex items-center gap-3"><img alt="Brand logo. - Primary color: #111111
+- Font: manrope
+- Mode: light
+- Roundness: rounded-full
+" class="h-8 w-auto object-contain" src="https://lh3.googleusercontent.com/aida/AEtjO1Vq5gYJu3JEyXGjZL0cy0tnA69OCtZuuTQkVrNZEj_ohuLJxrFtblD3YBWkPdoiRY5Hy-lkt3TXHMxkYm2xvOpyY7h47ASVC77YTKpUEvsyPo4YAYsh7rNKfzgFhDqUT5yWipsWcZDRuB1dkvGDbYf1Y4lPRIC3oF0ViWT8XUGJL2T7l7vklvVQXthAMcv_71BW6W5fcIe0j40z4eb7czx2THmKalxg_EZP3m2OMfY5KaZzEwfuSry9Sg"/><div class="flex flex-col"><span class="font-headline-sm text-headline-sm tracking-tight text-text-primary leading-none">Proxam AI</span><span class="font-label-sm text-label-sm text-text-secondary mt-1">Intelligent Proctoring</span></div></div><div class="px-6 py-3"><div class="p-1 bg-surface-container rounded-full flex items-center justify-between text-center"><button class="flex-1 py-1.5 rounded-full font-label-sm text-label-sm text-text-muted hover:text-text-primary transition-colors" type="button">Student</button><button class="flex-1 py-1.5 rounded-full bg-primary text-on-primary font-label-sm text-label-sm shadow-[0_1px_8px_rgba(0,0,0,0.04)]" type="button">Faculty</button><button class="flex-1 py-1.5 rounded-full font-label-sm text-label-sm text-text-muted hover:text-text-primary transition-colors" type="button">Admin</button></div></div><div class="px-6 pt-4 pb-2"><span class="font-label-sm text-label-sm text-text-muted uppercase tracking-wider">Faculty Studio</span></div><nav class="flex flex-col gap-1.5 px-4" data-active-classes="bg-surface text-text-primary font-label-lg shadow-[0_1px_8px_rgba(0,0,0,0.04)]"><a class="flex items-center gap-3 px-4 py-3 rounded-full text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-all" data-path="dashboard" href="#"><span class="material-symbols-outlined text-[20px]">grid_view</span><span class="font-label-lg text-label-lg">Dashboard</span></a><a aria-current="page" class="flex items-center gap-3 px-4 py-3 rounded-full transition-all bg-surface text-text-primary font-label-lg shadow-[0_1px_8px_rgba(0,0,0,0.04)]" data-path="my-tests" href="#"><span class="material-symbols-outlined text-[20px]">layers</span><span class="font-label-lg text-label-lg">My Tests</span></a><a class="flex items-center gap-3 px-4 py-3 rounded-full text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-all" data-path="create-test" href="#"><span class="material-symbols-outlined text-[20px]">add_circle</span><span class="font-label-lg text-label-lg">Create Test</span></a><a class="flex items-center gap-3 px-4 py-3 rounded-full text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-all" data-path="attempts-and-results" href="#"><span class="material-symbols-outlined text-[20px]">group</span><span class="font-label-lg text-label-lg">Attempts &amp; Results</span></a><a class="flex items-center gap-3 px-4 py-3 rounded-full text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-all" data-path="help-and-support" href="#"><span class="material-symbols-outlined text-[20px]">help</span><span class="font-label-lg text-label-lg">Help &amp; Support</span></a></nav></div><div class="p-4 m-4 bg-surface rounded-DEFAULT shadow-[0_1px_8px_rgba(0,0,0,0.04)]"><div class="flex items-center gap-3"><img alt="Profile" class="w-8 h-8 rounded-full object-cover" src="https://lh3.googleusercontent.com/aida/AEtjO1Xr-T_Q5jEqi4HXrePeJ7hkKn_x6HldcEagPeudbQyjZrpOnLAXoug5pG_cgbbpQ3ZBr1IVebxLFtlUEEDFmopFrbAaXpQe_hlAn3MJ7alzmOZSh-obKOPpQuWHO7d5fTVbPI4D6AcwXHJqVhuB8v1QXzYgN0wkV6rxBli0nSSRjqEYlOBDfXDhH4RNuSdHnqlUEPHsJM6uYYamUTM11eZ8gF1_-xdVFCILLRZdqDaaF21I4L2eXFRMP70"/><div class="flex flex-col min-w-0 flex-1"><span class="font-label-md text-label-md text-text-primary truncate">Prof. Marcus Vance</span><span class="font-body-sm text-body-sm text-text-muted truncate">Faculty #8841</span></div></div><div class="mt-3 pt-3 flex items-center justify-between"><span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-mint text-on-secondary-container font-label-sm text-label-sm"><span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>Faculty Enclave Active</span><span class="material-symbols-outlined text-text-muted hover:text-text-primary cursor-pointer text-[18px]">more_vert</span></div></div></aside><div class="pl-72 flex flex-col min-h-screen"><header class="fixed top-0 left-72 right-0 h-16 bg-surface/85 backdrop-blur-xl z-40 shadow-[0_1px_8px_rgba(0,0,0,0.04)] px-margin"><div class="h-16 w-full flex items-center justify-between"><div class="flex items-center gap-4"><div class="flex items-center gap-2"><span class="font-headline-sm text-headline-sm text-text-primary">Proxam Faculty Studio</span></div><div class="hidden sm:inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-surface-soft text-text-secondary font-label-sm text-label-sm"><span class="material-symbols-outlined text-[16px] text-secondary">lock</span><span>256-bit Encrypted Vault</span></div></div><div class="flex items-center gap-3"><button aria-label="Notifications" class="w-10 h-10 rounded-full bg-surface-soft flex items-center justify-center text-text-secondary hover:text-text-primary hover:bg-surface-container transition-colors relative" type="button"><span class="material-symbols-outlined text-[20px]">notifications</span><span class="absolute top-2 right-2 w-2 h-2 rounded-full bg-error"></span></button><div class="flex items-center gap-2.5 pl-2"><img alt="Profile" class="w-8 h-8 rounded-full object-cover" src="https://lh3.googleusercontent.com/aida/AEtjO1Xr-T_Q5jEqi4HXrePeJ7hkKn_x6HldcEagPeudbQyjZrpOnLAXoug5pG_cgbbpQ3ZBr1IVebxLFtlUEEDFmopFrbAaXpQe_hlAn3MJ7alzmOZSh-obKOPpQuWHO7d5fTVbPI4D6AcwXHJqVhuB8v1QXzYgN0wkV6rxBli0nSSRjqEYlOBDfXDhH4RNuSdHnqlUEPHsJM6uYYamUTM11eZ8gF1_-xdVFCILLRZdqDaaF21I4L2eXFRMP70"/><span class="hidden md:block font-label-md text-label-md text-text-primary">Prof. Vance</span></div></div></div></header><main class="w-full pt-16 px-margin flex-1 bg-background"><div class="flex flex-col w-full pb-16">
+<!-- Subtle Ambient Glow Ornaments -->
+<div class="relative w-full">
+<div class="absolute -top-12 right-16 w-72 h-72 rounded-full bg-mint/30 blur-3xl pointer-events-none -z-10"></div>
+<div class="absolute top-48 left-1/3 w-80 h-80 rounded-full bg-lavender/35 blur-3xl pointer-events-none -z-10"></div>
+<div class="absolute bottom-10 right-1/4 w-96 h-96 rounded-full bg-peach/25 blur-3xl pointer-events-none -z-10"></div>
+<!-- Header & Breadcrumbs Section -->
+<section class="flex flex-col md:flex-row md:items-end justify-between gap-6 pt-6 pb-8">
+<div class="flex flex-col gap-2 max-w-3xl">
+<div class="flex items-center gap-2">
+<span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-surface shadow-sm text-text-secondary font-label-sm text-label-sm">
+<span class="material-symbols-outlined text-[14px]">school</span>
+            Workspace
+          </span>
+<span class="text-text-muted font-label-sm text-label-sm">/</span>
+<span class="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-surface-container font-label-sm text-label-sm text-text-primary">
+            Examinations Registry
+          </span>
+<span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-secondary-container text-on-secondary-container font-label-sm text-label-sm ml-2">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary animate-pulse"></span>
+            Sync Active
+          </span>
+</div>
+<h1 class="font-headline-lg text-headline-lg text-text-primary tracking-tight mt-1">
+          Teacher Test Records
+        </h1>
+<p class="font-body-md text-body-md text-text-secondary leading-relaxed">
+          Comprehensive roster of all instructor-authored assessments, cryptographic passcodes, active cohorts, and student participation rates.
+        </p>
+</div>
+<!-- Header Quick Metrics & Primary CTA -->
+<div class="flex items-center gap-3 self-start md:self-auto flex-wrap">
+<div class="hidden xl:flex items-center gap-3 px-4 py-2.5 rounded-full bg-surface shadow-sm">
+<div class="flex -space-x-2 overflow-hidden">
+<img class="inline-block h-6 w-6 rounded-full ring-2 ring-surface object-cover" data-alt="Student avatar portrait in university hall with warm daylight smiling politely" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB8SLmkFTDRsptstd7XJxNbWJLJCcvzukHNEbXg7viJR35T9MTPzMGMo-vEDJn_Ugaquhs-DnptRCJNyL-yZXG4A63vXW4rHOW2RrVaSYObkQWpWjwgY6cXWwumXLQbweDco1iKNtgaWfJhEhxp4YRKhI5DdmI7udfLO8UM3L8_CGrot6USf6tev01WjWEz_l_M0CHquvVFP8gQsHCA2D93tqhHMEVy82rq205iQi7BPY7oL5o4bPnA"/>
+<img class="inline-block h-6 w-6 rounded-full ring-2 ring-surface object-cover" data-alt="Female student avatar with spectacles reading textbook in soft morning focus" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBuMkNkaQaMyECzPAWTAYGZNiumFZC0bSU-cSBIS-gso_aAjL3eCitkm8-WLikrrzHybpK_zrFWSQhOkVXC1fPYDLXwOSWJOErmQDrBnPSAEn0dcRJJwqnFbTvhVR4zuIrJwMthWdS3HpNKv1w85pQ1j0qgzrPoiLld4tcXF2bmIklN5SO8IODod9ynEJdPtNiDgsQRFOE7vKigNwIBYi3U2k2IXWxndJEQOiRjZ9MteFKqXiJkcSUJ"/>
+<img class="inline-block h-6 w-6 rounded-full ring-2 ring-surface object-cover" data-alt="Graduate researcher avatar in natural library study space with pastel tone lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCjMhrCR6Ay7GqHwc-R2oISwCdeqoeUq2xrgsDjPWDcJ8295Csoef5b7yGY2HQL6s0qKyYvKKPAblz-EWG4kITxJ_H3AdXlyl-UXExheqddjnfW2hfhaElHL0Z1F8vpa7SZ-LHq7Kn9wvSIsFVy9p3cc_-l8QhO5Rp-SA5fqaK_lqhjOr38CGR9eeCgyKycG6an2hDPnNvIdkgP2X5wPRPEJT5af92-xte5FrEdQPBu095O0WWtkzL0"/>
+</div>
+<span class="font-label-sm text-label-sm text-text-secondary">
+<strong class="text-text-primary font-semibold">182</strong> Active Students
+          </span>
+</div>
+<button class="inline-flex items-center justify-center gap-2 px-6 h-11 rounded-full bg-text-primary text-surface font-label-lg text-label-lg shadow-sm hover:bg-primary-hover transition-all active:scale-[0.98]" type="button">
+<span class="material-symbols-outlined text-[18px]">add</span>
+          Create New Test
+        </button>
+</div>
+</section>
+<!-- Stat Strip / Visual Pulse -->
+<section class="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+<div class="p-5 rounded-DEFAULT bg-surface shadow-sm flex items-center justify-between">
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm text-text-muted uppercase tracking-wider">Live Windows</span>
+<div class="flex items-baseline gap-2 mt-1">
+<span class="font-headline-md text-headline-md text-text-primary">02</span>
+<span class="font-label-sm text-label-sm text-secondary font-medium">Ongoing now</span>
+</div>
+</div>
+<div class="w-10 h-10 rounded-full bg-mint flex items-center justify-center text-on-secondary-container">
+<span class="material-symbols-outlined text-[20px]">sensors</span>
+</div>
+</div>
+<div class="p-5 rounded-DEFAULT bg-surface shadow-sm flex items-center justify-between">
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm text-text-muted uppercase tracking-wider">Total Submissions</span>
+<div class="flex items-baseline gap-2 mt-1">
+<span class="font-headline-md text-headline-md text-text-primary">342</span>
+<span class="font-label-sm text-label-sm text-text-muted">98.4% completed</span>
+</div>
+</div>
+<div class="w-10 h-10 rounded-full bg-blue flex items-center justify-center text-text-primary">
+<span class="material-symbols-outlined text-[20px]">assignment_turned_in</span>
+</div>
+</div>
+<div class="p-5 rounded-DEFAULT bg-surface shadow-sm flex items-center justify-between">
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm text-text-muted uppercase tracking-wider">Passcode Vault</span>
+<div class="flex items-baseline gap-2 mt-1">
+<span class="font-headline-md text-headline-md text-text-primary">8 Keys</span>
+<span class="font-label-sm text-label-sm text-text-secondary">SHA-256</span>
+</div>
+</div>
+<div class="w-10 h-10 rounded-full bg-lavender flex items-center justify-center text-text-primary">
+<span class="material-symbols-outlined text-[20px]">key</span>
+</div>
+</div>
+<div class="p-5 rounded-DEFAULT bg-surface shadow-sm flex items-center justify-between">
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm text-text-muted uppercase tracking-wider">Average Score</span>
+<div class="flex items-baseline gap-2 mt-1">
+<span class="font-headline-md text-headline-md text-text-primary">85.1%</span>
+<span class="font-label-sm text-label-sm text-secondary">+3.4% cohort avg</span>
+</div>
+</div>
+<div class="w-10 h-10 rounded-full bg-peach flex items-center justify-center text-text-primary">
+<span class="material-symbols-outlined text-[20px]">trending_up</span>
+</div>
+</div>
+</section>
+<!-- Search & Filter Controls Panel -->
+<section class="p-4 sm:p-5 rounded-DEFAULT bg-surface shadow-sm flex flex-col gap-4 mb-6">
+<!-- Search row & Dropdowns -->
+<div class="flex flex-col lg:flex-row gap-3 items-stretch lg:items-center justify-between">
+<!-- Search Field -->
+<div class="relative flex-1">
+<span class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-text-muted">
+<span class="material-symbols-outlined text-[20px]">search</span>
+</span>
+<input class="w-full h-12 pl-11 pr-4 bg-surface-container-low text-text-primary placeholder:text-text-muted font-body-md text-body-md rounded-[14px] focus:outline-none focus:bg-surface focus:shadow-[0_0_0_2px_#111111] transition-all" id="test-search-input" placeholder="Search by test title, course ID, or 10-digit code (e.g. PXAM-7K4Q2)..." type="text"/>
+</div>
+<!-- Filter Dropdowns -->
+<div class="flex items-center gap-2.5 flex-wrap sm:flex-nowrap">
+<!-- Semester Selector -->
+<div class="relative">
+<button class="h-12 px-4 rounded-[14px] bg-surface-container-low hover:bg-surface-container text-text-primary font-label-md text-label-md flex items-center gap-2 transition-colors whitespace-nowrap" id="semester-dropdown-btn" type="button">
+<span class="material-symbols-outlined text-[18px] text-text-secondary">calendar_month</span>
+<span>Fall Semester 2026</span>
+<span class="material-symbols-outlined text-[16px] text-text-muted">expand_more</span>
+</button>
+</div>
+<!-- Sort Selector -->
+<div class="relative">
+<button class="h-12 px-4 rounded-[14px] bg-surface-container-low hover:bg-surface-container text-text-primary font-label-md text-label-md flex items-center gap-2 transition-colors whitespace-nowrap" id="sort-dropdown-btn" type="button">
+<span class="material-symbols-outlined text-[18px] text-text-secondary">swap_vert</span>
+<span>Latest Created</span>
+<span class="material-symbols-outlined text-[16px] text-text-muted">expand_more</span>
+</button>
+</div>
+<!-- Quick Action: Export / Refresh -->
+<button class="h-12 w-12 rounded-[14px] bg-surface-container-low hover:bg-surface-container flex items-center justify-center text-text-secondary hover:text-text-primary transition-colors" title="Download CSV Audit" type="button">
+<span class="material-symbols-outlined text-[20px]">download</span>
+</button>
+</div>
+</div>
+<!-- Filter Pills Row -->
+<div class="flex items-center gap-2 overflow-x-auto pb-1 scrollbar-none pt-1">
+<button class="filter-pill px-4 py-1.5 rounded-full bg-text-primary text-surface font-label-sm text-label-sm shadow-sm whitespace-nowrap transition-all" data-filter="all" type="button">
+          All Tests (8)
+        </button>
+<button class="filter-pill px-4 py-1.5 rounded-full bg-surface-container hover:bg-surface-container-high text-text-secondary font-label-sm text-label-sm whitespace-nowrap transition-all" data-filter="active" type="button">
+          Active Window (2)
+        </button>
+<button class="filter-pill px-4 py-1.5 rounded-full bg-surface-container hover:bg-surface-container-high text-text-secondary font-label-sm text-label-sm whitespace-nowrap transition-all" data-filter="scheduled" type="button">
+          Scheduled (1)
+        </button>
+<button class="filter-pill px-4 py-1.5 rounded-full bg-surface-container hover:bg-surface-container-high text-text-secondary font-label-sm text-label-sm whitespace-nowrap transition-all" data-filter="completed" type="button">
+          Completed (4)
+        </button>
+<button class="filter-pill px-4 py-1.5 rounded-full bg-surface-container hover:bg-surface-container-high text-text-secondary font-label-sm text-label-sm whitespace-nowrap transition-all" data-filter="drafts" type="button">
+          Drafts (1)
+        </button>
+<!-- Right pinned subtle metadata -->
+<span class="hidden md:inline-flex ml-auto text-text-muted font-code-md text-code-md tracking-tight">
+          SHA: 4f98...e1b7
+        </span>
+</div>
+</section>
+<!-- Assessment Records List (Interactive Container) -->
+<div class="flex flex-col gap-4" id="tests-list-container">
+<!-- ITEM 1: Discrete Mathematics & Logic (Mint Accent) -->
+<article class="test-card group p-6 rounded-DEFAULT bg-surface shadow-sm hover:shadow-md transition-all flex flex-col xl:flex-row items-start xl:items-center justify-between gap-6" data-category="active" data-query="discrete mathematics logic pxam-7k4q2 department of cs">
+<div class="flex items-start gap-4 min-w-0 flex-1">
+<!-- Left Icon in Mint Rounded Square -->
+<div class="w-14 h-14 rounded-2xl bg-mint flex-shrink-0 flex items-center justify-center text-text-primary group-hover:scale-105 transition-transform">
+<span class="material-symbols-outlined text-[28px]">calculate</span>
+</div>
+<!-- Test Details -->
+<div class="flex flex-col min-w-0 flex-1">
+<div class="flex flex-wrap items-center gap-2.5">
+<h2 class="font-headline-sm text-headline-sm text-text-primary font-semibold tracking-tight truncate">
+                Discrete Mathematics &amp; Logic
+              </h2>
+<!-- Cryptographic Monospace Code Chip -->
+<div class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-surface-soft text-text-primary font-code-md text-code-md">
+<span class="material-symbols-outlined text-[14px] text-text-muted">vpn_key</span>
+<span>PXAM-7K4Q2</span>
+</div>
+<!-- Status Chip -->
+<span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-mint text-on-secondary-container font-label-sm text-label-sm font-medium">
+<span class="w-2 h-2 rounded-full bg-secondary animate-ping"></span>
+                Active Window
+              </span>
+</div>
+<p class="font-body-sm text-body-sm text-text-secondary mt-1">
+              Department of Computer Science • Section CS-204A • Terminal Cohort
+            </p>
+<!-- Metadata Pills Row -->
+<div class="flex flex-wrap items-center gap-2 mt-3">
+<span class="px-3 py-1 rounded-full bg-surface-container font-label-sm text-label-sm text-text-secondary">
+                20 Questions
+              </span>
+<span class="px-3 py-1 rounded-full bg-surface-container font-label-sm text-label-sm text-text-secondary flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">timer</span>
+                30 Mins Duration
+              </span>
+<span class="px-3 py-1 rounded-full bg-surface-container font-label-sm text-label-sm text-text-secondary">
+                Single Attempt
+              </span>
+<span class="px-3 py-1 rounded-full bg-surface-soft font-label-sm text-label-sm text-secondary flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">format_image_left</span>
+                AI Proctor Locked
+              </span>
+</div>
+</div>
+</div>
+<!-- Progress, Timestamp & Actions Strip -->
+<div class="flex flex-col sm:flex-row xl:flex-col items-start sm:items-center xl:items-end justify-between w-full xl:w-auto gap-4 pt-4 xl:pt-0 border-t xl:border-t-0 border-surface-container">
+<!-- Attempts Progress Metric -->
+<div class="flex flex-col xl:items-end min-w-[200px]">
+<div class="flex items-center justify-between xl:justify-end gap-3 w-full">
+<span class="font-label-sm text-label-sm text-text-secondary">Attempts</span>
+<span class="font-label-md text-label-md text-text-primary font-semibold">42 / 45 Completed (93%)</span>
+</div>
+<!-- Progress Bar -->
+<div class="w-full h-2 rounded-full bg-surface-container overflow-hidden mt-1.5">
+<div class="h-full rounded-full bg-secondary transition-all" style="width: 93%;"></div>
+</div>
+<span class="font-body-sm text-body-sm text-text-muted mt-1">
+              Created Oct 24, 2026 • 10:14 AM
+            </span>
+</div>
+<!-- Buttons Row -->
+<div class="flex items-center gap-2 self-stretch sm:self-auto justify-end">
+<button class="w-10 h-10 rounded-full bg-surface-container hover:bg-surface-container-high flex items-center justify-center text-text-primary transition-colors active:scale-95" onclick="copyExamCode('PXAM-7K4Q2', this)" title="Copy Cryptographic Passcode" type="button">
+<span class="material-symbols-outlined text-[18px]">content_copy</span>
+</button>
+<button class="inline-flex items-center gap-2 px-5 h-10 rounded-full bg-text-primary text-surface font-label-sm text-label-sm shadow-sm hover:bg-primary-hover transition-all" type="button">
+<span>View Details</span>
+<span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+</button>
+</div>
+</div>
+</article>
+<!-- ITEM 2: Advanced Cognitive Psychology (Peach Accent) -->
+<article class="test-card group p-6 rounded-DEFAULT bg-surface shadow-sm hover:shadow-md transition-all flex flex-col xl:flex-row items-start xl:items-center justify-between gap-6" data-category="scheduled" data-query="advanced cognitive psychology pxam-8b2n1 dept of behavioral sciences">
+<div class="flex items-start gap-4 min-w-0 flex-1">
+<!-- Left Icon in Peach Rounded Square -->
+<div class="w-14 h-14 rounded-2xl bg-peach flex-shrink-0 flex items-center justify-center text-text-primary group-hover:scale-105 transition-transform">
+<span class="material-symbols-outlined text-[28px]">psychology</span>
+</div>
+<!-- Test Details -->
+<div class="flex flex-col min-w-0 flex-1">
+<div class="flex flex-wrap items-center gap-2.5">
+<h2 class="font-headline-sm text-headline-sm text-text-primary font-semibold tracking-tight truncate">
+                Advanced Cognitive Psychology
+              </h2>
+<div class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-surface-soft text-text-primary font-code-md text-code-md">
+<span class="material-symbols-outlined text-[14px] text-text-muted">vpn_key</span>
+<span>PXAM-8B2N1</span>
+</div>
+<span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-peach text-text-primary font-label-sm text-label-sm font-medium">
+<span class="w-2 h-2 rounded-full bg-[#D48238]"></span>
+                Scheduled Today
+              </span>
+</div>
+<p class="font-body-sm text-body-sm text-text-secondary mt-1">
+              Dept. of Behavioral Sciences • Mid-Term Assessment Window
+            </p>
+<!-- Metadata Pills Row -->
+<div class="flex flex-wrap items-center gap-2 mt-3">
+<span class="px-3 py-1 rounded-full bg-surface-container font-label-sm text-label-sm text-text-secondary">
+                30 Questions
+              </span>
+<span class="px-3 py-1 rounded-full bg-surface-container font-label-sm text-label-sm text-text-secondary flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">timer</span>
+                45 Mins Duration
+              </span>
+<span class="px-3 py-1 rounded-full bg-surface-container font-label-sm text-label-sm text-text-secondary">
+                Single Attempt
+              </span>
+<span class="px-3 py-1 rounded-full bg-surface-soft font-label-sm text-label-sm text-text-secondary flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">lock_clock</span>
+                Opens in 2 hrs
+              </span>
+</div>
+</div>
+</div>
+<!-- Attempts, Timestamp & Actions -->
+<div class="flex flex-col sm:flex-row xl:flex-col items-start sm:items-center xl:items-end justify-between w-full xl:w-auto gap-4 pt-4 xl:pt-0 border-t xl:border-t-0 border-surface-container">
+<div class="flex flex-col xl:items-end min-w-[200px]">
+<div class="flex items-center justify-between xl:justify-end gap-3 w-full">
+<span class="font-label-sm text-label-sm text-text-secondary">Roster Status</span>
+<span class="font-label-md text-label-md text-text-primary font-semibold">0 / 38 (Starts 14:00 today)</span>
+</div>
+<div class="w-full h-2 rounded-full bg-surface-container overflow-hidden mt-1.5">
+<div class="h-full rounded-full bg-peach transition-all" style="width: 0%;"></div>
+</div>
+<span class="font-body-sm text-body-sm text-text-muted mt-1">
+              Created Oct 20, 2026 • 09:30 AM
+            </span>
+</div>
+<div class="flex items-center gap-2 self-stretch sm:self-auto justify-end">
+<button class="w-10 h-10 rounded-full bg-surface-container hover:bg-surface-container-high flex items-center justify-center text-text-primary transition-colors active:scale-95" onclick="copyExamCode('PXAM-8B2N1', this)" title="Copy Cryptographic Passcode" type="button">
+<span class="material-symbols-outlined text-[18px]">content_copy</span>
+</button>
+<button class="inline-flex items-center gap-2 px-5 h-10 rounded-full bg-text-primary text-surface font-label-sm text-label-sm shadow-sm hover:bg-primary-hover transition-all" type="button">
+<span>View Details</span>
+<span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+</button>
+</div>
+</div>
+</article>
+<!-- ITEM 3: Introduction to Microeconomics (Lavender Accent) -->
+<article class="test-card group p-6 rounded-DEFAULT bg-surface shadow-sm hover:shadow-md transition-all flex flex-col xl:flex-row items-start xl:items-center justify-between gap-6" data-category="completed" data-query="introduction to microeconomics pxam-3m9k4 school of economics">
+<div class="flex items-start gap-4 min-w-0 flex-1">
+<!-- Left Icon in Lavender Rounded Square -->
+<div class="w-14 h-14 rounded-2xl bg-lavender flex-shrink-0 flex items-center justify-center text-text-primary group-hover:scale-105 transition-transform">
+<span class="material-symbols-outlined text-[28px]">query_stats</span>
+</div>
+<!-- Test Details -->
+<div class="flex flex-col min-w-0 flex-1">
+<div class="flex flex-wrap items-center gap-2.5">
+<h2 class="font-headline-sm text-headline-sm text-text-primary font-semibold tracking-tight truncate">
+                Introduction to Microeconomics
+              </h2>
+<div class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-surface-soft text-text-primary font-code-md text-code-md">
+<span class="material-symbols-outlined text-[14px] text-text-muted">vpn_key</span>
+<span>PXAM-3M9K4</span>
+</div>
+<span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-lavender text-text-primary font-label-sm text-label-sm font-medium">
+<span class="material-symbols-outlined text-[14px]">check_circle</span>
+                Completed
+              </span>
+</div>
+<p class="font-body-sm text-body-sm text-text-secondary mt-1">
+              School of Economics • Main Auditorium Cohort B
+            </p>
+<!-- Metadata Pills Row -->
+<div class="flex flex-wrap items-center gap-2 mt-3">
+<span class="px-3 py-1 rounded-full bg-surface-container font-label-sm text-label-sm text-text-secondary">
+                25 Questions
+              </span>
+<span class="px-3 py-1 rounded-full bg-surface-container font-label-sm text-label-sm text-text-secondary flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">timer</span>
+                35 Mins Duration
+              </span>
+<span class="px-3 py-1 rounded-full bg-surface-container font-label-sm text-label-sm text-text-secondary">
+                Full Auto-Graded
+              </span>
+<span class="px-3 py-1 rounded-full bg-mint/50 font-label-sm text-label-sm text-on-secondary-container flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">insights</span>
+                Avg: 88.3%
+              </span>
+</div>
+</div>
+</div>
+<!-- Attempts, Timestamp & Actions -->
+<div class="flex flex-col sm:flex-row xl:flex-col items-start sm:items-center xl:items-end justify-between w-full xl:w-auto gap-4 pt-4 xl:pt-0 border-t xl:border-t-0 border-surface-container">
+<div class="flex flex-col xl:items-end min-w-[200px]">
+<div class="flex items-center justify-between xl:justify-end gap-3 w-full">
+<span class="font-label-sm text-label-sm text-text-secondary">Turnout</span>
+<span class="font-label-md text-label-md text-text-primary font-semibold">56 / 56 Completed (100%)</span>
+</div>
+<div class="w-full h-2 rounded-full bg-surface-container overflow-hidden mt-1.5">
+<div class="h-full rounded-full bg-[#8276E8] transition-all" style="width: 100%;"></div>
+</div>
+<span class="font-body-sm text-body-sm text-text-muted mt-1">
+              Created Oct 18, 2026
+            </span>
+</div>
+<div class="flex items-center gap-2 self-stretch sm:self-auto justify-end">
+<button class="inline-flex items-center gap-1 px-4 h-10 rounded-full bg-surface-container hover:bg-surface-container-high text-text-primary font-label-sm text-label-sm transition-colors" type="button">
+<span class="material-symbols-outlined text-[16px]">receipt_long</span>
+<span>Results Ledger</span>
+</button>
+<button class="inline-flex items-center gap-2 px-5 h-10 rounded-full bg-text-primary text-surface font-label-sm text-label-sm shadow-sm hover:bg-primary-hover transition-all" type="button">
+<span>View Details</span>
+<span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+</button>
+</div>
+</div>
+</article>
+<!-- ITEM 4: Foundations of Data Structures (Pale Blue Accent) -->
+<article class="test-card group p-6 rounded-DEFAULT bg-surface shadow-sm hover:shadow-md transition-all flex flex-col xl:flex-row items-start xl:items-center justify-between gap-6" data-category="completed" data-query="foundations of data structures pxam-1y5t8 computer science">
+<div class="flex items-start gap-4 min-w-0 flex-1">
+<!-- Left Icon in Blue Rounded Square -->
+<div class="w-14 h-14 rounded-2xl bg-blue flex-shrink-0 flex items-center justify-center text-text-primary group-hover:scale-105 transition-transform">
+<span class="material-symbols-outlined text-[28px]">code</span>
+</div>
+<!-- Test Details -->
+<div class="flex flex-col min-w-0 flex-1">
+<div class="flex flex-wrap items-center gap-2.5">
+<h2 class="font-headline-sm text-headline-sm text-text-primary font-semibold tracking-tight truncate">
+                Foundations of Data Structures
+              </h2>
+<div class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-surface-soft text-text-primary font-code-md text-code-md">
+<span class="material-symbols-outlined text-[14px] text-text-muted">vpn_key</span>
+<span>PXAM-1Y5T8</span>
+</div>
+<span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-blue text-text-primary font-label-sm text-label-sm font-medium">
+<span class="material-symbols-outlined text-[14px]">check_circle</span>
+                Completed
+              </span>
+</div>
+<p class="font-body-sm text-body-sm text-text-secondary mt-1">
+              Computer Science • Engineering Wing Lab IV
+            </p>
+<!-- Metadata Pills Row -->
+<div class="flex flex-wrap items-center gap-2 mt-3">
+<span class="px-3 py-1 rounded-full bg-surface-container font-label-sm text-label-sm text-text-secondary">
+                40 Questions
+              </span>
+<span class="px-3 py-1 rounded-full bg-surface-container font-label-sm text-label-sm text-text-secondary flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">timer</span>
+                60 Mins Duration
+              </span>
+<span class="px-3 py-1 rounded-full bg-surface-container font-label-sm text-label-sm text-text-secondary">
+                Biometric Face Verification
+              </span>
+<span class="px-3 py-1 rounded-full bg-surface-soft font-label-sm text-label-sm text-text-secondary flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">analytics</span>
+                Avg: 82.0%
+              </span>
+</div>
+</div>
+</div>
+<!-- Attempts, Timestamp & Actions -->
+<div class="flex flex-col sm:flex-row xl:flex-col items-start sm:items-center xl:items-end justify-between w-full xl:w-auto gap-4 pt-4 xl:pt-0 border-t xl:border-t-0 border-surface-container">
+<div class="flex flex-col xl:items-end min-w-[200px]">
+<div class="flex items-center justify-between xl:justify-end gap-3 w-full">
+<span class="font-label-sm text-label-sm text-text-secondary">Graded Records</span>
+<span class="font-label-md text-label-md text-text-primary font-semibold">84 / 85 Completed</span>
+</div>
+<div class="w-full h-2 rounded-full bg-surface-container overflow-hidden mt-1.5">
+<div class="h-full rounded-full bg-[#529ECF] transition-all" style="width: 98.8%;"></div>
+</div>
+<span class="font-body-sm text-body-sm text-text-muted mt-1">
+              Created Oct 08, 2026
+            </span>
+</div>
+<div class="flex items-center gap-2 self-stretch sm:self-auto justify-end">
+<button class="inline-flex items-center gap-1 px-4 h-10 rounded-full bg-surface-container hover:bg-surface-container-high text-text-primary font-label-sm text-label-sm transition-colors" type="button">
+<span class="material-symbols-outlined text-[16px]">receipt_long</span>
+<span>Results Ledger</span>
+</button>
+<button class="inline-flex items-center gap-2 px-5 h-10 rounded-full bg-text-primary text-surface font-label-sm text-label-sm shadow-sm hover:bg-primary-hover transition-all" type="button">
+<span>View Details</span>
+<span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+</button>
+</div>
+</div>
+</article>
+<!-- ITEM 5: Distributed Consensus & Fault Tolerance (Soft Yellow Accent) -->
+<article class="test-card group p-6 rounded-DEFAULT bg-surface shadow-sm hover:shadow-md transition-all flex flex-col xl:flex-row items-start xl:items-center justify-between gap-6" data-category="drafts" data-query="distributed consensus fault tolerance pxam-draft-99">
+<div class="flex items-start gap-4 min-w-0 flex-1">
+<!-- Left Icon in Yellow Rounded Square -->
+<div class="w-14 h-14 rounded-2xl bg-yellow flex-shrink-0 flex items-center justify-center text-text-primary group-hover:scale-105 transition-transform">
+<span class="material-symbols-outlined text-[28px]">edit_document</span>
+</div>
+<!-- Test Details -->
+<div class="flex flex-col min-w-0 flex-1">
+<div class="flex flex-wrap items-center gap-2.5">
+<h2 class="font-headline-sm text-headline-sm text-text-primary font-semibold tracking-tight truncate">
+                Distributed Consensus &amp; Fault Tolerance
+              </h2>
+<div class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-surface-soft text-text-primary font-code-md text-code-md">
+<span class="material-symbols-outlined text-[14px] text-text-muted">tag</span>
+<span>PXAM-DRAFT-99</span>
+</div>
+<span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-yellow text-text-primary font-label-sm text-label-sm font-medium">
+<span class="w-2 h-2 rounded-full bg-[#B8961D]"></span>
+                Draft Unsealed
+              </span>
+</div>
+<p class="font-body-sm text-body-sm text-text-secondary mt-1">
+              Advanced Distributed Systems • Staged Sandbox Mode
+            </p>
+<!-- Metadata Pills Row -->
+<div class="flex flex-wrap items-center gap-2 mt-3">
+<span class="px-3 py-1 rounded-full bg-surface-container font-label-sm text-label-sm text-text-secondary">
+                15 Questions added
+              </span>
+<span class="px-3 py-1 rounded-full bg-surface-soft font-label-sm text-label-sm text-text-secondary flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">warning</span>
+                Unpublished Key
+              </span>
+<span class="px-3 py-1 rounded-full bg-surface-container font-label-sm text-label-sm text-text-secondary">
+                Auto-Save: 4 mins ago
+              </span>
+</div>
+</div>
+</div>
+<!-- Attempts, Timestamp & Actions -->
+<div class="flex flex-col sm:flex-row xl:flex-col items-start sm:items-center xl:items-end justify-between w-full xl:w-auto gap-4 pt-4 xl:pt-0 border-t xl:border-t-0 border-surface-container">
+<div class="flex flex-col xl:items-end min-w-[200px]">
+<div class="flex items-center justify-between xl:justify-end gap-3 w-full">
+<span class="font-label-sm text-label-sm text-text-secondary">Participation</span>
+<span class="font-label-md text-label-md text-text-muted">0 Attempts (Unpublished)</span>
+</div>
+<div class="w-full h-2 rounded-full bg-surface-container overflow-hidden mt-1.5">
+<div class="h-full rounded-full bg-yellow transition-all" style="width: 35%;"></div>
+</div>
+<span class="font-body-sm text-body-sm text-text-muted mt-1">
+              Created Oct 26, 2026
+            </span>
+</div>
+<div class="flex items-center gap-2 self-stretch sm:self-auto justify-end">
+<button class="inline-flex items-center gap-2 px-5 h-10 rounded-full bg-text-primary text-surface font-label-sm text-label-sm shadow-sm hover:bg-primary-hover transition-all" type="button">
+<span>Resume Editing</span>
+<span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+</button>
+</div>
+</div>
+</article>
+</div>
+<!-- Empty State View (Toggled dynamically or when zero filters match) -->
+<div class="hidden p-12 rounded-DEFAULT bg-surface shadow-sm text-center flex-col items-center justify-center my-6" id="empty-state">
+<div class="w-16 h-16 rounded-full bg-surface-soft flex items-center justify-center text-text-muted mb-4">
+<span class="material-symbols-outlined text-[32px]">folder_off</span>
+</div>
+<h3 class="font-headline-sm text-headline-sm text-text-primary font-semibold">No examinations located</h3>
+<p class="font-body-md text-body-md text-text-secondary max-w-md mt-2">
+        No assessment records match your current query or filter criteria in Fall Semester 2026.
+      </p>
+<div class="flex items-center gap-3 mt-6">
+<button class="px-5 h-10 rounded-full bg-surface-container hover:bg-surface-container-high text-text-primary font-label-sm text-label-sm transition-colors" id="reset-filters-btn" type="button">
+          Reset All Filters
+        </button>
+<button class="px-5 h-10 rounded-full bg-text-primary text-surface font-label-sm text-label-sm shadow-sm hover:bg-primary-hover transition-all" type="button">
+          + Author Test
+        </button>
+</div>
+</div>
+<!-- Bottom Footer Strip: Pagination & Stats & Interactive Preview Toggle -->
+<section class="mt-8 pt-6 flex flex-col md:flex-row items-center justify-between gap-4">
+<div class="flex items-center gap-3">
+<span class="font-label-sm text-label-sm text-text-secondary">
+          Showing <span class="font-semibold text-text-primary" id="visible-count">5</span> of 8 examinations
+        </span>
+<span class="w-1 h-1 rounded-full bg-border-strong"></span>
+<span class="font-label-sm text-label-sm text-text-muted">
+          342 total submissions processed
+        </span>
+</div>
+<!-- Right Hand Controls: Pagination & Empty State Demo Toggle -->
+<div class="flex items-center gap-4 flex-wrap justify-end">
+<!-- Live Empty State Toggle helper -->
+<button class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-surface-container text-text-secondary hover:text-text-primary font-label-sm text-label-sm transition-colors" id="toggle-empty-state-btn" type="button">
+<span class="material-symbols-outlined text-[16px]">visibility</span>
+<span>Toggle Empty State View</span>
+</button>
+<!-- Pagination Pills -->
+<div class="flex items-center gap-1 bg-surface p-1 rounded-full shadow-sm">
+<button class="w-8 h-8 rounded-full flex items-center justify-center text-text-muted hover:text-text-primary hover:bg-surface-container transition-colors disabled:opacity-40" disabled="" type="button">
+<span class="material-symbols-outlined text-[16px]">chevron_left</span>
+</button>
+<span class="w-8 h-8 rounded-full bg-text-primary text-surface font-label-sm text-label-sm flex items-center justify-center font-medium">
+            1
+          </span>
+<button class="w-8 h-8 rounded-full flex items-center justify-center text-text-secondary hover:text-text-primary hover:bg-surface-container transition-colors font-label-sm text-label-sm" type="button">
+            2
+          </button>
+<button class="w-8 h-8 rounded-full flex items-center justify-center text-text-muted hover:text-text-primary hover:bg-surface-container transition-colors" type="button">
+<span class="material-symbols-outlined text-[16px]">chevron_right</span>
+</button>
+</div>
+</div>
+</section>
+<!-- Toast Notification Overlay for Passcode Copy -->
+<div class="fixed bottom-6 right-6 pointer-events-none opacity-0 translate-y-3 transition-all duration-200 z-50 px-4 py-3 rounded-full bg-text-primary text-surface font-label-sm text-label-sm flex items-center gap-2 shadow-xl" id="copy-toast">
+<span class="material-symbols-outlined text-[18px] text-mint">verified</span>
+<span id="copy-toast-msg">Passcode copied to clipboard</span>
+</div>
+</div>
+</div>
+<script>
+  // Simple interactive client-side logic for search, filters, empty-state demonstration, and code copy
+  (function() {
+    const searchInput = document.getElementById('test-search-input');
+    const filterButtons = document.querySelectorAll('.filter-pill');
+    const cards = document.querySelectorAll('.test-card');
+    const emptyState = document.getElementById('empty-state');
+    const visibleCount = document.getElementById('visible-count');
+    const resetBtn = document.getElementById('reset-filters-btn');
+    const toggleEmptyBtn = document.getElementById('toggle-empty-state-btn');
+    const toast = document.getElementById('copy-toast');
+    const toastMsg = document.getElementById('copy-toast-msg');
+
+    let activeFilter = 'all';
+    let searchQuery = '';
+    let manualEmptyState = false;
+
+    function renderList() {
+      if (manualEmptyState) {
+        cards.forEach(c => c.classList.add('hidden'));
+        emptyState.classList.remove('hidden');
+        emptyState.classList.add('flex');
+        if (visibleCount) visibleCount.textContent = '0';
+        return;
+      }
+
+      let count = 0;
+      cards.forEach(card => {
+        const category = card.getAttribute('data-category');
+        const queryText = card.getAttribute('data-query') || '';
+        const matchesFilter = (activeFilter === 'all') || (category === activeFilter);
+        const matchesSearch = queryText.toLowerCase().includes(searchQuery.toLowerCase().trim());
+
+        if (matchesFilter && matchesSearch) {
+          card.classList.remove('hidden');
+          count++;
+        } else {
+          card.classList.add('hidden');
+        }
+      });
+
+      if (visibleCount) visibleCount.textContent = count;
+
+      if (count === 0) {
+        emptyState.classList.remove('hidden');
+        emptyState.classList.add('flex');
+      } else {
+        emptyState.classList.add('hidden');
+        emptyState.classList.remove('flex');
+      }
+    }
+
+    if (searchInput) {
+      searchInput.addEventListener('input', (e) => {
+        manualEmptyState = false;
+        searchQuery = e.target.value;
+        renderList();
+      });
+    }
+
+    filterButtons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        manualEmptyState = false;
+        filterButtons.forEach(b => {
+          b.className = 'filter-pill px-4 py-1.5 rounded-full bg-surface-container hover:bg-surface-container-high text-text-secondary font-label-sm text-label-sm whitespace-nowrap transition-all';
+        });
+        btn.className = 'filter-pill px-4 py-1.5 rounded-full bg-text-primary text-surface font-label-sm text-label-sm shadow-sm whitespace-nowrap transition-all';
+        activeFilter = btn.getAttribute('data-filter');
+        renderList();
+      });
+    });
+
+    if (resetBtn) {
+      resetBtn.addEventListener('click', () => {
+        manualEmptyState = false;
+        searchQuery = '';
+        activeFilter = 'all';
+        if (searchInput) searchInput.value = '';
+        filterButtons.forEach((b, i) => {
+          if (i === 0) {
+            b.className = 'filter-pill px-4 py-1.5 rounded-full bg-text-primary text-surface font-label-sm text-label-sm shadow-sm whitespace-nowrap transition-all';
+          } else {
+            b.className = 'filter-pill px-4 py-1.5 rounded-full bg-surface-container hover:bg-surface-container-high text-text-secondary font-label-sm text-label-sm whitespace-nowrap transition-all';
+          }
+        });
+        renderList();
+      });
+    }
+
+    if (toggleEmptyBtn) {
+      toggleEmptyBtn.addEventListener('click', () => {
+        manualEmptyState = !manualEmptyState;
+        toggleEmptyBtn.classList.toggle('bg-text-primary', manualEmptyState);
+        toggleEmptyBtn.classList.toggle('text-surface', manualEmptyState);
+        renderList();
+      });
+    }
+
+    window.copyExamCode = function(code, btn) {
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(code).then(showToast);
+      } else {
+        showToast();
+      }
+
+      function showToast() {
+        if (!toast) return;
+        toastMsg.textContent = 'Passcode ' + code + ' copied to clipboard';
+        toast.classList.remove('opacity-0', 'translate-y-3');
+        toast.classList.add('opacity-100', 'translate-y-0');
+        setTimeout(() => {
+          toast.classList.remove('opacity-100', 'translate-y-0');
+          toast.classList.add('opacity-0', 'translate-y-3');
+        }, 2600);
+      }
+    };
+  })();
+</script></main></div></body></html>

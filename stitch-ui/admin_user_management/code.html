@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+
+<html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><title>Proxam AI Admin Console</title><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=JetBrains+Mono:wght@400&amp;family=Manrope:wght@600;700&amp;display=swap" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config={darkMode:"class",theme:{extend:{"colors":{"on-primary-fixed":"#1c1b1b","text-secondary":"#686868","surface-container-high":"#eae8e4","info":"#BFDDF2","primary":"#000000","secondary-fixed-dim":"#a0d1bf","yellow":"#F4E6A8","background":"#fbf9f5","surface-tint":"#5f5e5e","primary-fixed-dim":"#c8c6c5","surface":"#FFFFFF","on-tertiary":"#ffffff","on-secondary":"#ffffff","error-container":"#ffdad6","on-error":"#ffffff","text-primary":"#111111","inverse-surface":"#30312e","peach":"#F8D9B5","primary-hover":"#292929","surface-bright":"#fbf9f5","inverse-primary":"#c8c6c5","on-tertiary-fixed-variant":"#454269","secondary-container":"#b9ead8","on-secondary-fixed":"#002018","tertiary-container":"#1a173b","on-surface":"#1b1c1a","surface-container":"#efeeea","secondary-fixed":"#bceddb","error":"#ba1a1a","border-strong":"#D8D2C9","tertiary":"#000000","on-primary-container":"#858383","lavender":"#D5D0FF","outline":"#747878","outline-variant":"#c4c7c7","on-tertiary-fixed":"#1a173b","on-error-container":"#93000a","pink":"#F4B9C2","warning":"#F3C58E","success":"#9BD9BD","inverse-on-surface":"#f2f0ec","surface-container-lowest":"#ffffff","on-background":"#1b1c1a","on-secondary-container":"#3e6b5d","primary-container":"#1c1b1b","border":"#E8E4DD","surface-soft":"#F1EEE8","danger":"#E9A4A4","surface-variant":"#e4e2de","on-secondary-fixed-variant":"#204f42","surface-container-highest":"#e4e2de","mint":"#B9EAD8","primary-fixed":"#e5e2e1","secondary":"#396759","on-surface-variant":"#444748","tertiary-fixed-dim":"#c6c2f0","on-tertiary-container":"#837faa","surface-dim":"#dbdad6","mint-strong":"#8FD5BD","blue":"#C8E2F5","on-primary-fixed-variant":"#474646","surface-container-low":"#f5f3ef","tertiary-fixed":"#e4dfff","text-muted":"#969696","on-primary":"#ffffff"},"borderRadius":{"DEFAULT":"1rem","lg":"2rem","xl":"3rem","full":"9999px"},"spacing":{"gutter":"1.5rem","space-lg":"1.5rem","gutter-sm":"1rem","space-xl":"2rem","space-md":"1rem","space-sm":"0.5rem","space-xs":"0.25rem","margin-sm":"1rem","margin":"2rem"},"fontFamily":{"code-md":["JetBrains Mono"],"headline-md":["Manrope"],"display-lg-mobile":["Manrope"],"label-lg":["Inter"],"body-lg":["Inter"],"headline-lg":["Manrope"],"label-sm":["Inter"],"display-lg":["Manrope"],"label-md":["Inter"],"headline-sm":["Manrope"],"body-md":["Inter"],"body-sm":["Inter"]},"fontSize":{"code-md":["13px",{"lineHeight":"20px","fontWeight":"400"}],"headline-md":["24px",{"lineHeight":"32px","fontWeight":"600"}],"display-lg-mobile":["30px",{"lineHeight":"38px","letterSpacing":"-0.02em","fontWeight":"700"}],"label-lg":["14px",{"lineHeight":"20px","fontWeight":"600"}],"body-lg":["16px",{"lineHeight":"26px","fontWeight":"400"}],"headline-lg":["32px",{"lineHeight":"40px","letterSpacing":"-0.01em","fontWeight":"600"}],"label-sm":["11px",{"lineHeight":"14px","fontWeight":"500"}],"display-lg":["40px",{"lineHeight":"48px","letterSpacing":"-0.02em","fontWeight":"700"}],"label-md":["12px",{"lineHeight":"16px","fontWeight":"500"}],"headline-sm":["20px",{"lineHeight":"28px","fontWeight":"600"}],"body-md":["14px",{"lineHeight":"22px","fontWeight":"400"}],"body-sm":["12px",{"lineHeight":"18px","fontWeight":"400"}]}}}};</script></head><body class="bg-background font-body-md text-body-md text-on-surface antialiased"><aside class="fixed left-0 top-0 h-full w-72 bg-surface-container-low/90 backdrop-blur-xl z-50 flex flex-col justify-between shadow-[0_1px_8px_rgba(0,0,0,0.04)]"><div class="flex flex-col"><div class="h-16 px-gutter flex items-center justify-between"><div class="flex items-center gap-space-sm"><img alt="Brand logo. - Primary color: #111111
+- Font: manrope
+- Mode: light
+- Roundness: rounded-full
+" class="h-8 w-auto object-contain" src="https://lh3.googleusercontent.com/aida/AEtjO1Vq5gYJu3JEyXGjZL0cy0tnA69OCtZuuTQkVrNZEj_ohuLJxrFtblD3YBWkPdoiRY5Hy-lkt3TXHMxkYm2xvOpyY7h47ASVC77YTKpUEvsyPo4YAYsh7rNKfzgFhDqUT5yWipsWcZDRuB1dkvGDbYf1Y4lPRIC3oF0ViWT8XUGJL2T7l7vklvVQXthAMcv_71BW6W5fcIe0j40z4eb7czx2THmKalxg_EZP3m2OMfY5KaZzEwfuSry9Sg"/><span class="font-headline-sm text-headline-sm text-text-primary font-bold">Proxam AI</span></div><span class="px-space-sm py-space-xs rounded-full bg-mint text-text-primary font-label-sm text-label-sm">Portal</span></div><div class="px-gutter pt-space-md pb-space-sm"><div class="p-space-xs bg-surface-container rounded-full flex items-center justify-between"><button class="flex-1 text-center py-space-xs px-space-xs rounded-full text-on-surface-variant font-label-md text-label-md hover:text-on-surface transition-colors" type="button">Student</button><button class="flex-1 text-center py-space-xs px-space-xs rounded-full text-on-surface-variant font-label-md text-label-md hover:text-on-surface transition-colors" type="button">Faculty</button><button class="flex-1 text-center py-space-xs px-space-xs rounded-full bg-primary text-on-primary font-label-md text-label-md shadow-sm" type="button">Admin</button></div></div><div class="px-gutter py-space-xs"><span class="font-label-sm text-label-sm text-text-muted uppercase tracking-wider">Navigation</span></div><nav class="flex flex-col gap-space-xs px-gutter" data-active-classes="bg-primary text-on-primary font-label-lg rounded-DEFAULT shadow-[0_8px_30px_rgba(20,20,20,0.04)]"><a class="flex items-center gap-space-md px-space-md py-space-sm rounded-DEFAULT font-label-lg text-label-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all" data-path="dashboard" href="#"><span class="material-symbols-outlined text-[20px]">grid_view</span><span>Dashboard</span></a><a aria-current="page" class="flex items-center gap-space-md px-space-md py-space-sm transition-all bg-primary text-on-primary font-label-lg rounded-DEFAULT shadow-[0_8px_30px_rgba(20,20,20,0.04)]" data-path="users" href="#"><span class="material-symbols-outlined text-[20px]">group</span><span>Users</span></a><a class="flex items-center gap-space-md px-space-md py-space-sm rounded-DEFAULT font-label-lg text-label-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all" data-path="tests" href="#"><span class="material-symbols-outlined text-[20px]">quiz</span><span>Tests</span></a><a class="flex items-center gap-space-md px-space-md py-space-sm rounded-DEFAULT font-label-lg text-label-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all" data-path="proctoring-alerts" href="#"><span class="material-symbols-outlined text-[20px]">warning_amber</span><span class="flex-1">Proctoring Alerts</span><span class="px-space-sm py-space-xs rounded-full bg-pink text-text-primary font-label-sm text-label-sm">Live</span></a><a class="flex items-center gap-space-md px-space-md py-space-sm rounded-DEFAULT font-label-lg text-label-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all" data-path="profile" href="#"><span class="material-symbols-outlined text-[20px]">manage_accounts</span><span>Profile</span></a></nav></div><div class="p-gutter"><div class="p-space-md rounded-DEFAULT bg-surface-soft flex flex-col gap-space-xs"><div class="flex items-center justify-between"><span class="font-label-sm text-label-sm text-text-secondary">Security Status</span><span class="material-symbols-outlined text-secondary text-[18px]">verified_user</span></div><span class="font-label-md text-label-md text-text-primary">Zero Trust Protocol</span><span class="font-body-sm text-body-sm text-text-muted">Policy sync: 2m ago</span></div></div></aside><div class="pl-72"><header class="fixed top-0 left-72 right-0 h-16 bg-surface/80 backdrop-blur-xl z-40 shadow-[0_1px_8px_rgba(0,0,0,0.04)]"><div class="w-full h-full px-gutter flex items-center justify-between"><div class="flex items-center gap-space-md"><img alt="Brand logo. - Primary color: #111111
+- Font: manrope
+- Mode: light
+- Roundness: rounded-full
+" class="h-8 w-auto object-contain" src="https://lh3.googleusercontent.com/aida/AEtjO1Vq5gYJu3JEyXGjZL0cy0tnA69OCtZuuTQkVrNZEj_ohuLJxrFtblD3YBWkPdoiRY5Hy-lkt3TXHMxkYm2xvOpyY7h47ASVC77YTKpUEvsyPo4YAYsh7rNKfzgFhDqUT5yWipsWcZDRuB1dkvGDbYf1Y4lPRIC3oF0ViWT8XUGJL2T7l7vklvVQXthAMcv_71BW6W5fcIe0j40z4eb7czx2THmKalxg_EZP3m2OMfY5KaZzEwfuSry9Sg"/><div class="hidden md:flex items-center gap-space-sm px-space-md py-space-xs rounded-full bg-surface-container font-label-md text-label-md text-text-primary"><span class="material-symbols-outlined text-[16px] text-text-primary">lock</span><span>256-bit Encrypted Enclave</span></div><div class="hidden lg:flex items-center gap-space-sm px-space-md py-space-xs rounded-full bg-secondary-container font-label-md text-label-md text-on-secondary-container"><span class="inline-block w-2 h-2 rounded-full bg-secondary"></span><span>System Health: 99.98%</span></div></div><div class="flex items-center gap-space-md"><button class="w-10 h-10 rounded-full flex items-center justify-center hover:bg-surface-container-high text-on-surface-variant hover:text-on-surface transition-colors relative" type="button"><span class="material-symbols-outlined text-[20px]">notifications</span><span class="absolute top-2 right-2 w-2 h-2 rounded-full bg-error"></span></button><div class="hidden sm:flex flex-col text-right"><span class="font-label-md text-label-md text-text-primary leading-tight">Dr. Arthur Sterling</span><span class="font-body-sm text-body-sm text-text-secondary leading-tight">System Administrator</span></div><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></div></header><main class="w-full pt-16 bg-background min-h-screen"><div class="flex flex-col w-full">
+<div class="px-margin py-space-xl flex flex-col gap-space-xl max-w-[1440px] mx-auto w-full">
+<!-- Top Bar / Breadcrumb Context & Title -->
+<div class="flex flex-col lg:flex-row lg:items-end justify-between gap-space-lg">
+<div class="flex flex-col gap-space-xs">
+<div class="flex items-center gap-space-xs text-text-muted font-label-sm text-label-sm">
+<span>CONSOLE</span>
+<span>/</span>
+<span>IDENTITY &amp; ACCESS</span>
+<span>/</span>
+<span class="text-text-primary font-semibold">DIRECTORY</span>
+</div>
+<h1 class="font-headline-lg text-headline-lg text-text-primary tracking-tight">User Management</h1>
+<p class="font-body-md text-body-md text-text-secondary max-w-2xl">
+          Directory of registered students, faculty proctors, and system administrators across affiliated departments.
+        </p>
+</div>
+<!-- Quick Action Stats Strip -->
+<div class="flex items-center gap-space-md">
+<div class="hidden sm:flex items-center gap-space-md bg-surface-soft px-space-lg py-space-sm rounded-full shadow-sm">
+<div class="flex items-center gap-space-xs">
+<span class="w-2.5 h-2.5 rounded-full bg-secondary"></span>
+<span class="font-label-md text-label-md text-text-primary">99.4% Verified</span>
+</div>
+<span class="text-border-strong font-label-md">|</span>
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-[16px] text-text-secondary">history</span>
+<span class="font-label-sm text-label-sm text-text-secondary">Sync: 14s ago</span>
+</div>
+</div>
+<button class="inline-flex items-center justify-center gap-space-xs bg-primary hover:bg-primary-hover text-on-primary font-label-lg text-label-lg px-space-lg py-3 rounded-full transition-all shadow-md active:scale-95" type="button">
+<span class="material-symbols-outlined text-[18px]">person_add</span>
+<span>+ Add / Invite User</span>
+</button>
+</div>
+</div>
+<!-- Metric Ribbon (Asymmetric Pastel Bento) -->
+<div class="grid grid-cols-1 md:grid-cols-4 gap-space-md">
+<!-- Total Cohort -->
+<div class="bg-surface rounded-DEFAULT p-space-lg flex flex-col justify-between shadow-sm relative overflow-hidden">
+<div class="flex items-center justify-between">
+<span class="font-label-sm text-label-sm text-text-secondary uppercase tracking-wider">Total Entities</span>
+<span class="w-8 h-8 rounded-full bg-surface-soft flex items-center justify-center text-text-primary">
+<span class="material-symbols-outlined text-[18px]">groups</span>
+</span>
+</div>
+<div class="mt-space-md">
+<div class="font-headline-lg text-headline-lg text-text-primary">14,820</div>
+<div class="flex items-center gap-space-xs mt-space-xs">
+<span class="material-symbols-outlined text-[14px] text-secondary">trending_up</span>
+<span class="font-label-sm text-label-sm text-secondary font-semibold">+342 this term</span>
+</div>
+</div>
+</div>
+<!-- Students Pastel Card -->
+<div class="bg-mint/40 rounded-DEFAULT p-space-lg flex flex-col justify-between relative overflow-hidden">
+<div class="flex items-center justify-between">
+<span class="font-label-sm text-label-sm text-on-secondary-container uppercase tracking-wider font-semibold">Candidates (Students)</span>
+<span class="w-8 h-8 rounded-full bg-mint flex items-center justify-center text-on-secondary-container">
+<span class="material-symbols-outlined text-[18px]">school</span>
+</span>
+</div>
+<div class="mt-space-md">
+<div class="font-headline-lg text-headline-lg text-text-primary">13,420</div>
+<span class="font-label-sm text-label-sm text-on-secondary-container">90.5% of population</span>
+</div>
+</div>
+<!-- Faculty Pastel Card -->
+<div class="bg-lavender/40 rounded-DEFAULT p-space-lg flex flex-col justify-between relative overflow-hidden">
+<div class="flex items-center justify-between">
+<span class="font-label-sm text-label-sm text-text-primary uppercase tracking-wider font-semibold">Faculty Proctors</span>
+<span class="w-8 h-8 rounded-full bg-lavender flex items-center justify-center text-text-primary">
+<span class="material-symbols-outlined text-[18px]">badge</span>
+</span>
+</div>
+<div class="mt-space-md">
+<div class="font-headline-lg text-headline-lg text-text-primary">1,380</div>
+<span class="font-label-sm text-label-sm text-text-secondary">42 proctors active now</span>
+</div>
+</div>
+<!-- Biometric Flags / Verification Card -->
+<div class="bg-peach/50 rounded-DEFAULT p-space-lg flex flex-col justify-between relative overflow-hidden">
+<div class="flex items-center justify-between">
+<span class="font-label-sm text-label-sm text-text-primary uppercase tracking-wider font-semibold">Security Enclave</span>
+<span class="w-8 h-8 rounded-full bg-peach flex items-center justify-center text-text-primary">
+<span class="material-symbols-outlined text-[18px]">verified</span>
+</span>
+</div>
+<div class="mt-space-md">
+<div class="font-headline-lg text-headline-lg text-text-primary">20 <span class="font-label-sm text-label-sm text-text-secondary">Admins</span></div>
+<span class="font-label-sm text-label-sm text-text-secondary">Multi-factor &amp; hardware key</span>
+</div>
+</div>
+</div>
+<!-- Filter Toolbar -->
+<div class="bg-surface rounded-DEFAULT p-space-md md:p-space-lg shadow-sm flex flex-col gap-space-md">
+<!-- Search & Status Row -->
+<div class="flex flex-col lg:flex-row items-stretch lg:items-center justify-between gap-space-md">
+<!-- Search Input -->
+<div class="relative flex-1">
+<span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-text-muted text-[20px]">search</span>
+<input class="w-full h-12 pl-12 pr-space-md rounded-[14px] bg-surface-soft text-text-primary font-body-md text-body-md placeholder-text-muted focus:bg-surface focus:outline-none transition-all shadow-inner" placeholder="Search by candidate name, email, or institutional UID..." type="text"/>
+<kbd class="hidden sm:inline-block absolute right-4 top-1/2 -translate-y-1/2 font-code-md text-code-md text-text-muted bg-surface px-2 py-0.5 rounded shadow-sm">⌘K</kbd>
+</div>
+<!-- Status Filter & Export -->
+<div class="flex items-center gap-space-sm flex-wrap sm:flex-nowrap">
+<div class="relative flex-1 sm:flex-none">
+<select aria-label="Filter directory by account status" class="appearance-none h-12 pl-4 pr-10 rounded-[14px] bg-surface-soft text-text-primary font-label-md text-label-md cursor-pointer hover:bg-surface-container transition-colors focus:outline-none w-full">
+<option>All Statuses</option>
+<option>Active</option>
+<option>Pending Verification</option>
+<option>Suspended</option>
+</select>
+<span class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 text-text-secondary pointer-events-none text-[18px]">expand_more</span>
+</div>
+<button class="h-12 px-space-md rounded-[14px] bg-surface-soft hover:bg-surface-container text-text-primary font-label-md text-label-md flex items-center gap-space-xs transition-colors shadow-sm" title="Filter columns" type="button">
+<span class="material-symbols-outlined text-[18px] text-text-secondary">tune</span>
+<span>Filters</span>
+</button>
+<button class="h-12 px-space-md rounded-[14px] bg-surface-soft hover:bg-surface-container text-text-primary font-label-md text-label-md flex items-center gap-space-xs transition-colors shadow-sm" title="Export batch file" type="button">
+<span class="material-symbols-outlined text-[18px] text-text-secondary">file_download</span>
+<span class="hidden sm:inline">Export</span>
+</button>
+</div>
+</div>
+<!-- Segmented Role Tabs Pill Bar -->
+<div class="flex items-center gap-space-xs overflow-x-auto pb-space-xs pt-space-xs">
+<button class="px-space-md py-2 rounded-full font-label-md text-label-md bg-primary text-on-primary transition-colors whitespace-nowrap shadow-sm" type="button">
+          All Roles <span class="ml-1 opacity-80">(14,820)</span>
+</button>
+<button class="px-space-md py-2 rounded-full font-label-md text-label-md bg-surface-soft text-text-secondary hover:text-text-primary hover:bg-surface-container transition-colors whitespace-nowrap" type="button">
+          Students <span class="ml-1 opacity-70 font-normal">(13,420)</span>
+</button>
+<button class="px-space-md py-2 rounded-full font-label-md text-label-md bg-surface-soft text-text-secondary hover:text-text-primary hover:bg-surface-container transition-colors whitespace-nowrap" type="button">
+          Faculty / Teachers <span class="ml-1 opacity-70 font-normal">(1,380)</span>
+</button>
+<button class="px-space-md py-2 rounded-full font-label-md text-label-md bg-surface-soft text-text-secondary hover:text-text-primary hover:bg-surface-container transition-colors whitespace-nowrap" type="button">
+          Admins <span class="ml-1 opacity-70 font-normal">(20)</span>
+</button>
+</div>
+</div>
+<!-- User Directory Canvas Card -->
+<div class="bg-surface rounded-DEFAULT shadow-sm overflow-hidden flex flex-col">
+<!-- Responsive Table Viewport -->
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse min-w-[900px]">
+<thead>
+<tr class="bg-surface-soft/60">
+<th class="py-space-md px-space-lg font-label-sm text-label-sm uppercase tracking-wider text-text-secondary" scope="col">Name &amp; Identifier</th>
+<th class="py-space-md px-space-lg font-label-sm text-label-sm uppercase tracking-wider text-text-secondary" scope="col">Institutional Email</th>
+<th class="py-space-md px-space-lg font-label-sm text-label-sm uppercase tracking-wider text-text-secondary" scope="col">Role</th>
+<th class="py-space-md px-space-lg font-label-sm text-label-sm uppercase tracking-wider text-text-secondary" scope="col">Account Status</th>
+<th class="py-space-md px-space-lg font-label-sm text-label-sm uppercase tracking-wider text-text-secondary" scope="col">Enrolled Date</th>
+<th class="py-space-md px-space-lg font-label-sm text-label-sm uppercase tracking-wider text-text-secondary text-right" scope="col">Actions</th>
+</tr>
+</thead>
+<tbody class="divide-y-0">
+<!-- Row 1: Student Sarah Jenkins -->
+<tr class="hover:bg-surface-soft/40 transition-colors group">
+<td class="py-space-md px-space-lg">
+<div class="flex items-center gap-space-md">
+<div class="relative w-11 h-11 rounded-full overflow-hidden shrink-0 shadow-sm bg-surface-soft">
+<img class="w-full h-full object-cover" data-alt="Portrait photo of Sarah Jenkins, a collegiate computer science student with a friendly warm expression in natural campus sunlight." src="https://lh3.googleusercontent.com/aida-public/AB6AXuA0mvlNNi-xjth54yuyWgDskYz3DxQLb_MsaqmlokgmbHtsWfkChd5tGMgMK0ZO-S30zH-whoXm5eailgrjuWZdWUhphwRRhgk4Qa2a62qkJSVlnqsQAmwRVEXd36YA2RpbC59yIo_ne-psChFjre35aNQ4y1yrFcUKgv7qHy7PoHMR8wZjwQRhjM0OvMO1E1-ssgHd9bvNqVzzgAJ7i475CEri17qF3WUnSHIY3Qc6gp_-MPsXTsYx"/>
+</div>
+<div class="flex flex-col min-w-0">
+<span class="font-label-lg text-label-lg text-text-primary truncate group-hover:text-primary transition-colors">Sarah Jenkins</span>
+<span class="font-code-md text-code-md text-text-muted">UID #8831</span>
+</div>
+</div>
+</td>
+<td class="py-space-md px-space-lg">
+<span class="font-body-md text-body-md text-text-primary">sarah.j@university.edu</span>
+</td>
+<td class="py-space-md px-space-lg">
+<span class="inline-flex items-center px-space-md py-1 rounded-full bg-mint text-text-primary font-label-md text-label-md font-medium">
+                  Student
+                </span>
+</td>
+<td class="py-space-md px-space-lg">
+<span class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-surface-soft font-label-md text-label-md text-text-primary">
+<span class="w-2 h-2 rounded-full bg-secondary"></span>
+                  Active
+                </span>
+</td>
+<td class="py-space-md px-space-lg">
+<span class="font-body-sm text-body-sm text-text-secondary">Oct 12, 2026</span>
+</td>
+<td class="py-space-md px-space-lg text-right">
+<button class="inline-flex items-center gap-space-xs px-4 py-1.5 rounded-full bg-surface-soft hover:bg-primary hover:text-on-primary text-text-primary font-label-md text-label-md transition-all shadow-sm" type="button">
+<span>View Details</span>
+<span class="material-symbols-outlined text-[16px]">chevron_right</span>
+</button>
+</td>
+</tr>
+<!-- Row 2: Prof Marcus Vance (Faculty) -->
+<tr class="hover:bg-surface-soft/40 transition-colors group bg-surface-container-low/20">
+<td class="py-space-md px-space-lg">
+<div class="flex items-center gap-space-md">
+<div class="relative w-11 h-11 rounded-full overflow-hidden shrink-0 shadow-sm bg-surface-soft">
+<img class="w-full h-full object-cover" data-alt="Close-up professional portrait of Marcus Vance, senior university professor wearing glasses with quiet focused scholarly demeanor in an academic office." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCcocQBBIq5XMVbdqbGpuNJ_CvRJ48ajByfk11IOriIk-EsNxAfWnItZuPK8GuBhXUt8POgNbAL36huiSb2g5y3v7_R-EZqw8uI5EcsF0e0dSflCe2ojA8kBjhLLjb4rUdj5aWY9ktBCk3xMK2BXut0e-CHbSMAzeFtwVnn9V0X3Bib0R0_qic6Hj0iAejzL4Ho6hnToGvaBbQG0m9M2DZ-djfhluqx4L9wFHQc0TzjWfirhr95HOaa"/>
+</div>
+<div class="flex flex-col min-w-0">
+<span class="font-label-lg text-label-lg text-text-primary truncate group-hover:text-primary transition-colors">Prof. Marcus Vance</span>
+<span class="font-code-md text-code-md text-text-muted">UID #8841</span>
+</div>
+</div>
+</td>
+<td class="py-space-md px-space-lg">
+<span class="font-body-md text-body-md text-text-primary">marcus.vance@university.edu</span>
+</td>
+<td class="py-space-md px-space-lg">
+<span class="inline-flex items-center px-space-md py-1 rounded-full bg-lavender text-text-primary font-label-md text-label-md font-medium">
+                  Faculty Proctor
+                </span>
+</td>
+<td class="py-space-md px-space-lg">
+<span class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-surface-soft font-label-md text-label-md text-text-primary">
+<span class="w-2 h-2 rounded-full bg-secondary"></span>
+                  Active
+                </span>
+</td>
+<td class="py-space-md px-space-lg">
+<span class="font-body-sm text-body-sm text-text-secondary">Aug 28, 2026</span>
+</td>
+<td class="py-space-md px-space-lg text-right">
+<button class="inline-flex items-center gap-space-xs px-4 py-1.5 rounded-full bg-surface-soft hover:bg-primary hover:text-on-primary text-text-primary font-label-md text-label-md transition-all shadow-sm" type="button">
+<span>View Details</span>
+<span class="material-symbols-outlined text-[16px]">chevron_right</span>
+</button>
+</td>
+</tr>
+<!-- Row 3: Alex Rivera (Student - Pending) -->
+<tr class="hover:bg-surface-soft/40 transition-colors group">
+<td class="py-space-md px-space-lg">
+<div class="flex items-center gap-space-md">
+<div class="relative w-11 h-11 rounded-full overflow-hidden shrink-0 shadow-sm bg-surface-soft">
+<img class="w-full h-full object-cover" data-alt="Headshot of student Alex Rivera with modern casual college style, thoughtful expression, subtle soft warm backlighting." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCiLj-5W7Tj8vnQePlKKGc2BU26vLDB-7e_g2xutD2DTUNm3GX9pyJdqoEtLrTWO4bCPr9VQ8JsScewdTzUy1pw5Tt9_ZuUaFYctCEM_NVCLpHr6VaW0RDHrxlaRaTTWeCDE33RhBKOl2D2plMNARmItknDaTxSVRFF6PmB9oXf0S86u0Qv5WMrtQbkpa-wA0VODju4ELF8wcclde2Gj3d0oT879rMbRq3mbdsouwsxRoF6KGFpBU52"/>
+</div>
+<div class="flex flex-col min-w-0">
+<span class="font-label-lg text-label-lg text-text-primary truncate group-hover:text-primary transition-colors">Alex Rivera</span>
+<span class="font-code-md text-code-md text-text-muted">UID #4821</span>
+</div>
+</div>
+</td>
+<td class="py-space-md px-space-lg">
+<span class="font-body-md text-body-md text-text-primary">alex.rivera@university.edu</span>
+</td>
+<td class="py-space-md px-space-lg">
+<span class="inline-flex items-center px-space-md py-1 rounded-full bg-mint text-text-primary font-label-md text-label-md font-medium">
+                  Student
+                </span>
+</td>
+<td class="py-space-md px-space-lg">
+<span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-yellow/80 text-text-primary font-label-md text-label-md">
+<span class="material-symbols-outlined text-[14px]">hourglass_empty</span>
+                  Pending Verification
+                </span>
+</td>
+<td class="py-space-md px-space-lg">
+<span class="font-body-sm text-body-sm text-text-secondary">Nov 04, 2026</span>
+</td>
+<td class="py-space-md px-space-lg text-right">
+<button class="inline-flex items-center gap-space-xs px-4 py-1.5 rounded-full bg-surface-soft hover:bg-primary hover:text-on-primary text-text-primary font-label-md text-label-md transition-all shadow-sm" type="button">
+<span>View Details</span>
+<span class="material-symbols-outlined text-[16px]">chevron_right</span>
+</button>
+</td>
+</tr>
+<!-- Row 4: Dr. Elena Rostova (Admin) -->
+<tr class="hover:bg-surface-soft/40 transition-colors group bg-surface-container-low/20">
+<td class="py-space-md px-space-lg">
+<div class="flex items-center gap-space-md">
+<div class="relative w-11 h-11 rounded-full overflow-hidden shrink-0 shadow-sm bg-surface-soft">
+<img class="w-full h-full object-cover" data-alt="Portrait photo of Dr. Elena Rostova, university administrator and security researcher, confident poised expression with subtle natural office ambient lighting." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDxsjXn5EpFt9Rbhyl9Z5sHVJZJYJag4EcS6BzhmGyQ9p0cWW6jtdGfP-8hQw1NiKW6-UP2RsFlo2JZy7AOSok0ejhHWnA0nknIBkS2Kz6yF8RFwOyJ0lrFyBBlkKUqJc7nEjUtpvZp4sAmDwNbemg9zS8v0IV8bJpqVoStW5De4JZC5iNImCkcZc25p0E7Y7MaBMgiZH0148RY2H1Ls9CK-LrSHhgyd0JWZd64volgtqAFz4XrKz2z"/>
+</div>
+<div class="flex flex-col min-w-0">
+<span class="font-label-lg text-label-lg text-text-primary truncate group-hover:text-primary transition-colors">Dr. Elena Rostova</span>
+<span class="font-code-md text-code-md text-text-muted">UID #1024</span>
+</div>
+</div>
+</td>
+<td class="py-space-md px-space-lg">
+<span class="font-body-md text-body-md text-text-primary">e.rostova@university.edu</span>
+</td>
+<td class="py-space-md px-space-lg">
+<span class="inline-flex items-center px-space-md py-1 rounded-full bg-primary text-on-primary font-label-md text-label-md font-medium shadow-sm">
+                  Admin
+                </span>
+</td>
+<td class="py-space-md px-space-lg">
+<span class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-surface-soft font-label-md text-label-md text-text-primary">
+<span class="w-2 h-2 rounded-full bg-secondary"></span>
+                  Active
+                </span>
+</td>
+<td class="py-space-md px-space-lg">
+<span class="font-body-sm text-body-sm text-text-secondary">Jun 14, 2026</span>
+</td>
+<td class="py-space-md px-space-lg text-right">
+<button class="inline-flex items-center gap-space-xs px-4 py-1.5 rounded-full bg-surface-soft hover:bg-primary hover:text-on-primary text-text-primary font-label-md text-label-md transition-all shadow-sm" type="button">
+<span>View Details</span>
+<span class="material-symbols-outlined text-[16px]">chevron_right</span>
+</button>
+</td>
+</tr>
+<!-- Row 5: Michael Chang (Student) -->
+<tr class="hover:bg-surface-soft/40 transition-colors group">
+<td class="py-space-md px-space-lg">
+<div class="flex items-center gap-space-md">
+<div class="relative w-11 h-11 rounded-full overflow-hidden shrink-0 shadow-sm bg-surface-soft">
+<img class="w-full h-full object-cover" data-alt="Portrait headshot of Michael Chang, young undergraduate student in a university library study alcove with soft focused daylight." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAucUJedp9pZ8Kw1J_kepMyRbCfOer1rey1OottysF5ftIgLTSj0KpsIuGJQEstG8Up6Ps64lY_-bvR1hZZebgwsSShyLkTUt-kaDXnwVQqPMG_g9sUhN3xDQ0udKKthHa5SfrBJ2On5DlXecZwM9Wx9sQC-PcPQS9LxgnjTpbGr19miF-xr4Iqsn-7ltGhZmJRTWcRnYs8EqADRQTqUeQalS0LmsvN4Ne_aI3Lgsp2RyTg_VXBMKqp"/>
+</div>
+<div class="flex flex-col min-w-0">
+<span class="font-label-lg text-label-lg text-text-primary truncate group-hover:text-primary transition-colors">Michael Chang</span>
+<span class="font-code-md text-code-md text-text-muted">UID #9921</span>
+</div>
+</div>
+</td>
+<td class="py-space-md px-space-lg">
+<span class="font-body-md text-body-md text-text-primary">m.chang@university.edu</span>
+</td>
+<td class="py-space-md px-space-lg">
+<span class="inline-flex items-center px-space-md py-1 rounded-full bg-mint text-text-primary font-label-md text-label-md font-medium">
+                  Student
+                </span>
+</td>
+<td class="py-space-md px-space-lg">
+<span class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-surface-soft font-label-md text-label-md text-text-primary">
+<span class="w-2 h-2 rounded-full bg-secondary"></span>
+                  Active
+                </span>
+</td>
+<td class="py-space-md px-space-lg">
+<span class="font-body-sm text-body-sm text-text-secondary">Sep 01, 2026</span>
+</td>
+<td class="py-space-md px-space-lg text-right">
+<button class="inline-flex items-center gap-space-xs px-4 py-1.5 rounded-full bg-surface-soft hover:bg-primary hover:text-on-primary text-text-primary font-label-md text-label-md transition-all shadow-sm" type="button">
+<span>View Details</span>
+<span class="material-symbols-outlined text-[16px]">chevron_right</span>
+</button>
+</td>
+</tr>
+<!-- Row 6: Maya Patel (Student - Suspended) -->
+<tr class="hover:bg-surface-soft/40 transition-colors group bg-surface-container-low/20">
+<td class="py-space-md px-space-lg">
+<div class="flex items-center gap-space-md">
+<div class="relative w-11 h-11 rounded-full overflow-hidden shrink-0 shadow-sm bg-surface-soft">
+<img class="w-full h-full object-cover" data-alt="Portrait photography of student Maya Patel against a clean neutral architectural background, soft diffused lighting with calm focused gaze." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCj588sni-t9gasQX8FAKANDqh6IK3fpUfDoVhpyGR1B0L_oFnfp-Olh7AAtuGAMu-kxYGfl04qqnzJ1Xc1_ZYWdFN_miRsoagDnS3FmGHm7bn45S_d2HVphCdEkx9X66C-56SqCxiytTkjJ6SCaw5dJ5WY6pldSGJmMiF7mFd9F0On2fheJjbygsLjfq2Vguy03V30XB_X_8NV_XjhxLAwc3GACanusHhxJu13r03lhvPosH-P82PN"/>
+</div>
+<div class="flex flex-col min-w-0">
+<span class="font-label-lg text-label-lg text-text-primary truncate group-hover:text-primary transition-colors">Maya Patel</span>
+<span class="font-code-md text-code-md text-text-muted">UID #3991</span>
+</div>
+</div>
+</td>
+<td class="py-space-md px-space-lg">
+<span class="font-body-md text-body-md text-text-primary">maya.patel@university.edu</span>
+</td>
+<td class="py-space-md px-space-lg">
+<span class="inline-flex items-center px-space-md py-1 rounded-full bg-mint text-text-primary font-label-md text-label-md font-medium">
+                  Student
+                </span>
+</td>
+<td class="py-space-md px-space-lg">
+<span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-pink text-text-primary font-label-md text-label-md">
+<span class="w-1.5 h-1.5 rounded-full bg-error"></span>
+                  Suspended
+                </span>
+</td>
+<td class="py-space-md px-space-lg">
+<span class="font-body-sm text-body-sm text-text-secondary">Feb 19, 2026</span>
+</td>
+<td class="py-space-md px-space-lg text-right">
+<button class="inline-flex items-center gap-space-xs px-4 py-1.5 rounded-full bg-surface-soft hover:bg-primary hover:text-on-primary text-text-primary font-label-md text-label-md transition-all shadow-sm" type="button">
+<span>View Details</span>
+<span class="material-symbols-outlined text-[16px]">chevron_right</span>
+</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Pagination & Metadata Footer -->
+<div class="px-space-lg py-space-md bg-surface-soft/40 flex flex-col sm:flex-row items-center justify-between gap-space-md">
+<div class="flex items-center gap-space-sm text-text-secondary font-body-sm text-body-sm">
+<span>Showing</span>
+<span class="font-semibold text-text-primary">6</span>
+<span>of</span>
+<span class="font-semibold text-text-primary">14,820</span>
+<span>users</span>
+</div>
+<div class="flex items-center gap-space-xs">
+<button class="px-space-md py-2 rounded-full bg-surface hover:bg-surface-container text-text-secondary hover:text-text-primary font-label-md text-label-md transition-colors flex items-center gap-1 shadow-sm disabled:opacity-40" disabled="" type="button">
+<span class="material-symbols-outlined text-[18px]">west</span>
+<span>Previous</span>
+</button>
+<div class="px-space-md py-2 rounded-full bg-surface font-label-md text-label-md text-text-primary shadow-sm flex items-center gap-1">
+<span>Page</span>
+<span class="font-semibold">1</span>
+<span class="text-text-muted">of</span>
+<span>2,470</span>
+</div>
+<button class="px-space-md py-2 rounded-full bg-surface hover:bg-surface-container text-text-primary font-label-md text-label-md transition-colors flex items-center gap-1 shadow-sm" type="button">
+<span>Next</span>
+<span class="material-symbols-outlined text-[18px]">east</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Asymmetric Quick Action Footprint (Support, Sync & Audit log) -->
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-space-md">
+<!-- Live Sync Node -->
+<div class="bg-blue/30 rounded-DEFAULT p-space-lg flex flex-col justify-between">
+<div class="flex items-center justify-between">
+<span class="font-label-sm text-label-sm text-text-primary uppercase tracking-wider font-semibold">Directory Federation</span>
+<span class="material-symbols-outlined text-[20px] text-text-primary">sync_saved_locally</span>
+</div>
+<div class="my-space-md">
+<div class="font-headline-sm text-headline-sm text-text-primary">SAML 2.0 &amp; SCIM 2.0 Active</div>
+<p class="font-body-sm text-body-sm text-text-secondary mt-space-xs">Identity state synchronized across Google Workspace, Canvas LMS, and Blackboard.</p>
+</div>
+<div class="flex items-center justify-between pt-space-sm">
+<span class="font-label-sm text-label-sm text-text-muted">Next run in 12 min</span>
+<button class="font-label-md text-label-md text-text-primary underline hover:opacity-75" type="button">Force Poll</button>
+</div>
+</div>
+<!-- Batch Actions Card -->
+<div class="bg-surface rounded-DEFAULT p-space-lg flex flex-col justify-between shadow-sm">
+<div class="flex items-center justify-between">
+<span class="font-label-sm text-label-sm text-text-secondary uppercase tracking-wider font-semibold">Bulk Operations</span>
+<span class="material-symbols-outlined text-[20px] text-text-secondary">checklist</span>
+</div>
+<div class="my-space-md">
+<div class="font-headline-sm text-headline-sm text-text-primary">Cohort Onboarding</div>
+<p class="font-body-sm text-body-sm text-text-secondary mt-space-xs">Upload CSV roster with pre-assigned exam rooms, faculty proctors, and accommodation flags.</p>
+</div>
+<div>
+<button class="px-space-md py-2 rounded-full bg-surface-soft hover:bg-surface-container font-label-md text-label-md text-text-primary transition-colors inline-flex items-center gap-space-xs" type="button">
+<span class="material-symbols-outlined text-[16px]">upload_file</span>
+<span>Import CSV Roster</span>
+</button>
+</div>
+</div>
+<!-- Privacy Compliance Note -->
+<div class="bg-surface-soft rounded-DEFAULT p-space-lg flex flex-col justify-between shadow-sm">
+<div class="flex items-center justify-between">
+<span class="font-label-sm text-label-sm text-text-secondary uppercase tracking-wider font-semibold">FERPA &amp; GDPR Enclave</span>
+<span class="material-symbols-outlined text-[20px] text-secondary">security</span>
+</div>
+<div class="my-space-md">
+<div class="font-headline-sm text-headline-sm text-text-primary">Zero Biometric Retention</div>
+<p class="font-body-sm text-body-sm text-text-secondary mt-space-xs">Candidate webcam facial geometry hashes expire automatically 72 hours post examination.</p>
+</div>
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-secondary"></span>
+<span class="font-label-sm text-label-sm text-text-secondary">Audit Trail Immutable (Hash #9F21)</span>
+</div>
+</div>
+</div>
+</div>
+</div></main></div></body></html>

@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+
+<html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=JetBrains+Mono:wght@400&amp;family=Manrope:wght@600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = { darkMode: "class", theme: { extend: { "colors": { "tertiary": "#000000", "surface-soft": "#F1EEE8", "primary-container": "#1c1b1b", "on-primary-fixed": "#1c1b1b", "on-tertiary-container": "#837faa", "mint-strong": "#8FD5BD", "tertiary-fixed-dim": "#c6c2f0", "surface-container-low": "#f5f3ef", "surface-container": "#efeeea", "background": "#fbf9f5", "text-primary": "#111111", "blue": "#C8E2F5", "on-primary-container": "#858383", "primary-hover": "#292929", "on-secondary-fixed": "#002018", "info": "#BFDDF2", "on-secondary-fixed-variant": "#204f42", "outline": "#747878", "secondary-fixed": "#bceddb", "on-surface": "#1b1c1a", "on-error": "#ffffff", "on-tertiary": "#ffffff", "error": "#ba1a1a", "on-secondary": "#ffffff", "on-surface-variant": "#444748", "lavender": "#D5D0FF", "inverse-on-surface": "#f2f0ec", "surface-dim": "#dbdad6", "outline-variant": "#c4c7c7", "inverse-primary": "#c8c6c5", "peach": "#F8D9B5", "yellow": "#F4E6A8", "warning": "#F3C58E", "surface-container-high": "#eae8e4", "on-primary-fixed-variant": "#474646", "on-secondary-container": "#3e6b5d", "surface-tint": "#5f5e5e", "mint": "#B9EAD8", "inverse-surface": "#30312e", "text-muted": "#969696", "on-background": "#1b1c1a", "surface-bright": "#fbf9f5", "surface-container-lowest": "#ffffff", "surface-container-highest": "#e4e2de", "border-strong": "#D8D2C9", "success": "#9BD9BD", "on-error-container": "#93000a", "primary": "#000000", "tertiary-fixed": "#e4dfff", "secondary-container": "#b9ead8", "pink": "#F4B9C2", "secondary": "#396759", "surface": "#FFFFFF", "secondary-fixed-dim": "#a0d1bf", "error-container": "#ffdad6", "text-secondary": "#686868", "border": "#E8E4DD", "on-tertiary-fixed-variant": "#454269", "tertiary-container": "#1a173b", "danger": "#E9A4A4", "on-tertiary-fixed": "#1a173b", "surface-variant": "#e4e2de", "primary-fixed": "#e5e2e1", "on-primary": "#ffffff", "primary-fixed-dim": "#c8c6c5" }, "borderRadius": { "DEFAULT": "1rem", "lg": "2rem", "xl": "3rem", "full": "9999px" }, "spacing": { "gutter-sm": "1rem", "space-md": "1rem", "space-xs": "0.25rem", "gutter": "1.5rem", "space-xl": "2rem", "margin": "2rem", "space-lg": "1.5rem", "margin-sm": "1rem", "space-sm": "0.5rem" }, "fontFamily": { "label-lg": [ "Inter" ], "headline-sm": [ "Manrope" ], "display-lg": [ "Manrope" ], "code-md": [ "JetBrains Mono" ], "body-lg": [ "Inter" ], "label-md": [ "Inter" ], "headline-md": [ "Manrope" ], "headline-lg": [ "Manrope" ], "body-md": [ "Inter" ], "label-sm": [ "Inter" ], "body-sm": [ "Inter" ], "display-lg-mobile": [ "Manrope" ] }, "fontSize": { "label-lg": [ "14px", { "lineHeight": "20px", "fontWeight": "600" } ], "headline-sm": [ "20px", { "lineHeight": "28px", "fontWeight": "600" } ], "display-lg": [ "40px", { "lineHeight": "48px", "letterSpacing": "-0.02em", "fontWeight": "700" } ], "code-md": [ "13px", { "lineHeight": "20px", "fontWeight": "400" } ], "body-lg": [ "16px", { "lineHeight": "26px", "fontWeight": "400" } ], "label-md": [ "12px", { "lineHeight": "16px", "fontWeight": "500" } ], "headline-md": [ "24px", { "lineHeight": "32px", "fontWeight": "600" } ], "headline-lg": [ "32px", { "lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600" } ], "body-md": [ "14px", { "lineHeight": "22px", "fontWeight": "400" } ], "label-sm": [ "11px", { "lineHeight": "14px", "fontWeight": "500" } ], "body-sm": [ "12px", { "lineHeight": "18px", "fontWeight": "400" } ], "display-lg-mobile": [ "30px", { "lineHeight": "38px", "letterSpacing": "-0.02em", "fontWeight": "700" } ] } } } }</script></head><body class="bg-background font-body-md text-on-surface antialiased"><aside class="fixed left-0 top-0 h-full w-72 bg-surface-container-low z-50 flex flex-col justify-between p-space-lg shadow-[0_1px_8px_rgba(0,0,0,0.04)]"><div class="flex flex-col gap-space-lg"><div class="flex items-center gap-space-sm"><img alt="Brand logo. - Primary color: #111111
+- Font: manrope
+- Mode: light
+- Roundness: rounded-full
+" class="h-8 w-auto object-contain" src="https://lh3.googleusercontent.com/aida/AEtjO1Vq5gYJu3JEyXGjZL0cy0tnA69OCtZuuTQkVrNZEj_ohuLJxrFtblD3YBWkPdoiRY5Hy-lkt3TXHMxkYm2xvOpyY7h47ASVC77YTKpUEvsyPo4YAYsh7rNKfzgFhDqUT5yWipsWcZDRuB1dkvGDbYf1Y4lPRIC3oF0ViWT8XUGJL2T7l7vklvVQXthAMcv_71BW6W5fcIe0j40z4eb7czx2THmKalxg_EZP3m2OMfY5KaZzEwfuSry9Sg"/><div class="flex flex-col"><span class="font-headline-sm text-headline-sm tracking-tight text-primary leading-none">Proxam AI</span><span class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider mt-0.5">Assessment Engine</span></div></div><div class="inline-flex items-center self-start px-3 py-1 rounded-full bg-mint text-on-surface font-label-sm text-label-sm"><span class="w-1.5 h-1.5 rounded-full bg-secondary mr-1.5"></span>Faculty Studio</div><nav class="flex flex-col gap-space-xs" data-active-classes="bg-primary text-on-primary font-label-lg rounded-full shadow-sm"><a class="flex items-center gap-space-sm px-4 py-3 rounded-full text-on-surface-variant font-label-lg text-label-lg hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="dashboard" href="#"><span class="material-symbols-outlined text-[20px]">space_dashboard</span><span>Dashboard</span></a><a aria-current="page" class="flex items-center gap-space-sm px-4 py-3 transition-colors bg-primary text-on-primary font-label-lg rounded-full shadow-sm" data-path="my-tests" href="#"><span class="material-symbols-outlined text-[20px]">quiz</span><span>My Tests</span></a><a class="flex items-center gap-space-sm px-4 py-3 rounded-full text-on-surface-variant font-label-lg text-label-lg hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="create-test" href="#"><span class="material-symbols-outlined text-[20px]">add_circle</span><span>Create Test</span></a><a class="flex items-center gap-space-sm px-4 py-3 rounded-full text-on-surface-variant font-label-lg text-label-lg hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="attempts-and-results" href="#"><span class="material-symbols-outlined text-[20px]">analytics</span><span>Attempts &amp; Results</span></a><a class="flex items-center gap-space-sm px-4 py-3 rounded-full text-on-surface-variant font-label-lg text-label-lg hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="help-and-support" href="#"><span class="material-symbols-outlined text-[20px]">support_agent</span><span>Help &amp; Support</span></a></nav></div><div class="p-space-md rounded-lg bg-surface shadow-[0_8px_30px_rgba(20,20,20,0.04)] flex flex-col gap-space-sm"><div class="flex items-center justify-between"><span class="inline-flex items-center gap-1.5 font-label-sm text-label-sm text-secondary"><span class="w-2 h-2 rounded-full bg-secondary animate-pulse"></span>Enclave Active</span><span class="font-code-md text-code-md text-text-secondary">#8841</span></div><div class="flex items-center gap-space-sm pt-1"><div class="w-9 h-9 rounded-full bg-surface-soft flex items-center justify-center font-headline-sm text-headline-sm text-primary">MV</div><div class="flex flex-col min-w-0"><span class="font-label-lg text-label-lg text-text-primary truncate">Prof. Marcus Vance</span><span class="font-body-sm text-body-sm text-text-secondary truncate">Faculty of Science</span></div></div></div></aside><div class="pl-72"><header class="fixed top-0 left-72 right-0 h-16 bg-surface/85 backdrop-blur-xl z-40 flex items-center justify-between px-space-xl shadow-[0_1px_8px_rgba(0,0,0,0.04)]"><div class="flex items-center gap-space-md"><span class="font-headline-sm text-headline-sm text-text-primary tracking-tight">Proxam Faculty Studio</span><div class="hidden sm:flex items-center gap-1.5 px-3 py-1 rounded-full bg-surface-soft text-text-secondary font-label-md text-label-md"><span class="material-symbols-outlined text-[16px] text-secondary">lock</span><span>256-bit Encrypted Vault</span></div></div><div class="flex items-center gap-space-md"><button aria-label="Notifications" class="w-10 h-10 rounded-full bg-surface-container flex items-center justify-center text-on-surface hover:bg-surface-container-high transition-colors" type="button"><span class="material-symbols-outlined text-[20px]">notifications</span></button><div class="flex items-center gap-space-sm pl-2"><img alt="Profile" class="w-8 h-8 rounded-full object-cover" src="https://lh3.googleusercontent.com/aida/AEtjO1Xr-T_Q5jEqi4HXrePeJ7hkKn_x6HldcEagPeudbQyjZrpOnLAXoug5pG_cgbbpQ3ZBr1IVebxLFtlUEEDFmopFrbAaXpQe_hlAn3MJ7alzmOZSh-obKOPpQuWHO7d5fTVbPI4D6AcwXHJqVhuB8v1QXzYgN0wkV6rxBli0nSSRjqEYlOBDfXDhH4RNuSdHnqlUEPHsJM6uYYamUTM11eZ8gF1_-xdVFCILLRZdqDaaF21I4L2eXFRMP70"/><div class="hidden md:flex flex-col text-left"><span class="font-label-md text-label-md text-text-primary leading-tight">Prof. Vance</span><span class="font-label-sm text-label-sm text-text-secondary leading-tight">Exam Proctor</span></div></div></div></header><main class="w-full pt-16 bg-background min-h-screen px-space-xl py-space-xl"><div class="flex flex-col w-full">
+<!-- Top Breadcrumb & Metadata Cluster -->
+<div class="flex flex-col gap-space-lg mb-space-xl">
+<!-- Breadcrumb & Top Utility Pill -->
+<div class="flex flex-wrap items-center justify-between gap-space-sm">
+<nav aria-label="Breadcrumbs" class="flex items-center gap-space-xs text-text-secondary font-label-md text-label-md">
+<a class="hover:text-text-primary transition-colors" href="#">Workspace</a>
+<span class="material-symbols-outlined text-[14px]">chevron_right</span>
+<a class="hover:text-text-primary transition-colors" href="#">My Tests</a>
+<span class="material-symbols-outlined text-[14px]">chevron_right</span>
+<span class="text-text-primary font-label-lg text-label-lg">PXAM-7K4Q2 Details</span>
+</nav>
+<div class="flex items-center gap-space-sm">
+<span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-mint text-on-secondary-fixed font-label-sm text-label-sm">
+<span class="w-2 h-2 rounded-full bg-secondary animate-ping"></span>
+          Active Window
+        </span>
+<span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-surface-soft text-text-secondary font-label-sm text-label-sm">
+<span class="material-symbols-outlined text-[14px] text-secondary">verified_user</span>
+          AI Proctoring Strict
+        </span>
+</div>
+</div>
+<!-- Title & Primary Control Stack -->
+<div class="flex flex-col lg:flex-row lg:items-end justify-between gap-space-lg">
+<div class="flex flex-col gap-space-xs max-w-3xl">
+<span class="font-code-md text-code-md text-text-secondary tracking-wider uppercase">Advanced Computer Science • CS-602</span>
+<h1 class="font-headline-lg text-headline-lg text-text-primary font-bold tracking-tight">
+          Distributed Systems &amp; Consensus Protocols
+        </h1>
+<p class="font-body-md text-body-md text-text-secondary mt-1">
+          Summative terminal examination covering Paxos, Raft quorum models, Byzantine Fault Tolerance, and vector clocks in partition-tolerant networks.
+        </p>
+</div>
+<!-- Action Bar -->
+<div class="flex flex-wrap items-center gap-space-sm">
+<!-- Locked Edit Button with Tooltip Indicator -->
+<div class="relative group">
+<button class="cursor-not-allowed opacity-60 flex items-center gap-2 px-5 py-2.5 rounded-full bg-surface-container-high text-on-surface font-label-lg text-label-lg shadow-sm" disabled="" type="button">
+<span class="material-symbols-outlined text-[18px]">lock</span>
+<span>Edit Test</span>
+</button>
+<div class="absolute bottom-full mb-2 left-1/2 -translate-x-1/2 hidden group-hover:flex flex-col items-center pointer-events-none z-50">
+<div class="bg-primary text-on-primary font-label-sm text-label-sm px-3 py-1.5 rounded-lg whitespace-nowrap shadow-xl">
+              Locked: 42 active submissions recorded
+            </div>
+<div class="w-2 h-2 bg-primary rotate-45 -mt-1"></div>
+</div>
+</div>
+<!-- Share Key Pill -->
+<button class="flex items-center gap-2 px-5 py-2.5 rounded-full bg-lavender text-text-primary hover:bg-opacity-80 transition-all font-label-lg text-label-lg shadow-sm" id="shareKeyBtn" type="button">
+<span class="material-symbols-outlined text-[18px]">key</span>
+<span>Share Access Key</span>
+</button>
+<!-- Export Archive -->
+<button class="flex items-center gap-2 px-5 py-2.5 rounded-full bg-primary text-on-primary hover:bg-primary-hover transition-colors font-label-lg text-label-lg shadow-sm" type="button">
+<span class="material-symbols-outlined text-[18px]">ios_share</span>
+<span>Export Assessment Archive</span>
+</button>
+</div>
+</div>
+<!-- Monospace Key & Meta Ribbon -->
+<div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-space-sm p-space-md rounded-lg bg-surface shadow-[0_8px_30px_rgba(20,20,20,0.04)]">
+<!-- Test ID & Copy Action -->
+<div class="flex flex-col justify-center gap-0.5">
+<span class="font-label-sm text-label-sm text-text-muted uppercase">Exam Key</span>
+<div class="flex items-center gap-1.5">
+<span class="font-code-md text-code-md text-text-primary font-medium" id="testCodeValue">PXAM-7K4Q2</span>
+<button aria-label="Copy test code" class="p-1 rounded-full text-text-secondary hover:text-text-primary hover:bg-surface-soft transition-colors" id="copyCodeBtn" type="button">
+<span class="material-symbols-outlined text-[16px]" id="copyCodeIcon">content_copy</span>
+</button>
+</div>
+</div>
+<div class="flex flex-col justify-center gap-0.5">
+<span class="font-label-sm text-label-sm text-text-muted uppercase">Duration</span>
+<span class="font-label-lg text-label-lg text-text-primary flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px] text-secondary">timer</span>
+          45 Mins
+        </span>
+</div>
+<div class="flex flex-col justify-center gap-0.5">
+<span class="font-label-sm text-label-sm text-text-muted uppercase">Inventory</span>
+<span class="font-label-lg text-label-lg text-text-primary">20 Single MCQs</span>
+</div>
+<div class="flex flex-col justify-center gap-0.5">
+<span class="font-label-sm text-label-sm text-text-muted uppercase">Total Weight</span>
+<span class="font-label-lg text-label-lg text-text-primary">100 Total Pts</span>
+</div>
+<div class="flex flex-col justify-center gap-0.5">
+<span class="font-label-sm text-label-sm text-text-muted uppercase">Created</span>
+<span class="font-label-lg text-label-lg text-text-primary">Oct 24, 2026</span>
+</div>
+<div class="flex flex-col justify-center gap-0.5">
+<span class="font-label-sm text-label-sm text-text-muted uppercase">Assigned Proctor</span>
+<span class="font-label-lg text-label-lg text-text-primary truncate">Prof. Vance</span>
+</div>
+</div>
+</div>
+<!-- Interactive Pill Navigation Tabs -->
+<div class="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-space-md mb-space-lg">
+<div class="inline-flex p-1.5 rounded-full bg-surface-container shadow-inner gap-1">
+<button class="tab-btn active px-5 py-2 rounded-full font-label-lg text-label-lg transition-all bg-primary text-on-primary shadow-sm flex items-center gap-2" data-tab-target="questions" type="button">
+<span>Questions</span>
+<span class="px-2 py-0.5 rounded-full bg-primary-container text-on-surface-variant font-label-sm text-label-sm">20</span>
+</button>
+<button class="tab-btn px-5 py-2 rounded-full font-label-lg text-label-lg transition-all text-on-surface-variant hover:text-on-surface flex items-center gap-2" data-tab-target="attempts" type="button">
+<span>Attempts</span>
+<span class="px-2 py-0.5 rounded-full bg-surface-soft text-text-secondary font-label-sm text-label-sm">42</span>
+</button>
+<button class="tab-btn px-5 py-2 rounded-full font-label-lg text-label-lg transition-all text-on-surface-variant hover:text-on-surface flex items-center gap-2" data-tab-target="analytics" type="button">
+<span>Results &amp; Analytics</span>
+</button>
+<button class="tab-btn px-5 py-2 rounded-full font-label-lg text-label-lg transition-all text-on-surface-variant hover:text-on-surface flex items-center gap-2" data-tab-target="proctoring" type="button">
+<span>Proctoring Events</span>
+<span class="px-2 py-0.5 rounded-full bg-pink text-error font-label-sm text-label-sm">7</span>
+</button>
+</div>
+<!-- Quick Mode Toggle Indicator -->
+<div class="flex items-center gap-2 self-end sm:self-auto">
+<span class="font-label-sm text-label-sm text-text-secondary">Student Preview Mode</span>
+<button aria-label="Toggle student preview" class="w-12 h-6 rounded-full bg-surface-container-highest relative transition-colors focus:outline-none p-0.5" id="previewToggle" type="button">
+<span class="block w-5 h-5 rounded-full bg-surface shadow-md transform transition-transform" id="previewToggleKnob"></span>
+</button>
+</div>
+</div>
+<!-- Main Content Grid Layout -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-space-lg items-start">
+<!-- Main Tab View: Questions Panel (8 Cols) -->
+<div class="lg:col-span-8 flex flex-col gap-space-lg">
+<!-- Filter & Search Controls Bar -->
+<div class="p-space-md rounded-lg bg-surface shadow-[0_8px_30px_rgba(20,20,20,0.04)] flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-space-sm">
+<div class="relative flex-1">
+<span class="material-symbols-outlined absolute left-3.5 top-1/2 -translate-y-1/2 text-[18px] text-text-muted">search</span>
+<input class="w-full h-11 pl-10 pr-4 rounded-full bg-surface-container-low font-body-md text-body-md text-text-primary placeholder:text-text-muted focus:bg-surface focus:outline-none transition-colors" id="questionSearch" placeholder="Search questions by keyword, topic, or protocol..." type="text"/>
+</div>
+<div class="flex items-center gap-space-sm">
+<select class="h-11 px-4 rounded-full bg-surface-container-low font-label-md text-label-md text-text-primary focus:bg-surface focus:outline-none transition-colors cursor-pointer">
+<option>All Topics (4)</option>
+<option>Paxos &amp; Raft Quorums</option>
+<option>Byzantine Fault Tolerance</option>
+<option>Vector Clocks &amp; Causality</option>
+<option>CAP Theorem Practicalities</option>
+</select>
+<select class="h-11 px-4 rounded-full bg-surface-container-low font-label-md text-label-md text-text-primary focus:bg-surface focus:outline-none transition-colors cursor-pointer">
+<option>Weight: All (5 Pts)</option>
+<option>5 Pts Only</option>
+</select>
+</div>
+</div>
+<!-- Question 1 Card -->
+<article class="p-space-lg rounded-lg bg-surface shadow-[0_8px_30px_rgba(20,20,20,0.04)] flex flex-col gap-space-md transition-all">
+<!-- Question Meta Header -->
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-space-sm">
+<span class="w-7 h-7 rounded-full bg-surface-container-high flex items-center justify-center font-headline-sm text-headline-sm text-text-primary text-[14px]">
+              01
+            </span>
+<span class="px-3 py-0.5 rounded-full bg-surface-soft font-label-sm text-label-sm text-text-secondary">
+              Raft Protocol &amp; Log Replication
+            </span>
+</div>
+<div class="flex items-center gap-2">
+<span class="font-code-md text-code-md px-2.5 py-1 rounded-full bg-blue text-text-primary">5 Points</span>
+<button aria-label="Question options" class="w-8 h-8 rounded-full flex items-center justify-center text-text-secondary hover:text-text-primary hover:bg-surface-soft transition-colors" type="button">
+<span class="material-symbols-outlined text-[18px]">more_vert</span>
+</button>
+</div>
+</div>
+<!-- Question Body Text -->
+<div class="text-text-primary font-body-lg text-body-lg">
+          In a standard Raft consensus cluster comprising 5 distinct server nodes, what is the absolute minimum number of node responses required by the leader to successfully commit an entry to the replicated log?
+        </div>
+<!-- Multiple Choice Options -->
+<div class="flex flex-col gap-2.5 pt-1">
+<!-- Option A -->
+<div class="flex items-center justify-between p-3.5 rounded-DEFAULT bg-surface-container-low text-text-primary">
+<div class="flex items-center gap-3">
+<span class="w-6 h-6 rounded-full bg-surface flex items-center justify-center font-code-md text-code-md text-text-secondary">A</span>
+<span class="font-body-md text-body-md">2 nodes (Leader + 1 Follower)</span>
+</div>
+</div>
+<!-- Option B (Correct) -->
+<div class="flex items-center justify-between p-3.5 rounded-DEFAULT bg-mint/50 text-text-primary">
+<div class="flex items-center gap-3">
+<span class="w-6 h-6 rounded-full bg-mint-strong flex items-center justify-center font-code-md text-code-md text-on-secondary-fixed font-bold">B</span>
+<span class="font-body-md text-body-md font-medium">3 nodes (A strict majority quorum)</span>
+</div>
+<span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-mint-strong text-on-secondary-fixed font-label-sm text-label-sm">
+<span class="material-symbols-outlined text-[14px]">check</span>
+              Correct Key
+            </span>
+</div>
+<!-- Option C -->
+<div class="flex items-center justify-between p-3.5 rounded-DEFAULT bg-surface-container-low text-text-primary">
+<div class="flex items-center gap-3">
+<span class="w-6 h-6 rounded-full bg-surface flex items-center justify-center font-code-md text-code-md text-text-secondary">C</span>
+<span class="font-body-md text-body-md">4 nodes (Supermajority)</span>
+</div>
+</div>
+<!-- Option D -->
+<div class="flex items-center justify-between p-3.5 rounded-DEFAULT bg-surface-container-low text-text-primary">
+<div class="flex items-center gap-3">
+<span class="w-6 h-6 rounded-full bg-surface flex items-center justify-center font-code-md text-code-md text-text-secondary">D</span>
+<span class="font-body-md text-body-md">5 nodes (Unanimous consensus)</span>
+</div>
+</div>
+</div>
+<!-- Collapsible Pedagogical Rationale Drawer -->
+<div class="pt-2">
+<button class="drawer-trigger flex items-center justify-between w-full py-2 text-text-secondary hover:text-text-primary font-label-md text-label-md transition-colors" data-target="drawer-1" type="button">
+<span class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[18px] text-secondary">lightbulb</span>
+              View Pedagogical Rationale &amp; Citations
+            </span>
+<span class="material-symbols-outlined text-[18px] transition-transform duration-200 transform" id="arrow-drawer-1">expand_more</span>
+</button>
+<div class="hidden mt-2 p-space-md rounded-DEFAULT bg-surface-soft text-text-secondary font-body-md text-body-md leading-relaxed" id="drawer-1">
+<p class="mb-1 text-text-primary font-medium">Ongaro &amp; Ousterhout (2014) Quorum Rule:</p>
+            Raft requires a majority of cluster members <code class="font-code-md text-code-md bg-surface px-1.5 py-0.5 rounded">floor(N/2) + 1</code> to safely commit an entry. In a 5-node cluster, the quorum is strictly 3 nodes. This guarantees that any two quorums overlap in at least one node containing the latest log entry.
+          </div>
+</div>
+</article>
+<!-- Question 2 Card -->
+<article class="p-space-lg rounded-lg bg-surface shadow-[0_8px_30px_rgba(20,20,20,0.04)] flex flex-col gap-space-md transition-all">
+<!-- Question Meta Header -->
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-space-sm">
+<span class="w-7 h-7 rounded-full bg-surface-container-high flex items-center justify-center font-headline-sm text-headline-sm text-text-primary text-[14px]">
+              02
+            </span>
+<span class="px-3 py-0.5 rounded-full bg-surface-soft font-label-sm text-label-sm text-text-secondary">
+              Byzantine Fault Tolerance
+            </span>
+</div>
+<div class="flex items-center gap-2">
+<span class="font-code-md text-code-md px-2.5 py-1 rounded-full bg-blue text-text-primary">5 Points</span>
+<button aria-label="Question options" class="w-8 h-8 rounded-full flex items-center justify-center text-text-secondary hover:text-text-primary hover:bg-surface-soft transition-colors" type="button">
+<span class="material-symbols-outlined text-[18px]">more_vert</span>
+</button>
+</div>
+</div>
+<!-- Question Body Text -->
+<div class="text-text-primary font-body-lg text-body-lg">
+          To tolerate up to <span class="font-code-md text-code-md px-1.5 py-0.5 rounded bg-surface-container-low">f</span> arbitrary or malicious Byzantine node failures in an asynchronous distributed network, what is the theoretical minimum total number of nodes <span class="font-code-md text-code-md px-1.5 py-0.5 rounded bg-surface-container-low">N</span> that must be provisioned?
+        </div>
+<!-- Multiple Choice Options -->
+<div class="flex flex-col gap-2.5 pt-1">
+<!-- Option A -->
+<div class="flex items-center justify-between p-3.5 rounded-DEFAULT bg-surface-container-low text-text-primary">
+<div class="flex items-center gap-3">
+<span class="w-6 h-6 rounded-full bg-surface flex items-center justify-center font-code-md text-code-md text-text-secondary">A</span>
+<span class="font-body-md text-body-md">2f + 1</span>
+</div>
+</div>
+<!-- Option B -->
+<div class="flex items-center justify-between p-3.5 rounded-DEFAULT bg-surface-container-low text-text-primary">
+<div class="flex items-center gap-3">
+<span class="w-6 h-6 rounded-full bg-surface flex items-center justify-center font-code-md text-code-md text-text-secondary">B</span>
+<span class="font-body-md text-body-md">2f</span>
+</div>
+</div>
+<!-- Option C (Correct) -->
+<div class="flex items-center justify-between p-3.5 rounded-DEFAULT bg-mint/50 text-text-primary">
+<div class="flex items-center gap-3">
+<span class="w-6 h-6 rounded-full bg-mint-strong flex items-center justify-center font-code-md text-code-md text-on-secondary-fixed font-bold">C</span>
+<span class="font-body-md text-body-md font-medium">3f + 1</span>
+</div>
+<span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-mint-strong text-on-secondary-fixed font-label-sm text-label-sm">
+<span class="material-symbols-outlined text-[14px]">check</span>
+              Correct Key
+            </span>
+</div>
+<!-- Option D -->
+<div class="flex items-center justify-between p-3.5 rounded-DEFAULT bg-surface-container-low text-text-primary">
+<div class="flex items-center gap-3">
+<span class="w-6 h-6 rounded-full bg-surface flex items-center justify-center font-code-md text-code-md text-text-secondary">D</span>
+<span class="font-body-md text-body-md">3f + 2</span>
+</div>
+</div>
+</div>
+<!-- Collapsible Pedagogical Rationale Drawer -->
+<div class="pt-2">
+<button class="drawer-trigger flex items-center justify-between w-full py-2 text-text-secondary hover:text-text-primary font-label-md text-label-md transition-colors" data-target="drawer-2" type="button">
+<span class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[18px] text-secondary">lightbulb</span>
+              View Pedagogical Rationale &amp; Citations
+            </span>
+<span class="material-symbols-outlined text-[18px] transition-transform duration-200 transform" id="arrow-drawer-2">expand_more</span>
+</button>
+<div class="hidden mt-2 p-space-md rounded-DEFAULT bg-surface-soft text-text-secondary font-body-md text-body-md leading-relaxed" id="drawer-2">
+<p class="mb-1 text-text-primary font-medium">PBFT Canonical Proof (Castro &amp; Liskov):</p>
+            In Byzantine environments where nodes may send conflicting messages or simply drop requests, you must distinguish between non-responsive nodes and malicious liars. The system requires <code class="font-code-md text-code-md bg-surface px-1.5 py-0.5 rounded">N &gt;= 3f + 1</code> to ensure non-faulty nodes reach consensus despite <code class="font-code-md text-code-md bg-surface px-1.5 py-0.5 rounded">f</code> faulty nodes.
+          </div>
+</div>
+</article>
+<!-- Question 3 Card -->
+<article class="p-space-lg rounded-lg bg-surface shadow-[0_8px_30px_rgba(20,20,20,0.04)] flex flex-col gap-space-md transition-all">
+<!-- Question Meta Header -->
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-space-sm">
+<span class="w-7 h-7 rounded-full bg-surface-container-high flex items-center justify-center font-headline-sm text-headline-sm text-text-primary text-[14px]">
+              03
+            </span>
+<span class="px-3 py-0.5 rounded-full bg-surface-soft font-label-sm text-label-sm text-text-secondary">
+              Vector Clocks &amp; Causality
+            </span>
+</div>
+<div class="flex items-center gap-2">
+<span class="font-code-md text-code-md px-2.5 py-1 rounded-full bg-blue text-text-primary">5 Points</span>
+<button aria-label="Question options" class="w-8 h-8 rounded-full flex items-center justify-center text-text-secondary hover:text-text-primary hover:bg-surface-soft transition-colors" type="button">
+<span class="material-symbols-outlined text-[18px]">more_vert</span>
+</button>
+</div>
+</div>
+<!-- Question Body Text -->
+<div class="text-text-primary font-body-lg text-body-lg">
+          Given two events <span class="font-code-md text-code-md px-1.5 py-0.5 rounded bg-surface-container-low">e₁</span> and <span class="font-code-md text-code-md px-1.5 py-0.5 rounded bg-surface-container-low">e₂</span> with associated vector timestamps <span class="font-code-md text-code-md px-1.5 py-0.5 rounded bg-surface-container-low">V(e₁) = [2, 1, 0]</span> and <span class="font-code-md text-code-md px-1.5 py-0.5 rounded bg-surface-container-low">V(e₂) = [1, 3, 0]</span> across a 3-process architecture, which causal relation accurately classifies the pair?
+        </div>
+<!-- Multiple Choice Options -->
+<div class="flex flex-col gap-2.5 pt-1">
+<!-- Option A -->
+<div class="flex items-center justify-between p-3.5 rounded-DEFAULT bg-surface-container-low text-text-primary">
+<div class="flex items-center gap-3">
+<span class="w-6 h-6 rounded-full bg-surface flex items-center justify-center font-code-md text-code-md text-text-secondary">A</span>
+<span class="font-body-md text-body-md">e₁ causally preceded e₂ (e₁ → e₂)</span>
+</div>
+</div>
+<!-- Option B -->
+<div class="flex items-center justify-between p-3.5 rounded-DEFAULT bg-surface-container-low text-text-primary">
+<div class="flex items-center gap-3">
+<span class="w-6 h-6 rounded-full bg-surface flex items-center justify-center font-code-md text-code-md text-text-secondary">B</span>
+<span class="font-body-md text-body-md">e₂ causally preceded e₁ (e₂ → e₁)</span>
+</div>
+</div>
+<!-- Option C (Correct) -->
+<div class="flex items-center justify-between p-3.5 rounded-DEFAULT bg-mint/50 text-text-primary">
+<div class="flex items-center gap-3">
+<span class="w-6 h-6 rounded-full bg-mint-strong flex items-center justify-center font-code-md text-code-md text-on-secondary-fixed font-bold">C</span>
+<span class="font-body-md text-body-md font-medium">e₁ and e₂ are concurrent events (e₁ || e₂)</span>
+</div>
+<span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-mint-strong text-on-secondary-fixed font-label-sm text-label-sm">
+<span class="material-symbols-outlined text-[14px]">check</span>
+              Correct Key
+            </span>
+</div>
+<!-- Option D -->
+<div class="flex items-center justify-between p-3.5 rounded-DEFAULT bg-surface-container-low text-text-primary">
+<div class="flex items-center gap-3">
+<span class="w-6 h-6 rounded-full bg-surface flex items-center justify-center font-code-md text-code-md text-text-secondary">D</span>
+<span class="font-body-md text-body-md">Indeterminate without Lamport physical scalar sync</span>
+</div>
+</div>
+</div>
+<!-- Collapsible Pedagogical Rationale Drawer -->
+<div class="pt-2">
+<button class="drawer-trigger flex items-center justify-between w-full py-2 text-text-secondary hover:text-text-primary font-label-md text-label-md transition-colors" data-target="drawer-3" type="button">
+<span class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[18px] text-secondary">lightbulb</span>
+              View Pedagogical Rationale &amp; Citations
+            </span>
+<span class="material-symbols-outlined text-[18px] transition-transform duration-200 transform" id="arrow-drawer-3">expand_more</span>
+</button>
+<div class="hidden mt-2 p-space-md rounded-DEFAULT bg-surface-soft text-text-secondary font-body-md text-body-md leading-relaxed" id="drawer-3">
+<p class="mb-1 text-text-primary font-medium">Causal Independence Principle:</p>
+            Because <code class="font-code-md text-code-md bg-surface px-1.5 py-0.5 rounded">V(e₁)[0] &gt; V(e₂)[0]</code> (2 &gt; 1) yet <code class="font-code-md text-code-md bg-surface px-1.5 py-0.5 rounded">V(e₁)[1] &lt; V(e₂)[1]</code> (1 &lt; 3), neither vector strictly dominates the other in all indices. Therefore, the events are mathematically concurrent (<code class="font-code-md text-code-md bg-surface px-1.5 py-0.5 rounded">e₁ || e₂</code>).
+          </div>
+</div>
+</article>
+<!-- Pagination / Questions Navigation Footer -->
+<div class="flex items-center justify-between pt-2">
+<span class="font-label-md text-label-md text-text-secondary">Showing 3 of 20 MCQs</span>
+<div class="flex items-center gap-2">
+<button class="px-4 py-2 rounded-full bg-surface-container-high text-text-muted font-label-md text-label-md cursor-not-allowed" disabled="" type="button">Previous</button>
+<button class="px-4 py-2 rounded-full bg-surface text-text-primary hover:bg-surface-soft font-label-md text-label-md transition-colors shadow-sm" type="button">Next 3 Questions</button>
+</div>
+</div>
+</div>
+<!-- Side Summary & Live Status Column (4 Cols) -->
+<div class="lg:col-span-4 flex flex-col gap-space-lg">
+<!-- Live Submission Progress Bento Card -->
+<div class="p-space-lg rounded-lg bg-surface shadow-[0_8px_30px_rgba(20,20,20,0.04)] flex flex-col gap-space-md">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="w-2.5 h-2.5 rounded-full bg-secondary animate-ping"></span>
+<span class="font-label-lg text-label-lg text-text-primary font-semibold">Live Submission Status</span>
+</div>
+<span class="font-code-md text-code-md px-2 py-0.5 rounded-full bg-mint text-on-secondary-fixed">93% Complete</span>
+</div>
+<!-- Custom Donut / Circular Progress Chart SVG -->
+<div class="flex items-center justify-center py-2 relative">
+<svg class="w-40 h-40 transform -rotate-90" viewbox="0 0 120 120">
+<!-- Background Ring -->
+<circle class="text-surface-container-high" cx="60" cy="60" fill="transparent" r="50" stroke="currentColor" stroke-width="12"></circle>
+<!-- Active Finished Segment (42 of 45 = 93%) -->
+<circle class="text-secondary" cx="60" cy="60" fill="transparent" r="50" stroke="currentColor" stroke-dasharray="314.16" stroke-dashoffset="21.99" stroke-linecap="round" stroke-width="12"></circle>
+</svg>
+<div class="absolute flex flex-col items-center justify-center text-center">
+<span class="font-headline-lg text-headline-lg font-bold text-text-primary leading-none">42</span>
+<span class="font-label-sm text-label-sm text-text-secondary mt-0.5">of 45 Students</span>
+</div>
+</div>
+<div class="flex flex-col gap-2 pt-2">
+<div class="flex items-center justify-between font-body-sm text-body-sm text-text-secondary">
+<span class="flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-secondary"></span>Turned In &amp; Graded</span>
+<span class="font-code-md text-code-md text-text-primary font-medium">42 (93%)</span>
+</div>
+<div class="flex items-center justify-between font-body-sm text-body-sm text-text-secondary">
+<span class="flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-warning"></span>In Progress (Exam Room)</span>
+<span class="font-code-md text-code-md text-text-primary font-medium">3 (7%)</span>
+</div>
+<div class="flex items-center justify-between font-body-sm text-body-sm text-text-secondary">
+<span class="flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-danger"></span>Integrity Flags</span>
+<span class="font-code-md text-code-md text-error font-medium">7 Events</span>
+</div>
+</div>
+<!-- Jump to Live Submissions CTA -->
+<a class="mt-2 w-full py-3 px-4 rounded-full bg-primary text-on-primary font-label-lg text-label-lg flex items-center justify-center gap-2 hover:bg-primary-hover transition-colors shadow-sm text-center" href="#">
+<span>Jump to Live Proctoring Hub</span>
+<span class="material-symbols-outlined text-[18px]">arrow_forward</span>
+</a>
+</div>
+<!-- Test Configuration Specifications -->
+<div class="p-space-lg rounded-lg bg-surface shadow-[0_8px_30px_rgba(20,20,20,0.04)] flex flex-col gap-space-md">
+<div class="flex items-center justify-between">
+<h2 class="font-headline-sm text-headline-sm text-text-primary font-bold">Policy &amp; Config</h2>
+<span class="material-symbols-outlined text-text-secondary text-[20px]">tune</span>
+</div>
+<div class="space-y-3">
+<div class="flex items-start gap-3 p-3 rounded-DEFAULT bg-surface-soft">
+<span class="material-symbols-outlined text-secondary text-[20px] mt-0.5">av_timer</span>
+<div class="flex flex-col">
+<span class="font-label-lg text-label-lg text-text-primary">Strict 45-Min Timer</span>
+<span class="font-body-sm text-body-sm text-text-secondary">Auto-locks and submits test upon expiry. No grace period.</span>
+</div>
+</div>
+<div class="flex items-start gap-3 p-3 rounded-DEFAULT bg-surface-soft">
+<span class="material-symbols-outlined text-secondary text-[20px] mt-0.5">military_tech</span>
+<div class="flex flex-col">
+<span class="font-label-lg text-label-lg text-text-primary">70% Passing Threshold</span>
+<span class="font-body-sm text-body-sm text-text-secondary">Minimum 70/100 Pts required for institutional prerequisite badge.</span>
+</div>
+</div>
+<div class="flex items-start gap-3 p-3 rounded-DEFAULT bg-surface-soft">
+<span class="material-symbols-outlined text-secondary text-[20px] mt-0.5">videocam</span>
+<div class="flex flex-col">
+<span class="font-label-lg text-label-lg text-text-primary">AI Enclave Proctoring</span>
+<span class="font-body-sm text-body-sm text-text-secondary">Gaze detection, background voice anomaly checks, and clipboard block.</span>
+</div>
+</div>
+<div class="flex items-start gap-3 p-3 rounded-DEFAULT bg-surface-soft">
+<span class="material-symbols-outlined text-secondary text-[20px] mt-0.5">shuffle</span>
+<div class="flex flex-col">
+<span class="font-label-lg text-label-lg text-text-primary">Option Shuffling</span>
+<span class="font-body-sm text-body-sm text-text-secondary">Randomized MCQ order per student seat enclave.</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Faculty Audit Card with Photo Placeholder -->
+<div class="p-space-lg rounded-lg bg-surface shadow-[0_8px_30px_rgba(20,20,20,0.04)] flex flex-col gap-space-sm">
+<span class="font-label-sm text-label-sm text-text-muted uppercase">Verified Examiner</span>
+<div class="flex items-center gap-3">
+<img class="w-12 h-12 rounded-full object-cover shadow-sm" data-alt="A dignified university professor in his late fifties with neat salt-and-pepper hair and round spectacles, wearing a soft charcoal blazer in a bright warm educational office, photorealistic documentary style, natural light, pastel tones." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBZ97Mt2mJDpM-Q4tvxgY-2ZH1L7G__Q3u0Im3Q_Aw9-m6caPFuQesyEJIYLH5i9jp5k9FypBmLe15NiZ-CbEMh2eAKtAr_eh_hPXlb5yvpXU71_hs_iZbdk11E9y2ovLy-Xtf2mrjQ1fOBjl7z9Mrx77xtRnszcXV1a667HmbVCSX5mqyfqWui2-w7xzKJjdS1ztQBIkx5gsY4QRTYy8HXk7P_ikARMOrABdqlPtJkz0mJ1Shuj3vX"/>
+<div class="flex flex-col">
+<span class="font-label-lg text-label-lg text-text-primary font-semibold">Prof. Marcus Vance</span>
+<span class="font-body-sm text-body-sm text-text-secondary">Chair of Distributed Architecture</span>
+</div>
+</div>
+<div class="pt-2 flex items-center justify-between text-text-secondary font-code-md text-code-md border-t-0">
+<span>Ledger Hash</span>
+<span class="text-text-primary truncate ml-2">0x7F...c39A</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Copied Toast Banner Notification (Dynamic via JS) -->
+<div class="fixed bottom-8 right-8 bg-primary text-on-primary px-5 py-3 rounded-full shadow-2xl flex items-center gap-2 transform translate-y-24 opacity-0 transition-all duration-300 pointer-events-none z-50" id="copyToast">
+<span class="material-symbols-outlined text-[18px] text-mint">check_circle</span>
+<span class="font-label-md text-label-md">Exam Key PXAM-7K4Q2 copied to clipboard</span>
+</div>
+<!-- Minimal Inline Interactive Behavior -->
+<script>
+    // Copy Code Micro-interaction
+    const copyBtn = document.getElementById('copyCodeBtn');
+    const copyToast = document.getElementById('copyToast');
+    const copyIcon = document.getElementById('copyCodeIcon');
+
+    if (copyBtn) {
+      copyBtn.addEventListener('click', () => {
+        navigator.clipboard?.writeText('PXAM-7K4Q2');
+        copyIcon.textContent = 'done';
+        copyToast.classList.remove('translate-y-24', 'opacity-0');
+        copyToast.classList.add('translate-y-0', 'opacity-100');
+
+        setTimeout(() => {
+          copyIcon.textContent = 'content_copy';
+          copyToast.classList.remove('translate-y-0', 'opacity-100');
+          copyToast.classList.add('translate-y-24', 'opacity-0');
+        }, 2200);
+      });
+    }
+
+    // Share Access Key Button trigger
+    const shareBtn = document.getElementById('shareKeyBtn');
+    if (shareBtn) {
+      shareBtn.addEventListener('click', () => {
+        if (copyBtn) copyBtn.click();
+      });
+    }
+
+    // Drawer collapse micro-interactions
+    document.querySelectorAll('.drawer-trigger').forEach(trigger => {
+      trigger.addEventListener('click', () => {
+        const targetId = trigger.getAttribute('data-target');
+        const targetElement = document.getElementById(targetId);
+        const arrow = document.getElementById('arrow-' + targetId);
+
+        if (targetElement) {
+          const isHidden = targetElement.classList.contains('hidden');
+          if (isHidden) {
+            targetElement.classList.remove('hidden');
+            if (arrow) arrow.classList.add('rotate-180');
+          } else {
+            targetElement.classList.add('hidden');
+            if (arrow) arrow.classList.remove('rotate-180');
+          }
+        }
+      });
+    });
+
+    // Preview Mode Toggle Switch
+    const previewToggle = document.getElementById('previewToggle');
+    const previewKnob = document.getElementById('previewToggleKnob');
+    let previewActive = false;
+
+    if (previewToggle && previewKnob) {
+      previewToggle.addEventListener('click', () => {
+        previewActive = !previewActive;
+        if (previewActive) {
+          previewToggle.classList.remove('bg-surface-container-highest');
+          previewToggle.classList.add('bg-primary');
+          previewKnob.classList.add('translate-x-6');
+        } else {
+          previewToggle.classList.remove('bg-primary');
+          previewToggle.classList.add('bg-surface-container-highest');
+          previewKnob.classList.remove('translate-x-6');
+        }
+      });
+    }
+
+    // Tabs Switcher visual mock state
+    const tabBtns = document.querySelectorAll('.tab-btn');
+    tabBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        tabBtns.forEach(b => {
+          b.classList.remove('bg-primary', 'text-on-primary', 'shadow-sm');
+          b.classList.add('text-on-surface-variant');
+        });
+        btn.classList.add('bg-primary', 'text-on-primary', 'shadow-sm');
+        btn.classList.remove('text-on-surface-variant');
+      });
+    });
+  </script>
+</div></main></div></body></html>

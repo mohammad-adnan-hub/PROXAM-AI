@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+
+<html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><title>Proxam AI Admin Console</title><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=JetBrains+Mono:wght@400&amp;family=Manrope:wght@600;700&amp;display=swap" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config={darkMode:"class",theme:{extend:{"colors":{"on-primary-fixed":"#1c1b1b","text-secondary":"#686868","surface-container-high":"#eae8e4","info":"#BFDDF2","primary":"#000000","secondary-fixed-dim":"#a0d1bf","yellow":"#F4E6A8","background":"#fbf9f5","surface-tint":"#5f5e5e","primary-fixed-dim":"#c8c6c5","surface":"#FFFFFF","on-tertiary":"#ffffff","on-secondary":"#ffffff","error-container":"#ffdad6","on-error":"#ffffff","text-primary":"#111111","inverse-surface":"#30312e","peach":"#F8D9B5","primary-hover":"#292929","surface-bright":"#fbf9f5","inverse-primary":"#c8c6c5","on-tertiary-fixed-variant":"#454269","secondary-container":"#b9ead8","on-secondary-fixed":"#002018","tertiary-container":"#1a173b","on-surface":"#1b1c1a","surface-container":"#efeeea","secondary-fixed":"#bceddb","error":"#ba1a1a","border-strong":"#D8D2C9","tertiary":"#000000","on-primary-container":"#858383","lavender":"#D5D0FF","outline":"#747878","outline-variant":"#c4c7c7","on-tertiary-fixed":"#1a173b","on-error-container":"#93000a","pink":"#F4B9C2","warning":"#F3C58E","success":"#9BD9BD","inverse-on-surface":"#f2f0ec","surface-container-lowest":"#ffffff","on-background":"#1b1c1a","on-secondary-container":"#3e6b5d","primary-container":"#1c1b1b","border":"#E8E4DD","surface-soft":"#F1EEE8","danger":"#E9A4A4","surface-variant":"#e4e2de","on-secondary-fixed-variant":"#204f42","surface-container-highest":"#e4e2de","mint":"#B9EAD8","primary-fixed":"#e5e2e1","secondary":"#396759","on-surface-variant":"#444748","tertiary-fixed-dim":"#c6c2f0","on-tertiary-container":"#837faa","surface-dim":"#dbdad6","mint-strong":"#8FD5BD","blue":"#C8E2F5","on-primary-fixed-variant":"#474646","surface-container-low":"#f5f3ef","tertiary-fixed":"#e4dfff","text-muted":"#969696","on-primary":"#ffffff"},"borderRadius":{"DEFAULT":"1rem","lg":"2rem","xl":"3rem","full":"9999px"},"spacing":{"gutter":"1.5rem","space-lg":"1.5rem","gutter-sm":"1rem","space-xl":"2rem","space-md":"1rem","space-sm":"0.5rem","space-xs":"0.25rem","margin-sm":"1rem","margin":"2rem"},"fontFamily":{"code-md":["JetBrains Mono"],"headline-md":["Manrope"],"display-lg-mobile":["Manrope"],"label-lg":["Inter"],"body-lg":["Inter"],"headline-lg":["Manrope"],"label-sm":["Inter"],"display-lg":["Manrope"],"label-md":["Inter"],"headline-sm":["Manrope"],"body-md":["Inter"],"body-sm":["Inter"]},"fontSize":{"code-md":["13px",{"lineHeight":"20px","fontWeight":"400"}],"headline-md":["24px",{"lineHeight":"32px","fontWeight":"600"}],"display-lg-mobile":["30px",{"lineHeight":"38px","letterSpacing":"-0.02em","fontWeight":"700"}],"label-lg":["14px",{"lineHeight":"20px","fontWeight":"600"}],"body-lg":["16px",{"lineHeight":"26px","fontWeight":"400"}],"headline-lg":["32px",{"lineHeight":"40px","letterSpacing":"-0.01em","fontWeight":"600"}],"label-sm":["11px",{"lineHeight":"14px","fontWeight":"500"}],"display-lg":["40px",{"lineHeight":"48px","letterSpacing":"-0.02em","fontWeight":"700"}],"label-md":["12px",{"lineHeight":"16px","fontWeight":"500"}],"headline-sm":["20px",{"lineHeight":"28px","fontWeight":"600"}],"body-md":["14px",{"lineHeight":"22px","fontWeight":"400"}],"body-sm":["12px",{"lineHeight":"18px","fontWeight":"400"}]}}}};</script></head><body class="bg-background font-body-md text-body-md text-on-surface antialiased"><aside class="fixed left-0 top-0 h-full w-72 bg-surface-container-low/90 backdrop-blur-xl z-50 flex flex-col justify-between shadow-[0_1px_8px_rgba(0,0,0,0.04)]"><div class="flex flex-col"><div class="h-16 px-gutter flex items-center justify-between"><div class="flex items-center gap-space-sm"><img alt="Brand logo. - Primary color: #111111
+- Font: manrope
+- Mode: light
+- Roundness: rounded-full
+" class="h-8 w-auto object-contain" src="https://lh3.googleusercontent.com/aida/AEtjO1Vq5gYJu3JEyXGjZL0cy0tnA69OCtZuuTQkVrNZEj_ohuLJxrFtblD3YBWkPdoiRY5Hy-lkt3TXHMxkYm2xvOpyY7h47ASVC77YTKpUEvsyPo4YAYsh7rNKfzgFhDqUT5yWipsWcZDRuB1dkvGDbYf1Y4lPRIC3oF0ViWT8XUGJL2T7l7vklvVQXthAMcv_71BW6W5fcIe0j40z4eb7czx2THmKalxg_EZP3m2OMfY5KaZzEwfuSry9Sg"/><span class="font-headline-sm text-headline-sm text-text-primary font-bold">Proxam AI</span></div><span class="px-space-sm py-space-xs rounded-full bg-mint text-text-primary font-label-sm text-label-sm">Portal</span></div><div class="px-gutter pt-space-md pb-space-sm"><div class="p-space-xs bg-surface-container rounded-full flex items-center justify-between"><button class="flex-1 text-center py-space-xs px-space-xs rounded-full text-on-surface-variant font-label-md text-label-md hover:text-on-surface transition-colors" type="button">Student</button><button class="flex-1 text-center py-space-xs px-space-xs rounded-full text-on-surface-variant font-label-md text-label-md hover:text-on-surface transition-colors" type="button">Faculty</button><button class="flex-1 text-center py-space-xs px-space-xs rounded-full bg-primary text-on-primary font-label-md text-label-md shadow-sm" type="button">Admin</button></div></div><div class="px-gutter py-space-xs"><span class="font-label-sm text-label-sm text-text-muted uppercase tracking-wider">Navigation</span></div><nav class="flex flex-col gap-space-xs px-gutter" data-active-classes="bg-primary text-on-primary font-label-lg rounded-DEFAULT shadow-[0_8px_30px_rgba(20,20,20,0.04)]"><a class="flex items-center gap-space-md px-space-md py-space-sm rounded-DEFAULT font-label-lg text-label-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all" data-path="dashboard" href="#"><span class="material-symbols-outlined text-[20px]">grid_view</span><span>Dashboard</span></a><a class="flex items-center gap-space-md px-space-md py-space-sm rounded-DEFAULT font-label-lg text-label-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all" data-path="users" href="#"><span class="material-symbols-outlined text-[20px]">group</span><span>Users</span></a><a aria-current="page" class="flex items-center gap-space-md px-space-md py-space-sm transition-all bg-primary text-on-primary font-label-lg rounded-DEFAULT shadow-[0_8px_30px_rgba(20,20,20,0.04)]" data-path="tests" href="#"><span class="material-symbols-outlined text-[20px]">quiz</span><span>Tests</span></a><a class="flex items-center gap-space-md px-space-md py-space-sm rounded-DEFAULT font-label-lg text-label-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all" data-path="proctoring-alerts" href="#"><span class="material-symbols-outlined text-[20px]">warning_amber</span><span class="flex-1">Proctoring Alerts</span><span class="px-space-sm py-space-xs rounded-full bg-pink text-text-primary font-label-sm text-label-sm">Live</span></a><a class="flex items-center gap-space-md px-space-md py-space-sm rounded-DEFAULT font-label-lg text-label-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all" data-path="profile" href="#"><span class="material-symbols-outlined text-[20px]">manage_accounts</span><span>Profile</span></a></nav></div><div class="p-gutter"><div class="p-space-md rounded-DEFAULT bg-surface-soft flex flex-col gap-space-xs"><div class="flex items-center justify-between"><span class="font-label-sm text-label-sm text-text-secondary">Security Status</span><span class="material-symbols-outlined text-secondary text-[18px]">verified_user</span></div><span class="font-label-md text-label-md text-text-primary">Zero Trust Protocol</span><span class="font-body-sm text-body-sm text-text-muted">Policy sync: 2m ago</span></div></div></aside><div class="pl-72"><header class="fixed top-0 left-72 right-0 h-16 bg-surface/80 backdrop-blur-xl z-40 shadow-[0_1px_8px_rgba(0,0,0,0.04)]"><div class="w-full h-full px-gutter flex items-center justify-between"><div class="flex items-center gap-space-md"><img alt="Brand logo. - Primary color: #111111
+- Font: manrope
+- Mode: light
+- Roundness: rounded-full
+" class="h-8 w-auto object-contain" src="https://lh3.googleusercontent.com/aida/AEtjO1Vq5gYJu3JEyXGjZL0cy0tnA69OCtZuuTQkVrNZEj_ohuLJxrFtblD3YBWkPdoiRY5Hy-lkt3TXHMxkYm2xvOpyY7h47ASVC77YTKpUEvsyPo4YAYsh7rNKfzgFhDqUT5yWipsWcZDRuB1dkvGDbYf1Y4lPRIC3oF0ViWT8XUGJL2T7l7vklvVQXthAMcv_71BW6W5fcIe0j40z4eb7czx2THmKalxg_EZP3m2OMfY5KaZzEwfuSry9Sg"/><div class="hidden md:flex items-center gap-space-sm px-space-md py-space-xs rounded-full bg-surface-container font-label-md text-label-md text-text-primary"><span class="material-symbols-outlined text-[16px] text-text-primary">lock</span><span>256-bit Encrypted Enclave</span></div><div class="hidden lg:flex items-center gap-space-sm px-space-md py-space-xs rounded-full bg-secondary-container font-label-md text-label-md text-on-secondary-container"><span class="inline-block w-2 h-2 rounded-full bg-secondary"></span><span>System Health: 99.98%</span></div></div><div class="flex items-center gap-space-md"><button class="w-10 h-10 rounded-full flex items-center justify-center hover:bg-surface-container-high text-on-surface-variant hover:text-on-surface transition-colors relative" type="button"><span class="material-symbols-outlined text-[20px]">notifications</span><span class="absolute top-2 right-2 w-2 h-2 rounded-full bg-error"></span></button><div class="hidden sm:flex flex-col text-right"><span class="font-label-md text-label-md text-text-primary leading-tight">Dr. Arthur Sterling</span><span class="font-body-sm text-body-sm text-text-secondary leading-tight">System Administrator</span></div><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></div></header><main class="w-full pt-16 bg-background min-h-screen"><div class="flex flex-col w-full">
+<div class="w-full px-gutter py-space-xl flex flex-col gap-space-xl max-w-7xl mx-auto">
+<!-- Top Navigation & Breadcrumb -->
+<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-space-md">
+<a class="inline-flex items-center gap-space-xs font-label-lg text-label-lg text-text-secondary hover:text-text-primary transition-colors group" href="#">
+<span class="material-symbols-outlined text-[18px] transition-transform group-hover:-translate-x-1">arrow_back</span>
+<span>Back to Test Management</span>
+</a>
+<div class="flex items-center gap-space-sm self-start sm:self-auto">
+<div class="flex items-center gap-space-xs px-space-md py-space-xs rounded-full bg-surface shadow-sm text-text-secondary font-label-md text-label-md">
+<span class="material-symbols-outlined text-secondary text-[16px]">shield</span>
+<span>Policy Protocol: <strong class="text-text-primary font-semibold">Enclave v4.8</strong></span>
+</div>
+<div class="flex items-center gap-space-xs px-space-md py-space-xs rounded-full bg-surface-container font-code-md text-code-md text-text-secondary">
+<span class="inline-block w-2 h-2 rounded-full bg-secondary"></span>
+<span>SEAL: 0x9F4C...B81A</span>
+</div>
+</div>
+</div>
+<!-- Header & Identity Section -->
+<div class="bg-surface rounded-lg p-gutter sm:p-space-xl shadow-sm flex flex-col lg:flex-row lg:items-center justify-between gap-space-lg relative overflow-hidden">
+<div class="absolute -right-16 -top-16 w-64 h-64 bg-mint/30 rounded-full blur-3xl pointer-events-none"></div>
+<div class="flex flex-col gap-space-sm relative z-10 max-w-3xl">
+<div class="flex flex-wrap items-center gap-space-sm">
+<span class="px-space-md py-space-xs rounded-full bg-mint text-on-secondary-container font-label-md text-label-md flex items-center gap-space-xs">
+<span class="inline-block w-2 h-2 rounded-full bg-secondary animate-pulse"></span>
+            Active Window
+          </span>
+<span class="px-space-md py-space-xs rounded-full bg-surface-container text-text-secondary font-label-md text-label-md">
+            Term 1 • Fall 2024
+          </span>
+<div class="flex items-center gap-space-xs bg-surface-soft px-space-md py-space-xs rounded-full font-code-md text-code-md text-text-primary">
+<span class="text-text-muted">CODE:</span>
+<span class="font-semibold tracking-wider" id="accessCode">PXAM-7K4Q2</span>
+<button class="ml-space-xs hover:text-secondary transition-colors" onclick="navigator.clipboard.writeText('PXAM-7K4Q2'); document.getElementById('copyToast').classList.remove('opacity-0'); setTimeout(()=&gt;document.getElementById('copyToast').classList.add('opacity-0'), 2000)" title="Copy Test Code" type="button">
+<span class="material-symbols-outlined text-[16px] align-middle">content_copy</span>
+</button>
+<span class="opacity-0 transition-opacity font-label-sm text-label-sm text-secondary ml-space-xs" id="copyToast">Copied!</span>
+</div>
+</div>
+<h1 class="font-headline-lg text-headline-lg text-text-primary tracking-tight">
+          Distributed Systems &amp; Consensus Protocols (CS 602)
+        </h1>
+<div class="flex flex-wrap items-center gap-space-md pt-space-xs">
+<div class="flex items-center gap-space-sm">
+<div class="w-9 h-9 rounded-full bg-surface-container-high flex items-center justify-center text-text-primary font-headline-sm text-headline-sm">
+              MV
+            </div>
+<div class="flex flex-col">
+<span class="font-label-md text-label-md text-text-primary font-semibold">Prof. Marcus Vance, PhD</span>
+<span class="font-body-sm text-body-sm text-text-secondary">Department of Computer Science &amp; Distributed Engineering</span>
+</div>
+</div>
+<span class="hidden sm:inline-block text-text-muted">•</span>
+<div class="flex items-center gap-space-xs text-text-secondary font-body-sm text-body-sm">
+<span class="material-symbols-outlined text-[18px]">calendar_today</span>
+<span>Created Oct 18, 2024</span>
+</div>
+</div>
+</div>
+<!-- Quick Action Buttons -->
+<div class="flex flex-wrap sm:flex-nowrap lg:flex-col gap-space-sm relative z-10 lg:items-end">
+<button class="w-full sm:w-auto px-space-lg py-space-sm rounded-full bg-primary text-on-primary font-label-lg text-label-lg hover:bg-primary-hover shadow-sm flex items-center justify-center gap-space-xs transition-all" type="button">
+<span class="material-symbols-outlined text-[18px]">more_time</span>
+<span>Extend Examination Window</span>
+</button>
+<div class="flex items-center gap-space-sm w-full sm:w-auto">
+<button class="flex-1 sm:flex-initial px-space-md py-space-sm rounded-full bg-surface-container hover:bg-surface-container-high text-text-primary font-label-md text-label-md transition-colors flex items-center justify-center gap-space-xs" type="button">
+<span class="material-symbols-outlined text-[18px]">download</span>
+<span>Export Ledger</span>
+</button>
+<button class="flex-1 sm:flex-initial px-space-md py-space-sm rounded-full bg-surface-container hover:bg-surface-container-high text-text-primary font-label-md text-label-md transition-colors flex items-center justify-center gap-space-xs" type="button">
+<span class="material-symbols-outlined text-[18px]">verified</span>
+<span>Audit Seal</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Pastel Metric Summary Cards (4-column responsive grid) -->
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-space-md">
+<!-- Mint: Submissions -->
+<div class="bg-mint p-space-lg rounded-lg flex flex-col justify-between relative overflow-hidden transition-all hover:-translate-y-0.5">
+<div class="flex items-center justify-between">
+<span class="font-label-md text-label-md text-text-primary uppercase tracking-wide">Total Submissions</span>
+<span class="w-8 h-8 rounded-full bg-surface/50 flex items-center justify-center text-text-primary">
+<span class="material-symbols-outlined text-[18px]">assignment_turned_in</span>
+</span>
+</div>
+<div class="mt-space-md">
+<div class="flex items-baseline gap-space-xs">
+<span class="font-display-lg text-display-lg text-text-primary font-bold">42</span>
+<span class="font-headline-sm text-headline-sm text-text-secondary">/ 45 Candidates</span>
+</div>
+<div class="w-full bg-surface/40 h-2 rounded-full mt-space-sm overflow-hidden">
+<div class="bg-primary h-full rounded-full" style="width: 93.3%;"></div>
+</div>
+<p class="font-body-sm text-body-sm text-on-secondary-container mt-space-xs font-medium">93.3% Cohort Turnout completed</p>
+</div>
+</div>
+<!-- Peach: Duration -->
+<div class="bg-peach p-space-lg rounded-lg flex flex-col justify-between relative overflow-hidden transition-all hover:-translate-y-0.5">
+<div class="flex items-center justify-between">
+<span class="font-label-md text-label-md text-text-primary uppercase tracking-wide">Duration Envelope</span>
+<span class="w-8 h-8 rounded-full bg-surface/50 flex items-center justify-center text-text-primary">
+<span class="material-symbols-outlined text-[18px]">timer</span>
+</span>
+</div>
+<div class="mt-space-md">
+<div class="flex items-baseline gap-space-xs">
+<span class="font-display-lg text-display-lg text-text-primary font-bold">45</span>
+<span class="font-headline-sm text-headline-sm text-text-secondary">Minutes</span>
+</div>
+<div class="flex items-center gap-space-xs mt-space-sm text-text-secondary font-label-md text-label-md">
+<span class="material-symbols-outlined text-[16px]">lock_clock</span>
+<span>Strict countdown timer</span>
+</div>
+<p class="font-body-sm text-body-sm text-text-secondary mt-space-xs">Single-attempt constraint enforced</p>
+</div>
+</div>
+<!-- Lavender: Question Weight -->
+<div class="bg-lavender p-space-lg rounded-lg flex flex-col justify-between relative overflow-hidden transition-all hover:-translate-y-0.5">
+<div class="flex items-center justify-between">
+<span class="font-label-md text-label-md text-text-primary uppercase tracking-wide">Questions &amp; Weight</span>
+<span class="w-8 h-8 rounded-full bg-surface/50 flex items-center justify-center text-text-primary">
+<span class="material-symbols-outlined text-[18px]">quiz</span>
+</span>
+</div>
+<div class="mt-space-md">
+<div class="flex items-baseline gap-space-xs">
+<span class="font-display-lg text-display-lg text-text-primary font-bold">20</span>
+<span class="font-headline-sm text-headline-sm text-text-secondary">MCQs</span>
+</div>
+<div class="flex items-center gap-space-xs mt-space-sm text-text-secondary font-label-md text-label-md">
+<span class="material-symbols-outlined text-[16px]">equalizer</span>
+<span>5 Points per question</span>
+</div>
+<p class="font-body-sm text-body-sm text-text-secondary mt-space-xs">100 Maximum aggregate points</p>
+</div>
+</div>
+<!-- Blue: Proctoring Integrity -->
+<div class="bg-blue p-space-lg rounded-lg flex flex-col justify-between relative overflow-hidden transition-all hover:-translate-y-0.5">
+<div class="flex items-center justify-between">
+<span class="font-label-md text-label-md text-text-primary uppercase tracking-wide">Proctoring Integrity</span>
+<span class="w-8 h-8 rounded-full bg-surface/50 flex items-center justify-center text-text-primary">
+<span class="material-symbols-outlined text-[18px]">health_and_safety</span>
+</span>
+</div>
+<div class="mt-space-md">
+<div class="flex items-baseline gap-space-xs">
+<span class="font-display-lg text-display-lg text-text-primary font-bold">99.1%</span>
+<span class="font-label-md text-label-md text-text-secondary">Reliability</span>
+</div>
+<div class="flex items-center gap-space-xs mt-space-sm text-text-secondary font-label-md text-label-md">
+<span class="w-2 h-2 rounded-full bg-secondary"></span>
+<span>3 Informational events</span>
+</div>
+<p class="font-body-sm text-body-sm text-text-secondary mt-space-xs">Zero severe anomalies detected</p>
+</div>
+</div>
+</div>
+<!-- Main Content Layout (Asymmetric 12-column grid) -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-space-lg items-start">
+<!-- Left Column: Specs & Proctoring Policy (7 cols) -->
+<div class="lg:col-span-7 flex flex-col gap-space-lg">
+<!-- Card 1: Assessment Specifications -->
+<div class="bg-surface rounded-lg p-space-xl shadow-sm flex flex-col gap-space-lg">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-space-sm">
+<span class="w-9 h-9 rounded-full bg-surface-soft flex items-center justify-center text-text-primary">
+<span class="material-symbols-outlined text-[20px]">menu_book</span>
+</span>
+<h2 class="font-headline-sm text-headline-sm text-text-primary">Assessment Specifications &amp; Syllabus Coverage</h2>
+</div>
+<span class="px-space-md py-space-xs rounded-full bg-surface-container font-label-sm text-label-sm text-text-secondary">Core Curriculum</span>
+</div>
+<div class="flex flex-col gap-space-md">
+<p class="font-body-md text-body-md text-text-secondary leading-relaxed">
+              This comprehensive assessment covers core concurrency, fault tolerance, replication semantics, Paxos, Raft, and Byzantine Fault Tolerance primitives. Focus is directed toward CAP theorem trade-offs, vector clocks, quorum consensus, and partition-healing mechanisms under high latency variance.
+            </p>
+<div class="bg-surface-soft p-space-md rounded-DEFAULT flex flex-col gap-space-xs">
+<span class="font-label-md text-label-md text-text-primary font-semibold flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-[16px] text-secondary">info</span>
+                Candidate Instructions (Displayed Pre-Flight)
+              </span>
+<p class="font-body-sm text-body-sm text-text-secondary leading-relaxed">
+                "Ensure your camera maintains clear peripheral line-of-sight. Dual monitor setups are strictly forbidden and flagged automatically. Scratchpad usage is monitored via local on-screen whiteboard utility only. Once started, browser window focus must remain primary."
+              </p>
+</div>
+<!-- Meta Specs Badges / Modular Info -->
+<div class="grid grid-cols-1 sm:grid-cols-3 gap-space-sm pt-space-xs">
+<div class="p-space-md rounded-DEFAULT bg-surface-container flex flex-col gap-space-xs">
+<span class="font-label-sm text-label-sm text-text-secondary uppercase">Passing Cutoff</span>
+<span class="font-headline-sm text-headline-sm text-text-primary font-bold">70% (70/100)</span>
+<span class="font-body-sm text-body-sm text-text-secondary">Standard institutional threshold</span>
+</div>
+<div class="p-space-md rounded-DEFAULT bg-surface-container flex flex-col gap-space-xs">
+<span class="font-label-sm text-label-sm text-text-secondary uppercase">Grading Architecture</span>
+<span class="font-headline-sm text-headline-sm text-text-primary font-bold">Instant Auto</span>
+<span class="font-body-sm text-body-sm text-text-secondary">Deterministic key reconciliation</span>
+</div>
+<div class="p-space-md rounded-DEFAULT bg-surface-container flex flex-col gap-space-xs">
+<span class="font-label-sm text-label-sm text-text-secondary uppercase">Question Randomization</span>
+<span class="font-headline-sm text-headline-sm text-text-primary font-bold">Enabled</span>
+<span class="font-body-sm text-body-sm text-text-secondary">Order &amp; choice shuffle</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Card 2: Enforced Proctoring Policy & Sandbox Parameters -->
+<div class="bg-surface rounded-lg p-space-xl shadow-sm flex flex-col gap-space-lg">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-space-sm">
+<span class="w-9 h-9 rounded-full bg-surface-soft flex items-center justify-center text-text-primary">
+<span class="material-symbols-outlined text-[20px]">security</span>
+</span>
+<h2 class="font-headline-sm text-headline-sm text-text-primary">Enforced Proctoring Policy &amp; Sandbox Parameters</h2>
+</div>
+<span class="px-space-md py-space-xs rounded-full bg-secondary-container text-on-secondary-container font-label-sm text-label-sm flex items-center gap-space-xs">
+<span class="inline-block w-1.5 h-1.5 rounded-full bg-secondary"></span>
+              Air-Gapped Client
+            </span>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-space-md">
+<div class="p-space-md rounded-DEFAULT bg-surface-soft flex flex-col gap-space-xs">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-secondary text-[18px]">face</span>
+<span class="font-label-md text-label-md text-text-primary font-semibold">Face Presence Verification</span>
+</div>
+<span class="px-space-sm py-0.5 rounded-full bg-mint text-text-primary font-label-sm text-label-sm">Active</span>
+</div>
+<p class="font-body-sm text-body-sm text-text-secondary mt-space-xs">
+                Continuous edge tensor processing. Triggers micro-warnings if multiple faces appear or prolonged gaze divergence exceeds 8.5 seconds.
+              </p>
+</div>
+<div class="p-space-md rounded-DEFAULT bg-surface-soft flex flex-col gap-space-xs">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-secondary text-[18px]">fullscreen</span>
+<span class="font-label-md text-label-md text-text-primary font-semibold">Locked Fullscreen Enclave</span>
+</div>
+<span class="px-space-sm py-0.5 rounded-full bg-mint text-text-primary font-label-sm text-label-sm">Active</span>
+</div>
+<p class="font-body-sm text-body-sm text-text-secondary mt-space-xs">
+                Restricts Alt-Tab, Command-Tab, multi-display mirroring, and external clipboard injection. Immediate session lockdown after 2 unapproved unfocus events.
+              </p>
+</div>
+<div class="p-space-md rounded-DEFAULT bg-surface-soft flex flex-col gap-space-xs">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-secondary text-[18px]">graphic_eq</span>
+<span class="font-label-md text-label-md text-text-primary font-semibold">Decibel Ambient Baseline</span>
+</div>
+<span class="px-space-sm py-0.5 rounded-full bg-mint text-text-primary font-label-sm text-label-sm">Active</span>
+</div>
+<p class="font-body-sm text-body-sm text-text-secondary mt-space-xs">
+                Frequency classification filters normal typing and HVAC rumble while logging external conversational whispers &gt;42 dB threshold.
+              </p>
+</div>
+<div class="p-space-md rounded-DEFAULT bg-surface-soft flex flex-col gap-space-xs">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-secondary text-[18px]">privacy_tip</span>
+<span class="font-label-md text-label-md text-text-primary font-semibold">Zero Persistent Video Storage</span>
+</div>
+<span class="px-space-sm py-0.5 rounded-full bg-mint text-text-primary font-label-sm text-label-sm">Certified</span>
+</div>
+<p class="font-body-sm text-body-sm text-text-secondary mt-space-xs">
+                GDPR &amp; FERPA compliant: Only mathematical face landmark telemetry vector hashes are transmitted. No raw candidate video feed is saved to disk.
+              </p>
+</div>
+</div>
+</div>
+</div>
+<!-- Right Column: Cohort Ledger & Real-Time Stats (5 cols) -->
+<div class="lg:col-span-5 flex flex-col gap-space-lg">
+<!-- Card 3: Enrolled Candidate Cohort & Submission Ledger -->
+<div class="bg-surface rounded-lg p-space-xl shadow-sm flex flex-col gap-space-lg">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-space-sm">
+<span class="w-9 h-9 rounded-full bg-surface-soft flex items-center justify-center text-text-primary">
+<span class="material-symbols-outlined text-[20px]">groups</span>
+</span>
+<div>
+<h2 class="font-headline-sm text-headline-sm text-text-primary">Candidate Ledger</h2>
+<span class="font-body-sm text-body-sm text-text-secondary">Cohort CS-602-A</span>
+</div>
+</div>
+<div class="flex items-center gap-space-xs">
+<button class="w-8 h-8 rounded-full bg-surface-container flex items-center justify-center text-text-secondary hover:text-text-primary hover:bg-surface-container-high transition-colors" title="Filter candidates" type="button">
+<span class="material-symbols-outlined text-[18px]">filter_list</span>
+</button>
+<button class="w-8 h-8 rounded-full bg-surface-container flex items-center justify-center text-text-secondary hover:text-text-primary hover:bg-surface-container-high transition-colors" title="Search candidates" type="button">
+<span class="material-symbols-outlined text-[18px]">search</span>
+</button>
+</div>
+</div>
+<!-- Submission Ledger Table / List -->
+<div class="flex flex-col gap-space-sm">
+<!-- Candidate 1: Sarah Jenkins -->
+<div class="p-space-md rounded-DEFAULT bg-surface-container-low hover:bg-surface-soft transition-colors flex flex-col gap-space-sm">
+<div class="flex items-start justify-between gap-space-sm">
+<div class="flex items-center gap-space-sm">
+<div class="w-10 h-10 rounded-full bg-surface-container-high flex items-center justify-center text-text-primary font-headline-sm text-headline-sm">
+                    SJ
+                  </div>
+<div>
+<span class="font-label-lg text-label-lg text-text-primary font-semibold block">Sarah Jenkins</span>
+<span class="font-body-sm text-body-sm text-text-muted font-code-md">ID: ST-9042 • sarah.j@univ.edu</span>
+</div>
+</div>
+<span class="px-space-sm py-space-xs rounded-full bg-mint text-on-secondary-container font-label-sm text-label-sm font-semibold">
+                  0 Events (Clean)
+                </span>
+</div>
+<div class="flex items-center justify-between pt-space-xs text-text-secondary font-body-sm text-body-sm">
+<div class="flex items-center gap-space-md">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-[16px] text-text-muted">grade</span>
+<span class="font-label-md text-label-md text-text-primary font-bold">95 / 100</span>
+</div>
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-[16px] text-text-muted">schedule</span>
+<span>Oct 24, 10:14 UTC</span>
+</div>
+</div>
+<button class="px-space-md py-space-xs rounded-full bg-surface hover:bg-surface-container-high text-text-primary font-label-md text-label-md shadow-sm transition-colors flex items-center gap-space-xs" type="button">
+<span>View</span>
+<span class="material-symbols-outlined text-[14px]">arrow_forward</span>
+</button>
+</div>
+</div>
+<!-- Candidate 2: Liam Chen -->
+<div class="p-space-md rounded-DEFAULT bg-surface-container-low hover:bg-surface-soft transition-colors flex flex-col gap-space-sm">
+<div class="flex items-start justify-between gap-space-sm">
+<div class="flex items-center gap-space-sm">
+<div class="w-10 h-10 rounded-full bg-surface-container-high flex items-center justify-center text-text-primary font-headline-sm text-headline-sm">
+                    LC
+                  </div>
+<div>
+<span class="font-label-lg text-label-lg text-text-primary font-semibold block">Liam Chen</span>
+<span class="font-body-sm text-body-sm text-text-muted font-code-md">ID: ST-8821 • liam.c@univ.edu</span>
+</div>
+</div>
+<span class="px-space-sm py-space-xs rounded-full bg-yellow text-text-primary font-label-sm text-label-sm font-medium">
+                  1 Event (Info)
+                </span>
+</div>
+<div class="flex items-center justify-between pt-space-xs text-text-secondary font-body-sm text-body-sm">
+<div class="flex items-center gap-space-md">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-[16px] text-text-muted">grade</span>
+<span class="font-label-md text-label-md text-text-primary font-bold">88 / 100</span>
+</div>
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-[16px] text-text-muted">schedule</span>
+<span>Oct 24, 10:22 UTC</span>
+</div>
+</div>
+<button class="px-space-md py-space-xs rounded-full bg-surface hover:bg-surface-container-high text-text-primary font-label-md text-label-md shadow-sm transition-colors flex items-center gap-space-xs" type="button">
+<span>View</span>
+<span class="material-symbols-outlined text-[14px]">arrow_forward</span>
+</button>
+</div>
+</div>
+<!-- Candidate 3: Alex Rivera -->
+<div class="p-space-md rounded-DEFAULT bg-surface-container-low hover:bg-surface-soft transition-colors flex flex-col gap-space-sm">
+<div class="flex items-start justify-between gap-space-sm">
+<div class="flex items-center gap-space-sm">
+<div class="w-10 h-10 rounded-full bg-surface-container-high flex items-center justify-center text-text-primary font-headline-sm text-headline-sm">
+                    AR
+                  </div>
+<div>
+<span class="font-label-lg text-label-lg text-text-primary font-semibold block">Alex Rivera</span>
+<span class="font-body-sm text-body-sm text-text-muted font-code-md">ID: ST-7195 • alex.r@univ.edu</span>
+</div>
+</div>
+<span class="px-space-sm py-space-xs rounded-full bg-pink text-text-primary font-label-sm text-label-sm font-semibold">
+                  3 Events (Review)
+                </span>
+</div>
+<div class="flex items-center justify-between pt-space-xs text-text-secondary font-body-sm text-body-sm">
+<div class="flex items-center gap-space-md">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-[16px] text-text-muted">grade</span>
+<span class="font-label-md text-label-md text-text-primary font-bold">78 / 100</span>
+</div>
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-[16px] text-text-muted">schedule</span>
+<span>Oct 24, 10:41 UTC</span>
+</div>
+</div>
+<button class="px-space-md py-space-xs rounded-full bg-surface hover:bg-surface-container-high text-text-primary font-label-md text-label-md shadow-sm transition-colors flex items-center gap-space-xs" type="button">
+<span>View</span>
+<span class="material-symbols-outlined text-[14px]">arrow_forward</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Ledger Footer -->
+<div class="p-space-md rounded-DEFAULT bg-surface-container flex items-center justify-between">
+<div class="flex items-center gap-space-xs font-body-sm text-body-sm text-text-secondary">
+<span class="material-symbols-outlined text-[18px]">sync</span>
+<span>Ledger synchronized in real-time</span>
+</div>
+<a class="font-label-md text-label-md text-text-primary font-semibold hover:underline flex items-center gap-space-xs" href="#">
+<span>View all 42</span>
+<span class="material-symbols-outlined text-[16px]">chevron_right</span>
+</a>
+</div>
+</div>
+<!-- Grade Distribution Mini-Widget -->
+<div class="bg-surface rounded-lg p-space-xl shadow-sm flex flex-col gap-space-md">
+<div class="flex items-center justify-between">
+<h3 class="font-headline-sm text-headline-sm text-text-primary">Cohorts Grade Curve</h3>
+<span class="font-label-sm text-label-sm text-secondary font-semibold">Mean: 86.4 Pts</span>
+</div>
+<!-- Inline SVG Histogram -->
+<div class="w-full flex flex-col gap-space-xs">
+<svg class="w-full h-24 text-text-primary" fill="none" preserveaspectratio="none" viewbox="0 0 320 80">
+<!-- Grid lines -->
+<line stroke="currentColor" stroke-opacity="0.1" x1="0" x2="320" y1="79" y2="79"></line>
+<line stroke="currentColor" stroke-dasharray="4 4" stroke-opacity="0.05" x1="0" x2="320" y1="40" y2="40"></line>
+<!-- Bars -->
+<rect class="fill-surface-container-high" height="15" rx="4" width="22" x="15" y="65"></rect>
+<rect class="fill-surface-container-high" height="28" rx="4" width="22" x="50" y="52"></rect>
+<rect class="fill-surface-container-high" height="36" rx="4" width="22" x="85" y="44"></rect>
+<rect class="fill-secondary-container" height="50" rx="4" width="22" x="120" y="30"></rect>
+<rect class="fill-mint" height="64" rx="4" width="22" x="155" y="16"></rect>
+<rect class="fill-primary" height="72" rx="4" width="22" x="190" y="8"></rect>
+<rect class="fill-mint" height="56" rx="4" width="22" x="225" y="24"></rect>
+<rect class="fill-secondary-container" height="32" rx="4" width="22" x="260" y="48"></rect>
+<rect class="fill-surface-container-high" height="12" rx="4" width="22" x="295" y="68"></rect>
+</svg>
+<div class="flex justify-between font-code-md text-code-md text-text-muted pt-space-xs">
+<span>&lt;60</span>
+<span>70</span>
+<span>80</span>
+<span>90</span>
+<span>100</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Administrative Actions Bar -->
+<div class="bg-surface rounded-lg p-gutter shadow-sm flex flex-col md:flex-row md:items-center justify-between gap-space-md">
+<div class="flex items-center gap-space-md">
+<div class="w-10 h-10 rounded-full bg-secondary-container flex items-center justify-center text-on-secondary-container">
+<span class="material-symbols-outlined text-[22px]">admin_panel_settings</span>
+</div>
+<div class="flex flex-col">
+<span class="font-label-lg text-label-lg text-text-primary">Administrative Enclave Controls</span>
+<span class="font-body-sm text-body-sm text-text-secondary">Changes affect all current live student sessions instantly</span>
+</div>
+</div>
+<div class="flex flex-wrap items-center gap-space-sm">
+<button class="px-space-lg py-space-sm rounded-full bg-surface-container hover:bg-surface-container-high text-text-primary font-label-md text-label-md transition-colors flex items-center gap-space-xs" type="button">
+<span class="material-symbols-outlined text-[18px]">lock_reset</span>
+<span>Regenerate Access Key</span>
+</button>
+<button class="px-space-lg py-space-sm rounded-full bg-surface-container hover:bg-surface-container-high text-text-primary font-label-md text-label-md transition-colors flex items-center gap-space-xs" type="button">
+<span class="material-symbols-outlined text-[18px]">download_for_offline</span>
+<span>Export Full Grade Ledger (CSV)</span>
+</button>
+<button class="px-space-lg py-space-sm rounded-full bg-primary text-on-primary hover:bg-primary-hover font-label-md text-label-md shadow-sm transition-all flex items-center gap-space-xs" type="button">
+<span class="material-symbols-outlined text-[18px]">verified_user</span>
+<span>Audit Enclave Cryptographic Seal</span>
+</button>
+</div>
+</div>
+</div>
+</div></main></div></body></html>

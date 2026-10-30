@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+
+<html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><title>Proxam AI Admin Console</title><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=JetBrains+Mono:wght@400&amp;family=Manrope:wght@600;700&amp;display=swap" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config={darkMode:"class",theme:{extend:{"colors":{"on-primary-fixed":"#1c1b1b","text-secondary":"#686868","surface-container-high":"#eae8e4","info":"#BFDDF2","primary":"#000000","secondary-fixed-dim":"#a0d1bf","yellow":"#F4E6A8","background":"#fbf9f5","surface-tint":"#5f5e5e","primary-fixed-dim":"#c8c6c5","surface":"#FFFFFF","on-tertiary":"#ffffff","on-secondary":"#ffffff","error-container":"#ffdad6","on-error":"#ffffff","text-primary":"#111111","inverse-surface":"#30312e","peach":"#F8D9B5","primary-hover":"#292929","surface-bright":"#fbf9f5","inverse-primary":"#c8c6c5","on-tertiary-fixed-variant":"#454269","secondary-container":"#b9ead8","on-secondary-fixed":"#002018","tertiary-container":"#1a173b","on-surface":"#1b1c1a","surface-container":"#efeeea","secondary-fixed":"#bceddb","error":"#ba1a1a","border-strong":"#D8D2C9","tertiary":"#000000","on-primary-container":"#858383","lavender":"#D5D0FF","outline":"#747878","outline-variant":"#c4c7c7","on-tertiary-fixed":"#1a173b","on-error-container":"#93000a","pink":"#F4B9C2","warning":"#F3C58E","success":"#9BD9BD","inverse-on-surface":"#f2f0ec","surface-container-lowest":"#ffffff","on-background":"#1b1c1a","on-secondary-container":"#3e6b5d","primary-container":"#1c1b1b","border":"#E8E4DD","surface-soft":"#F1EEE8","danger":"#E9A4A4","surface-variant":"#e4e2de","on-secondary-fixed-variant":"#204f42","surface-container-highest":"#e4e2de","mint":"#B9EAD8","primary-fixed":"#e5e2e1","secondary":"#396759","on-surface-variant":"#444748","tertiary-fixed-dim":"#c6c2f0","on-tertiary-container":"#837faa","surface-dim":"#dbdad6","mint-strong":"#8FD5BD","blue":"#C8E2F5","on-primary-fixed-variant":"#474646","surface-container-low":"#f5f3ef","tertiary-fixed":"#e4dfff","text-muted":"#969696","on-primary":"#ffffff"},"borderRadius":{"DEFAULT":"1rem","lg":"2rem","xl":"3rem","full":"9999px"},"spacing":{"gutter":"1.5rem","space-lg":"1.5rem","gutter-sm":"1rem","space-xl":"2rem","space-md":"1rem","space-sm":"0.5rem","space-xs":"0.25rem","margin-sm":"1rem","margin":"2rem"},"fontFamily":{"code-md":["JetBrains Mono"],"headline-md":["Manrope"],"display-lg-mobile":["Manrope"],"label-lg":["Inter"],"body-lg":["Inter"],"headline-lg":["Manrope"],"label-sm":["Inter"],"display-lg":["Manrope"],"label-md":["Inter"],"headline-sm":["Manrope"],"body-md":["Inter"],"body-sm":["Inter"]},"fontSize":{"code-md":["13px",{"lineHeight":"20px","fontWeight":"400"}],"headline-md":["24px",{"lineHeight":"32px","fontWeight":"600"}],"display-lg-mobile":["30px",{"lineHeight":"38px","letterSpacing":"-0.02em","fontWeight":"700"}],"label-lg":["14px",{"lineHeight":"20px","fontWeight":"600"}],"body-lg":["16px",{"lineHeight":"26px","fontWeight":"400"}],"headline-lg":["32px",{"lineHeight":"40px","letterSpacing":"-0.01em","fontWeight":"600"}],"label-sm":["11px",{"lineHeight":"14px","fontWeight":"500"}],"display-lg":["40px",{"lineHeight":"48px","letterSpacing":"-0.02em","fontWeight":"700"}],"label-md":["12px",{"lineHeight":"16px","fontWeight":"500"}],"headline-sm":["20px",{"lineHeight":"28px","fontWeight":"600"}],"body-md":["14px",{"lineHeight":"22px","fontWeight":"400"}],"body-sm":["12px",{"lineHeight":"18px","fontWeight":"400"}]}}}};</script></head><body class="bg-background font-body-md text-body-md text-on-surface antialiased"><aside class="fixed left-0 top-0 h-full w-72 bg-surface-container-low/90 backdrop-blur-xl z-50 flex flex-col justify-between shadow-[0_1px_8px_rgba(0,0,0,0.04)]"><div class="flex flex-col"><div class="h-16 px-gutter flex items-center justify-between"><div class="flex items-center gap-space-sm"><img alt="Brand logo. - Primary color: #111111
+- Font: manrope
+- Mode: light
+- Roundness: rounded-full
+" class="h-8 w-auto object-contain" src="https://lh3.googleusercontent.com/aida/AEtjO1Vq5gYJu3JEyXGjZL0cy0tnA69OCtZuuTQkVrNZEj_ohuLJxrFtblD3YBWkPdoiRY5Hy-lkt3TXHMxkYm2xvOpyY7h47ASVC77YTKpUEvsyPo4YAYsh7rNKfzgFhDqUT5yWipsWcZDRuB1dkvGDbYf1Y4lPRIC3oF0ViWT8XUGJL2T7l7vklvVQXthAMcv_71BW6W5fcIe0j40z4eb7czx2THmKalxg_EZP3m2OMfY5KaZzEwfuSry9Sg"/><span class="font-headline-sm text-headline-sm text-text-primary font-bold">Proxam AI</span></div><span class="px-space-sm py-space-xs rounded-full bg-mint text-text-primary font-label-sm text-label-sm">Portal</span></div><div class="px-gutter pt-space-md pb-space-sm"><div class="p-space-xs bg-surface-container rounded-full flex items-center justify-between"><button class="flex-1 text-center py-space-xs px-space-xs rounded-full text-on-surface-variant font-label-md text-label-md hover:text-on-surface transition-colors" type="button">Student</button><button class="flex-1 text-center py-space-xs px-space-xs rounded-full text-on-surface-variant font-label-md text-label-md hover:text-on-surface transition-colors" type="button">Faculty</button><button class="flex-1 text-center py-space-xs px-space-xs rounded-full bg-primary text-on-primary font-label-md text-label-md shadow-sm" type="button">Admin</button></div></div><div class="px-gutter py-space-xs"><span class="font-label-sm text-label-sm text-text-muted uppercase tracking-wider">Navigation</span></div><nav class="flex flex-col gap-space-xs px-gutter" data-active-classes="bg-primary text-on-primary font-label-lg rounded-DEFAULT shadow-[0_8px_30px_rgba(20,20,20,0.04)]"><a class="flex items-center gap-space-md px-space-md py-space-sm rounded-DEFAULT font-label-lg text-label-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all" data-path="dashboard" href="#"><span class="material-symbols-outlined text-[20px]">grid_view</span><span>Dashboard</span></a><a class="flex items-center gap-space-md px-space-md py-space-sm rounded-DEFAULT font-label-lg text-label-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all" data-path="users" href="#"><span class="material-symbols-outlined text-[20px]">group</span><span>Users</span></a><a class="flex items-center gap-space-md px-space-md py-space-sm rounded-DEFAULT font-label-lg text-label-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all" data-path="tests" href="#"><span class="material-symbols-outlined text-[20px]">quiz</span><span>Tests</span></a><a aria-current="page" class="flex items-center gap-space-md px-space-md py-space-sm transition-all bg-primary text-on-primary font-label-lg rounded-DEFAULT shadow-[0_8px_30px_rgba(20,20,20,0.04)]" data-path="proctoring-alerts" href="#"><span class="material-symbols-outlined text-[20px]">warning_amber</span><span class="flex-1">Proctoring Alerts</span><span class="px-space-sm py-space-xs rounded-full bg-pink text-text-primary font-label-sm text-label-sm">Live</span></a><a class="flex items-center gap-space-md px-space-md py-space-sm rounded-DEFAULT font-label-lg text-label-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all" data-path="profile" href="#"><span class="material-symbols-outlined text-[20px]">manage_accounts</span><span>Profile</span></a></nav></div><div class="p-gutter"><div class="p-space-md rounded-DEFAULT bg-surface-soft flex flex-col gap-space-xs"><div class="flex items-center justify-between"><span class="font-label-sm text-label-sm text-text-secondary">Security Status</span><span class="material-symbols-outlined text-secondary text-[18px]">verified_user</span></div><span class="font-label-md text-label-md text-text-primary">Zero Trust Protocol</span><span class="font-body-sm text-body-sm text-text-muted">Policy sync: 2m ago</span></div></div></aside><div class="pl-72"><header class="fixed top-0 left-72 right-0 h-16 bg-surface/80 backdrop-blur-xl z-40 shadow-[0_1px_8px_rgba(0,0,0,0.04)]"><div class="w-full h-full px-gutter flex items-center justify-between"><div class="flex items-center gap-space-md"><img alt="Brand logo. - Primary color: #111111
+- Font: manrope
+- Mode: light
+- Roundness: rounded-full
+" class="h-8 w-auto object-contain" src="https://lh3.googleusercontent.com/aida/AEtjO1Vq5gYJu3JEyXGjZL0cy0tnA69OCtZuuTQkVrNZEj_ohuLJxrFtblD3YBWkPdoiRY5Hy-lkt3TXHMxkYm2xvOpyY7h47ASVC77YTKpUEvsyPo4YAYsh7rNKfzgFhDqUT5yWipsWcZDRuB1dkvGDbYf1Y4lPRIC3oF0ViWT8XUGJL2T7l7vklvVQXthAMcv_71BW6W5fcIe0j40z4eb7czx2THmKalxg_EZP3m2OMfY5KaZzEwfuSry9Sg"/><div class="hidden md:flex items-center gap-space-sm px-space-md py-space-xs rounded-full bg-surface-container font-label-md text-label-md text-text-primary"><span class="material-symbols-outlined text-[16px] text-text-primary">lock</span><span>256-bit Encrypted Enclave</span></div><div class="hidden lg:flex items-center gap-space-sm px-space-md py-space-xs rounded-full bg-secondary-container font-label-md text-label-md text-on-secondary-container"><span class="inline-block w-2 h-2 rounded-full bg-secondary"></span><span>System Health: 99.98%</span></div></div><div class="flex items-center gap-space-md"><button class="w-10 h-10 rounded-full flex items-center justify-center hover:bg-surface-container-high text-on-surface-variant hover:text-on-surface transition-colors relative" type="button"><span class="material-symbols-outlined text-[20px]">notifications</span><span class="absolute top-2 right-2 w-2 h-2 rounded-full bg-error"></span></button><div class="hidden sm:flex flex-col text-right"><span class="font-label-md text-label-md text-text-primary leading-tight">Dr. Arthur Sterling</span><span class="font-body-sm text-body-sm text-text-secondary leading-tight">System Administrator</span></div><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></div></header><main class="w-full pt-16 bg-background min-h-screen"><div class="flex flex-col w-full">
+<div class="w-full px-gutter py-space-xl flex flex-col gap-space-xl max-w-7xl mx-auto">
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-space-lg">
+<div class="flex flex-col gap-space-xs max-w-3xl">
+<div class="flex items-center gap-space-sm">
+<span class="inline-flex items-center justify-center w-6 h-6 rounded-full bg-mint text-on-secondary-container">
+<span class="material-symbols-outlined text-[15px]">verified_user</span>
+</span>
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-secondary font-semibold">Telemetry &amp; Audit Trail</span>
+</div>
+<h1 class="font-headline-lg text-headline-lg text-text-primary tracking-tight">Ethical Proctoring Alerts &amp; Telemetry Audit</h1>
+<p class="font-body-md text-body-md text-text-secondary leading-relaxed">
+          Review objective, client-side browser events logged during examinations. Proxam AI uses zero persistent video recordings and does NOT produce automated guilt verdicts.
+        </p>
+</div>
+<div class="flex items-center gap-space-sm self-start md:self-auto shrink-0">
+<div class="px-space-md py-space-xs rounded-full bg-surface-container flex items-center gap-space-xs text-text-secondary font-label-md text-label-md">
+<span class="w-2 h-2 rounded-full bg-secondary animate-pulse"></span>
+<span>Zero Persistent Media Mode</span>
+</div>
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-space-md">
+<div class="p-space-lg rounded-DEFAULT bg-mint/35 flex flex-col justify-between gap-space-md">
+<div class="flex items-center justify-between">
+<span class="font-label-md text-label-md text-on-secondary-container">Audit Integrity</span>
+<span class="material-symbols-outlined text-secondary text-[20px]">shield</span>
+</div>
+<div class="flex flex-col">
+<span class="font-display-lg text-display-lg text-text-primary">100%</span>
+<span class="font-body-sm text-body-sm text-text-secondary">Ephemeral local WASM evaluation</span>
+</div>
+</div>
+<div class="p-space-lg rounded-DEFAULT bg-surface-soft flex flex-col justify-between gap-space-md">
+<div class="flex items-center justify-between">
+<span class="font-label-md text-label-md text-text-secondary">Open Inquiries</span>
+<span class="material-symbols-outlined text-text-primary text-[20px]">pending_actions</span>
+</div>
+<div class="flex flex-col">
+<span class="font-display-lg text-display-lg text-text-primary">03</span>
+<span class="font-body-sm text-body-sm text-text-secondary">Pending instructor peer review</span>
+</div>
+</div>
+<div class="p-space-lg rounded-DEFAULT bg-lavender/30 flex flex-col justify-between gap-space-md">
+<div class="flex items-center justify-between">
+<span class="font-label-md text-label-md text-text-primary">Cryptographic Proofs</span>
+<span class="material-symbols-outlined text-text-primary text-[20px]">fingerprint</span>
+</div>
+<div class="flex flex-col">
+<span class="font-display-lg text-display-lg text-text-primary">12</span>
+<span class="font-body-sm text-body-sm text-text-secondary">Signed tamper-evident session hashes</span>
+</div>
+</div>
+</div>
+<div class="bg-surface rounded-DEFAULT shadow-[0_8px_30px_rgba(20,20,20,0.04)] p-space-md md:p-space-lg flex flex-col gap-space-md">
+<div class="flex flex-col lg:flex-row lg:items-center justify-between gap-space-md">
+<div class="flex flex-wrap items-center gap-space-xs p-space-xs bg-surface-container-low rounded-full">
+<button class="tab-btn px-space-md py-space-xs rounded-full bg-primary text-on-primary font-label-md text-label-md transition-all shadow-sm" data-filter="all" type="button">
+            All Alerts (12)
+          </button>
+<button class="tab-btn px-space-md py-space-xs rounded-full text-text-secondary hover:text-text-primary font-label-md text-label-md transition-all" data-filter="needs-review" type="button">
+            Needs Review (3)
+          </button>
+<button class="tab-btn px-space-md py-space-xs rounded-full text-text-secondary hover:text-text-primary font-label-md text-label-md transition-all" data-filter="informational" type="button">
+            Informational (7)
+          </button>
+<button class="tab-btn px-space-md py-space-xs rounded-full text-text-secondary hover:text-text-primary font-label-md text-label-md transition-all" data-filter="resolved" type="button">
+            Resolved / Cleared (2)
+          </button>
+</div>
+<div class="flex flex-wrap items-center gap-space-sm">
+<div class="relative">
+<select class="appearance-none bg-surface-container-low text-text-primary font-label-md text-label-md pl-space-md pr-space-xl py-space-xs rounded-full focus:outline-none focus:bg-surface-container cursor-pointer transition-colors">
+<option>All Tests (PXAM-7K4Q2, PXAM-8B2N1)</option>
+<option>Distributed Systems &amp; Consensus (PXAM-7K4Q2)</option>
+<option>Advanced Cognitive Psychology (PXAM-8B2N1)</option>
+</select>
+<span class="material-symbols-outlined absolute right-space-sm top-1/2 -translate-y-1/2 text-[16px] text-text-secondary pointer-events-none">expand_more</span>
+</div>
+<div class="relative">
+<select class="appearance-none bg-surface-container-low text-text-primary font-label-md text-label-md pl-space-md pr-space-xl py-space-xs rounded-full focus:outline-none focus:bg-surface-container cursor-pointer transition-colors">
+<option>All Types</option>
+<option>Face not detected</option>
+<option>Multiple faces</option>
+<option>Tab visibility</option>
+<option>Audio spike</option>
+<option>Camera disconnect</option>
+</select>
+<span class="material-symbols-outlined absolute right-space-sm top-1/2 -translate-y-1/2 text-[16px] text-text-secondary pointer-events-none">expand_more</span>
+</div>
+</div>
+</div>
+</div>
+<div class="bg-surface rounded-DEFAULT shadow-[0_8px_30px_rgba(20,20,20,0.04)] overflow-hidden">
+<div class="w-full overflow-x-auto">
+<table class="w-full text-left font-body-md text-body-md">
+<thead>
+<tr class="bg-surface-container-low/70 text-text-secondary font-label-md text-label-md">
+<th class="py-space-md px-space-lg font-medium">Event Type</th>
+<th class="py-space-md px-space-md font-medium">Student</th>
+<th class="py-space-md px-space-md font-medium">Associated Test</th>
+<th class="py-space-md px-space-md font-medium whitespace-nowrap">Timestamp (UTC)</th>
+<th class="py-space-md px-space-md font-medium min-w-[280px]">Telemetry Context</th>
+<th class="py-space-md px-space-md font-medium">Review Status</th>
+<th class="py-space-md px-space-lg text-right font-medium">Action</th>
+</tr>
+</thead>
+<tbody class="divide-y-0">
+<tr class="hover:bg-surface-soft/40 transition-colors group">
+<td class="py-space-md px-space-lg align-top">
+<div class="flex items-center gap-space-xs">
+<span class="px-space-md py-space-xs rounded-full bg-peach text-text-primary font-label-sm text-label-sm inline-flex items-center gap-space-xs whitespace-nowrap font-medium">
+<span class="w-1.5 h-1.5 rounded-full bg-text-primary"></span>
+                    Multiple faces detected
+                  </span>
+</div>
+</td>
+<td class="py-space-md px-space-md align-top">
+<div class="flex flex-col">
+<span class="font-label-md text-label-md text-text-primary">Alex Rivera</span>
+<span class="font-code-md text-code-md text-text-muted">UID #4821</span>
+</div>
+</td>
+<td class="py-space-md px-space-md align-top">
+<div class="flex flex-col max-w-[190px]">
+<span class="font-label-md text-label-md text-text-primary truncate">Distributed Systems &amp; Consensus</span>
+<span class="font-code-md text-code-md text-text-muted">PXAM-7K4Q2</span>
+</div>
+</td>
+<td class="py-space-md px-space-md align-top whitespace-nowrap">
+<div class="flex flex-col">
+<span class="font-label-md text-label-md text-text-primary">Oct 24, 2026</span>
+<span class="font-code-md text-code-md text-text-muted">10:37:19 AM</span>
+</div>
+</td>
+<td class="py-space-md px-space-md align-top">
+<p class="font-body-sm text-body-sm text-text-secondary leading-relaxed">
+                  Secondary person briefly passed doorway 4m behind desk. Primary gaze remained centered on screen.
+                </p>
+</td>
+<td class="py-space-md px-space-md align-top">
+<span class="px-space-md py-space-xs rounded-full bg-yellow text-text-primary font-label-sm text-label-sm inline-flex items-center gap-space-xs whitespace-nowrap">
+<span class="material-symbols-outlined text-[14px]">schedule</span>
+                  Pending Faculty Review
+                </span>
+</td>
+<td class="py-space-md px-space-lg align-top text-right whitespace-nowrap">
+<button class="px-space-md py-space-xs rounded-full bg-primary text-on-primary font-label-md text-label-md hover:bg-primary-hover transition-colors shadow-sm" type="button">
+                  View Attempt
+                </button>
+</td>
+</tr>
+<tr class="hover:bg-surface-soft/40 transition-colors bg-surface-container-low/20 group">
+<td class="py-space-md px-space-lg align-top">
+<div class="flex items-center gap-space-xs">
+<span class="px-space-md py-space-xs rounded-full bg-blue text-text-primary font-label-sm text-label-sm inline-flex items-center gap-space-xs whitespace-nowrap font-medium">
+<span class="w-1.5 h-1.5 rounded-full bg-text-primary"></span>
+                    Tab visibility changed
+                  </span>
+</div>
+</td>
+<td class="py-space-md px-space-md align-top">
+<div class="flex flex-col">
+<span class="font-label-md text-label-md text-text-primary">David Kim</span>
+<span class="font-code-md text-code-md text-text-muted">UID #5102</span>
+</div>
+</td>
+<td class="py-space-md px-space-md align-top">
+<div class="flex flex-col max-w-[190px]">
+<span class="font-label-md text-label-md text-text-primary truncate">Distributed Systems &amp; Consensus</span>
+<span class="font-code-md text-code-md text-text-muted">PXAM-7K4Q2</span>
+</div>
+</td>
+<td class="py-space-md px-space-md align-top whitespace-nowrap">
+<div class="flex flex-col">
+<span class="font-label-md text-label-md text-text-primary">Oct 24, 2026</span>
+<span class="font-code-md text-code-md text-text-muted">10:28:45 AM</span>
+</div>
+</td>
+<td class="py-space-md px-space-md align-top">
+<p class="font-body-sm text-body-sm text-text-secondary leading-relaxed">
+                  Operating system notification banner triggered browser blur. Returned in 2.1 seconds.
+                </p>
+</td>
+<td class="py-space-md px-space-md align-top">
+<span class="px-space-md py-space-xs rounded-full bg-mint text-text-primary font-label-sm text-label-sm inline-flex items-center gap-space-xs whitespace-nowrap">
+<span class="material-symbols-outlined text-[14px]">check_circle</span>
+                  Verified Benign
+                </span>
+</td>
+<td class="py-space-md px-space-lg align-top text-right whitespace-nowrap">
+<button class="px-space-md py-space-xs rounded-full bg-surface-container text-text-primary font-label-md text-label-md hover:bg-surface-container-high transition-colors" type="button">
+                  View Attempt
+                </button>
+</td>
+</tr>
+<tr class="hover:bg-surface-soft/40 transition-colors group">
+<td class="py-space-md px-space-lg align-top">
+<div class="flex items-center gap-space-xs">
+<span class="px-space-md py-space-xs rounded-full bg-peach text-text-primary font-label-sm text-label-sm inline-flex items-center gap-space-xs whitespace-nowrap font-medium">
+<span class="w-1.5 h-1.5 rounded-full bg-text-primary"></span>
+                    Face not detected
+                  </span>
+</div>
+</td>
+<td class="py-space-md px-space-md align-top">
+<div class="flex flex-col">
+<span class="font-label-md text-label-md text-text-primary">Clara Oswald</span>
+<span class="font-code-md text-code-md text-text-muted">UID #7721</span>
+</div>
+</td>
+<td class="py-space-md px-space-md align-top">
+<div class="flex flex-col max-w-[190px]">
+<span class="font-label-md text-label-md text-text-primary truncate">Advanced Cognitive Psychology</span>
+<span class="font-code-md text-code-md text-text-muted">PXAM-8B2N1</span>
+</div>
+</td>
+<td class="py-space-md px-space-md align-top whitespace-nowrap">
+<div class="flex flex-col">
+<span class="font-label-md text-label-md text-text-primary">Oct 24, 2026</span>
+<span class="font-code-md text-code-md text-text-muted">10:14:02 AM</span>
+</div>
+</td>
+<td class="py-space-md px-space-md align-top">
+<p class="font-body-sm text-body-sm text-text-secondary leading-relaxed">
+                  Brief downward head tilt consistent with physical scratch paper review. In-bounds for 3.2 seconds.
+                </p>
+</td>
+<td class="py-space-md px-space-md align-top">
+<span class="px-space-md py-space-xs rounded-full bg-mint text-text-primary font-label-sm text-label-sm inline-flex items-center gap-space-xs whitespace-nowrap">
+<span class="material-symbols-outlined text-[14px]">done_all</span>
+                  Cleared by Instructor
+                </span>
+</td>
+<td class="py-space-md px-space-lg align-top text-right whitespace-nowrap">
+<button class="px-space-md py-space-xs rounded-full bg-surface-container text-text-primary font-label-md text-label-md hover:bg-surface-container-high transition-colors" type="button">
+                  View Attempt
+                </button>
+</td>
+</tr>
+<tr class="hover:bg-surface-soft/40 transition-colors bg-surface-container-low/20 group">
+<td class="py-space-md px-space-lg align-top">
+<div class="flex items-center gap-space-xs">
+<span class="px-space-md py-space-xs rounded-full bg-lavender text-text-primary font-label-sm text-label-sm inline-flex items-center gap-space-xs whitespace-nowrap font-medium">
+<span class="w-1.5 h-1.5 rounded-full bg-text-primary"></span>
+                    Camera connection interrupted
+                  </span>
+</div>
+</td>
+<td class="py-space-md px-space-md align-top">
+<div class="flex flex-col">
+<span class="font-label-md text-label-md text-text-primary">Jordan Lee</span>
+<span class="font-code-md text-code-md text-text-muted">UID #6412</span>
+</div>
+</td>
+<td class="py-space-md px-space-md align-top">
+<div class="flex flex-col max-w-[190px]">
+<span class="font-label-md text-label-md text-text-primary truncate">Distributed Systems &amp; Consensus</span>
+<span class="font-code-md text-code-md text-text-muted">PXAM-7K4Q2</span>
+</div>
+</td>
+<td class="py-space-md px-space-md align-top whitespace-nowrap">
+<div class="flex flex-col">
+<span class="font-label-md text-label-md text-text-primary">Oct 24, 2026</span>
+<span class="font-code-md text-code-md text-text-muted">09:58:11 AM</span>
+</div>
+</td>
+<td class="py-space-md px-space-md align-top">
+<p class="font-body-sm text-body-sm text-text-secondary leading-relaxed">
+                  USB media pipeline renegotiation. Stream cleanly re-established within 1.8 seconds with identical cryptographic peer hash.
+                </p>
+</td>
+<td class="py-space-md px-space-md align-top">
+<span class="px-space-md py-space-xs rounded-full bg-yellow text-text-primary font-label-sm text-label-sm inline-flex items-center gap-space-xs whitespace-nowrap">
+<span class="material-symbols-outlined text-[14px]">schedule</span>
+                  Pending Faculty Review
+                </span>
+</td>
+<td class="py-space-md px-space-lg align-top text-right whitespace-nowrap">
+<button class="px-space-md py-space-xs rounded-full bg-primary text-on-primary font-label-md text-label-md hover:bg-primary-hover transition-colors shadow-sm" type="button">
+                  View Attempt
+                </button>
+</td>
+</tr>
+<tr class="hover:bg-surface-soft/40 transition-colors group">
+<td class="py-space-md px-space-lg align-top">
+<div class="flex items-center gap-space-xs">
+<span class="px-space-md py-space-xs rounded-full bg-yellow text-text-primary font-label-sm text-label-sm inline-flex items-center gap-space-xs whitespace-nowrap font-medium">
+<span class="w-1.5 h-1.5 rounded-full bg-text-primary"></span>
+                    Acoustic baseline exceeded
+                  </span>
+</div>
+</td>
+<td class="py-space-md px-space-md align-top">
+<div class="flex flex-col">
+<span class="font-label-md text-label-md text-text-primary">Alex Rivera</span>
+<span class="font-code-md text-code-md text-text-muted">UID #4821</span>
+</div>
+</td>
+<td class="py-space-md px-space-md align-top">
+<div class="flex flex-col max-w-[190px]">
+<span class="font-label-md text-label-md text-text-primary truncate">Distributed Systems &amp; Consensus</span>
+<span class="font-code-md text-code-md text-text-muted">PXAM-7K4Q2</span>
+</div>
+</td>
+<td class="py-space-md px-space-md align-top whitespace-nowrap">
+<div class="flex flex-col">
+<span class="font-label-md text-label-md text-text-primary">Oct 24, 2026</span>
+<span class="font-code-md text-code-md text-text-muted">09:42:50 AM</span>
+</div>
+</td>
+<td class="py-space-md px-space-md align-top">
+<p class="font-body-sm text-body-sm text-text-secondary leading-relaxed">
+                  Brief external mechanical sound detected (estimated HVAC cycle or door closure). No human phonemes detected by edge model.
+                </p>
+</td>
+<td class="py-space-md px-space-md align-top">
+<span class="px-space-md py-space-xs rounded-full bg-yellow text-text-primary font-label-sm text-label-sm inline-flex items-center gap-space-xs whitespace-nowrap">
+<span class="material-symbols-outlined text-[14px]">schedule</span>
+                  Pending Faculty Review
+                </span>
+</td>
+<td class="py-space-md px-space-lg align-top text-right whitespace-nowrap">
+<button class="px-space-md py-space-xs rounded-full bg-primary text-on-primary font-label-md text-label-md hover:bg-primary-hover transition-colors shadow-sm" type="button">
+                  View Attempt
+                </button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="px-space-lg py-space-md bg-surface-container-low flex items-center justify-between">
+<span class="font-body-sm text-body-sm text-text-secondary">Showing 5 of 12 verifiable client telemetry assertions</span>
+<div class="flex items-center gap-space-xs">
+<button class="w-8 h-8 rounded-full flex items-center justify-center bg-surface text-text-muted cursor-not-allowed" type="button">
+<span class="material-symbols-outlined text-[18px]">chevron_left</span>
+</button>
+<span class="font-label-md text-label-md text-text-primary px-space-xs">Page 1 of 3</span>
+<button class="w-8 h-8 rounded-full flex items-center justify-center bg-surface text-text-primary hover:bg-surface-container-high transition-colors" type="button">
+<span class="material-symbols-outlined text-[18px]">chevron_right</span>
+</button>
+</div>
+</div>
+</div>
+<div class="p-space-lg rounded-DEFAULT bg-surface-soft flex flex-col md:flex-row items-start md:items-center gap-space-md">
+<div class="w-10 h-10 rounded-full bg-mint flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-secondary text-[22px]">lock_reset</span>
+</div>
+<div class="flex flex-col gap-space-xs flex-1">
+<span class="font-label-lg text-label-lg text-text-primary font-semibold">Student Privacy Safeguard</span>
+<p class="font-body-sm text-body-sm text-text-secondary leading-relaxed">
+          In accordance with the Student Privacy Charter, all raw client video was processed locally in an ephemeral WebAssembly sandbox and immediately discarded. Only timestamped cryptographic telemetry assertions are stored.
+        </p>
+</div>
+<div class="shrink-0 self-end md:self-auto">
+<span class="px-space-md py-space-xs rounded-full bg-surface text-text-primary font-code-md text-code-md">
+          Zero-Knowledge Log v3.4
+        </span>
+</div>
+</div>
+</div>
+</div>
+<script>
+  document.querySelectorAll('.tab-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.tab-btn').forEach(b => {
+        b.classList.remove('bg-primary', 'text-on-primary', 'shadow-sm');
+        b.classList.add('text-text-secondary');
+      });
+      btn.classList.add('bg-primary', 'text-on-primary', 'shadow-sm');
+      btn.classList.remove('text-text-secondary');
+    });
+  });
+</script></main></div></body></html>

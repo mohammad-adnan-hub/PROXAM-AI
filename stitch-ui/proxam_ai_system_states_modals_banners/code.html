@@ -1,0 +1,1123 @@
+<!DOCTYPE html>
+
+<html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500&amp;family=Manrope:wght@600;700&amp;display=swap" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base { html, body { margin: 0; padding: 0; } body { overscroll-behavior: none; } main > :first-child { margin-top: 0 !important; } main > :last-child { margin-bottom: 0 !important; } } ::-webkit-scrollbar { display: none; }</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = { darkMode: "class", theme: { extend: { "colors": { "surface-container-highest": "#e4e2de", "surface-container-high": "#eae8e4", "blue": "#C8E2F5", "text-primary": "#111111", "on-error": "#ffffff", "on-surface-variant": "#444748", "mint-strong": "#8FD5BD", "error": "#ba1a1a", "border-strong": "#D8D2C9", "secondary-fixed": "#bceddb", "tertiary": "#000000", "on-background": "#1b1c1a", "on-secondary-fixed": "#002018", "on-primary-fixed": "#1c1b1b", "peach": "#F8D9B5", "surface-container-lowest": "#ffffff", "on-primary": "#ffffff", "primary-fixed-dim": "#c8c6c5", "tertiary-fixed": "#e4dfff", "on-tertiary": "#ffffff", "inverse-primary": "#c8c6c5", "primary-fixed": "#e5e2e1", "warning": "#F3C58E", "outline-variant": "#c4c7c7", "on-surface": "#1b1c1a", "primary": "#000000", "yellow": "#F4E6A8", "pink": "#F4B9C2", "surface-tint": "#5f5e5e", "outline": "#747878", "info": "#BFDDF2", "on-tertiary-fixed-variant": "#454269", "on-primary-fixed-variant": "#474646", "on-tertiary-fixed": "#1a173b", "surface": "#FFFFFF", "inverse-surface": "#30312e", "surface-dim": "#dbdad6", "danger": "#E9A4A4", "secondary": "#396759", "success": "#9BD9BD", "mint": "#B9EAD8", "text-secondary": "#686868", "on-error-container": "#93000a", "text-muted": "#969696", "surface-soft": "#F1EEE8", "error-container": "#ffdad6", "primary-container": "#1c1b1b", "surface-variant": "#e4e2de", "secondary-fixed-dim": "#a0d1bf", "primary-hover": "#292929", "surface-container": "#efeeea", "tertiary-container": "#1a173b", "surface-container-low": "#f5f3ef", "on-secondary-fixed-variant": "#204f42", "on-primary-container": "#858383", "lavender": "#D5D0FF", "on-tertiary-container": "#837faa", "tertiary-fixed-dim": "#c6c2f0", "secondary-container": "#b9ead8", "on-secondary": "#ffffff", "background": "#fbf9f5", "border": "#E8E4DD", "surface-bright": "#fbf9f5", "inverse-on-surface": "#f2f0ec", "on-secondary-container": "#3e6b5d" }, "borderRadius": { "DEFAULT": "1rem", "lg": "2rem", "xl": "3rem", "full": "9999px" }, "spacing": { "space-xl": "2rem", "space-lg": "1.5rem", "gutter": "1.5rem", "space-sm": "0.5rem", "margin": "2rem", "gutter-sm": "1rem", "space-xs": "0.25rem", "margin-sm": "1rem", "space-md": "1rem" }, "fontFamily": { "headline-sm": [ "Manrope" ], "body-md": [ "Inter" ], "label-lg": [ "Inter" ], "display-lg": [ "Manrope" ], "display-lg-mobile": [ "Manrope" ], "label-sm": [ "Inter" ], "headline-md": [ "Manrope" ], "code-md": [ "JetBrains Mono" ], "label-md": [ "Inter" ], "headline-lg": [ "Manrope" ], "body-sm": [ "Inter" ], "body-lg": [ "Inter" ] }, "fontSize": { "headline-sm": [ "20px", { "lineHeight": "28px", "fontWeight": "600" } ], "body-md": [ "14px", { "lineHeight": "22px", "fontWeight": "400" } ], "label-lg": [ "14px", { "lineHeight": "20px", "fontWeight": "600" } ], "display-lg": [ "40px", { "lineHeight": "48px", "letterSpacing": "-0.02em", "fontWeight": "700" } ], "display-lg-mobile": [ "30px", { "lineHeight": "38px", "letterSpacing": "-0.02em", "fontWeight": "700" } ], "label-sm": [ "11px", { "lineHeight": "14px", "fontWeight": "500" } ], "headline-md": [ "24px", { "lineHeight": "32px", "fontWeight": "600" } ], "code-md": [ "13px", { "lineHeight": "20px", "fontWeight": "400" } ], "label-md": [ "12px", { "lineHeight": "16px", "fontWeight": "500" } ], "headline-lg": [ "32px", { "lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600" } ], "body-sm": [ "12px", { "lineHeight": "18px", "fontWeight": "400" } ], "body-lg": [ "16px", { "lineHeight": "26px", "fontWeight": "400" } ] } } } };</script></head><body class="bg-background font-body-md text-on-surface antialiased"><header class="fixed top-0 left-0 w-full z-50 bg-surface/80 backdrop-blur-xl shadow-[0_1px_8px_rgba(20,20,20,0.04)]"><div class="h-16 w-full px-margin flex items-center justify-between gap-gutter"><div class="flex items-center gap-space-lg"><div class="flex items-center gap-space-sm"><div class="w-9 h-9 rounded-full bg-primary flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[20px]">verified_user</span></div><span class="font-headline-sm text-headline-sm text-text-primary tracking-tight">Proxam AI</span></div><div class="hidden sm:flex items-center gap-space-xs bg-surface-container-low px-3 py-1 rounded-full"><span class="w-2 h-2 rounded-full bg-secondary"></span><span class="font-label-sm text-label-sm text-on-surface-variant font-medium">Proctor Supervisor Mode</span></div></div><nav class="hidden md:flex items-center gap-space-xs bg-surface-soft p-1 rounded-full" data-active-classes="bg-surface-container-high text-on-surface font-semibold"><a aria-current="page" class="px-4 py-2 rounded-full transition-colors bg-surface-container-high text-on-surface font-semibold" data-path="system-states-catalog" href="#">System States</a><a class="px-4 py-2 rounded-full font-label-lg text-label-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-colors" data-path="modals-and-dialogs" href="#">Modals &amp; Dialogs</a><a class="px-4 py-2 rounded-full font-label-lg text-label-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-colors" data-path="live-overlays" href="#">Overlays</a><a class="px-4 py-2 rounded-full font-label-lg text-label-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-colors" data-path="status-components-palette" href="#">Status Palette</a></nav><div class="flex items-center gap-space-md"><div class="hidden lg:flex items-center gap-space-xs bg-mint/50 px-3 py-1 rounded-full"><span class="material-symbols-outlined text-secondary text-[16px]">security</span><span class="font-label-sm text-label-sm text-on-secondary-container font-semibold">Engine Ready</span></div><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></div></header><main class="w-full pt-16 min-h-[calc(100vh-144px)] bg-background"><div class="flex flex-col w-full">
+<!-- Interactive Catalog Header & Filter Control Bar -->
+<section class="w-full px-margin pt-space-xl pb-space-lg bg-surface-bright">
+<div class="max-w-7xl mx-auto flex flex-col md:flex-row md:items-end justify-between gap-space-lg">
+<div class="space-y-space-xs max-w-2xl">
+<div class="flex items-center gap-space-xs">
+<span class="font-code-md text-code-md tracking-wider uppercase text-secondary bg-mint/50 px-3 py-1 rounded-full font-medium">Design System Spec v2.4</span>
+<span class="font-label-sm text-label-sm text-text-muted">•</span>
+<span class="font-label-sm text-label-sm text-text-secondary">Calm Assessment Architecture</span>
+</div>
+<h1 class="font-display-lg text-display-lg text-text-primary tracking-tight">System States, Modals &amp; Banners</h1>
+<p class="font-body-lg text-body-lg text-text-secondary">
+          A non-punitive, supportive interface vocabulary for high-stakes examinations. Designed with soft pastel geometry to preserve candidate composure during environmental or technical anomalies.
+        </p>
+</div>
+<!-- State Filter Pills -->
+<div class="flex flex-wrap items-center gap-space-xs bg-surface-soft p-1.5 rounded-full shadow-sm">
+<button class="catalog-filter-btn px-4 py-2 rounded-full font-label-md text-label-md bg-primary text-on-primary transition-all duration-200" id="filter-all" onclick="filterCatalog('all')">
+          All 21 States
+        </button>
+<button class="catalog-filter-btn px-4 py-2 rounded-full font-label-md text-label-md text-text-secondary hover:text-text-primary hover:bg-surface transition-all duration-200" id="filter-overlays" onclick="filterCatalog('overlays')">
+          1. Overlays &amp; Proctoring
+        </button>
+<button class="catalog-filter-btn px-4 py-2 rounded-full font-label-md text-label-md text-text-secondary hover:text-text-primary hover:bg-surface transition-all duration-200" id="filter-dialogs" onclick="filterCatalog('dialogs')">
+          2. Dialogs &amp; Modals
+        </button>
+<button class="catalog-filter-btn px-4 py-2 rounded-full font-label-md text-label-md text-text-secondary hover:text-text-primary hover:bg-surface transition-all duration-200" id="filter-forms" onclick="filterCatalog('forms')">
+          3. Inline Validation
+        </button>
+<button class="catalog-filter-btn px-4 py-2 rounded-full font-label-md text-label-md text-text-secondary hover:text-text-primary hover:bg-surface transition-all duration-200" id="filter-toasts" onclick="filterCatalog('toasts')">
+          4. Toasts Stack
+        </button>
+<button class="catalog-filter-btn px-4 py-2 rounded-full font-label-md text-label-md text-text-secondary hover:text-text-primary hover:bg-surface transition-all duration-200" id="filter-fallbacks" onclick="filterCatalog('fallbacks')">
+          5. Core Fallbacks
+        </button>
+</div>
+</div>
+</section>
+<!-- Live Interactivity Trigger Tray -->
+<section class="w-full px-margin pb-space-xl bg-surface-bright">
+<div class="max-w-7xl mx-auto">
+<div class="bg-surface p-space-lg rounded-[28px] shadow-sm flex flex-col lg:flex-row items-center justify-between gap-space-md">
+<div class="flex items-center gap-space-md">
+<div class="w-12 h-12 rounded-full bg-secondary-container flex items-center justify-center text-on-secondary-container">
+<span class="material-symbols-outlined text-[24px]">touch_app</span>
+</div>
+<div>
+<div class="font-headline-sm text-headline-sm text-text-primary">Interactive Preview Stage</div>
+<div class="font-body-sm text-body-sm text-text-secondary">Trigger true modal dialogs and live screen-covering overlays in-context</div>
+</div>
+</div>
+<div class="flex flex-wrap items-center gap-space-xs">
+<button class="px-4 py-2 rounded-full font-label-md text-label-md bg-surface-soft hover:bg-surface-container text-text-primary transition-colors flex items-center gap-1.5" onclick="triggerInteractiveModal('modal-logout')">
+<span class="material-symbols-outlined text-[16px]">logout</span> Test Sign Out
+          </button>
+<button class="px-4 py-2 rounded-full font-label-md text-label-md bg-peach/40 hover:bg-peach/70 text-text-primary transition-colors flex items-center gap-1.5" onclick="triggerInteractiveModal('modal-session-expired')">
+<span class="material-symbols-outlined text-[16px]">timer_off</span> Test Session Timeout
+          </button>
+<button class="px-4 py-2 rounded-full font-label-md text-label-md bg-pink/30 hover:bg-pink/60 text-text-primary transition-colors flex items-center gap-1.5" onclick="triggerInteractiveModal('modal-delete')">
+<span class="material-symbols-outlined text-[16px]">delete</span> Test Archive Modal
+          </button>
+<button class="px-5 py-2.5 rounded-full font-label-md text-label-md bg-primary text-on-primary hover:bg-primary-hover transition-colors flex items-center gap-2 shadow-sm" onclick="triggerLiveOverlaySimulation()">
+<span class="material-symbols-outlined text-[18px]">videocam</span> Launch Fullscreen Proctor Demo
+          </button>
+</div>
+</div>
+</div>
+</section>
+<!-- SECTION 1: IN-EXAM LIVE INTERRUPTION OVERLAYS & PROCTORING BANNERS -->
+<section class="catalog-section w-full px-margin py-space-xl bg-surface-container-low" id="section-overlays">
+<div class="max-w-7xl mx-auto space-y-space-xl">
+<!-- Section Meta Header -->
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-space-md">
+<div>
+<span class="font-code-md text-code-md text-secondary font-semibold uppercase tracking-wider">Catalog Enclave 01</span>
+<h2 class="font-headline-lg text-headline-lg text-text-primary tracking-tight mt-1">In-Exam Proctoring Interruptions &amp; Banners</h2>
+<p class="font-body-md text-body-md text-text-secondary max-w-3xl mt-1">
+            Carefully tuned language avoids disciplinary stigma. All warnings prioritize guidance, reassurance of locally cached progress, and actionable steps to resolve hardware or visual misalignment.
+          </p>
+</div>
+<div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-mint/60 text-on-secondary-fixed text-label-sm font-label-sm">
+<span class="material-symbols-outlined text-[16px]">shield</span> Non-Punitive Tone Verified
+        </div>
+</div>
+<!-- Grid of 7 States -->
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-space-lg">
+<!-- 1.1 Face Not Detected Overlay Simulation -->
+<div class="bg-surface rounded-[24px] p-space-lg shadow-sm flex flex-col justify-between relative overflow-hidden">
+<div class="flex items-center justify-between pb-space-md">
+<div class="flex items-center gap-space-xs">
+<span class="w-3 h-3 rounded-full bg-peach"></span>
+<span class="font-label-md text-label-md text-text-primary font-semibold">State 01: Face Not Detected</span>
+</div>
+<span class="font-code-md text-code-md text-text-muted bg-surface-soft px-2.5 py-0.5 rounded-full">Reticle Misalignment</span>
+</div>
+<!-- Component Mockup: Calm Webcam Warning Container -->
+<div class="relative rounded-[20px] bg-surface-soft p-space-lg overflow-hidden flex flex-col items-center text-center">
+<!-- Simulated Camera Feed Framing with SVG Reticle -->
+<div class="relative w-44 h-44 rounded-full bg-surface-container flex items-center justify-center mb-space-md shadow-inner">
+<svg class="absolute inset-0 w-full h-full text-peach" fill="none" viewbox="0 0 100 100">
+<circle class="opacity-60" cx="50" cy="50" r="46" stroke="currentColor" stroke-dasharray="6 4" stroke-width="2.5"></circle>
+<path d="M50 12 V22 M50 78 V88 M12 50 H22 M78 50 H88" stroke="currentColor" stroke-linecap="round" stroke-width="2"></path>
+</svg>
+<div class="w-20 h-20 rounded-full bg-surface flex items-center justify-center shadow-sm">
+<span class="material-symbols-outlined text-warning text-[36px]">face_retouching_off</span>
+</div>
+<span class="absolute bottom-1 px-3 py-0.5 rounded-full bg-surface font-label-sm text-label-sm text-text-secondary shadow-sm">Re-centering</span>
+</div>
+<div class="font-headline-sm text-headline-sm text-text-primary mb-1">Face Not Centered</div>
+<p class="font-body-md text-body-md text-text-secondary max-w-md">
+              Please adjust your camera angle or room lighting so your face remains clearly centered in the examination reticle.
+            </p>
+<div class="mt-space-md flex items-center gap-space-sm">
+<button class="px-5 py-2 rounded-full bg-primary text-on-primary font-label-md text-label-md shadow-sm hover:bg-primary-hover transition-colors">Adjust Alignment</button>
+<button class="px-4 py-2 rounded-full bg-surface text-text-primary font-label-md text-label-md shadow-sm hover:bg-surface-soft transition-colors">Lighting Tips</button>
+</div>
+</div>
+<div class="mt-space-sm flex items-center justify-between text-text-muted font-body-sm text-body-sm">
+<span>Non-obtrusive persistent camera alert</span>
+<span class="font-code-md text-code-md">AUTO_RESOLVE = TRUE</span>
+</div>
+</div>
+<!-- 1.2 Multiple Faces Detected Warning -->
+<div class="bg-surface rounded-[24px] p-space-lg shadow-sm flex flex-col justify-between relative overflow-hidden">
+<div class="flex items-center justify-between pb-space-md">
+<div class="flex items-center gap-space-xs">
+<span class="w-3 h-3 rounded-full bg-yellow"></span>
+<span class="font-label-md text-label-md text-text-primary font-semibold">State 02: Secondary Presence Detected</span>
+</div>
+<span class="font-code-md text-code-md text-text-muted bg-surface-soft px-2.5 py-0.5 rounded-full">Environmental Space</span>
+</div>
+<!-- Component Mockup: Environmental Perimeter Alert -->
+<div class="rounded-[20px] bg-yellow/25 p-space-lg flex flex-col md:flex-row items-center gap-space-lg">
+<div class="w-16 h-16 rounded-[18px] bg-surface flex items-center justify-center flex-shrink-0 shadow-sm">
+<span class="material-symbols-outlined text-text-primary text-[32px]">group_off</span>
+</div>
+<div class="space-y-space-xs text-left">
+<div class="flex items-center gap-2">
+<span class="font-headline-sm text-headline-sm text-text-primary">Secondary Presence In View</span>
+<span class="px-2.5 py-0.5 rounded-full bg-surface text-text-secondary font-label-sm text-label-sm shadow-sm">Calm Notice</span>
+</div>
+<p class="font-body-md text-body-md text-text-primary">
+                A secondary presence was detected in your room background. Please ensure only the registered examinee is present in the testing space to preserve testing validity.
+              </p>
+<div class="pt-2 flex items-center gap-space-sm">
+<button class="px-4 py-1.5 rounded-full bg-primary text-on-primary font-label-md text-label-md shadow-sm">I am now alone</button>
+<button class="px-3 py-1.5 rounded-full bg-surface text-text-secondary font-label-sm text-label-sm hover:text-text-primary transition-colors">Request Proctor Review</button>
+</div>
+</div>
+</div>
+<div class="mt-space-sm flex items-center justify-between text-text-muted font-body-sm text-body-sm">
+<span>Maintains calm; zero penalizing accusations</span>
+<span class="font-code-md text-code-md">CODE: AMB_PRESENCE_02</span>
+</div>
+</div>
+<!-- 1.3 Fullscreen Exited Overlay Banner -->
+<div class="bg-surface rounded-[24px] p-space-lg shadow-sm flex flex-col justify-between">
+<div class="flex items-center justify-between pb-space-md">
+<div class="flex items-center gap-space-xs">
+<span class="w-3 h-3 rounded-full bg-lavender"></span>
+<span class="font-label-md text-label-md text-text-primary font-semibold">State 03: Fullscreen Exited</span>
+</div>
+<span class="font-code-md text-code-md text-text-muted bg-surface-soft px-2.5 py-0.5 rounded-full">Focus Retention</span>
+</div>
+<div class="rounded-[20px] bg-lavender/35 p-space-lg flex flex-col gap-space-md">
+<div class="flex items-start gap-space-md">
+<div class="w-12 h-12 rounded-full bg-surface flex items-center justify-center flex-shrink-0 shadow-sm text-on-tertiary-fixed">
+<span class="material-symbols-outlined text-[24px]">fullscreen_exit</span>
+</div>
+<div class="space-y-1">
+<div class="font-headline-sm text-headline-sm text-text-primary">Fullscreen Mode Paused</div>
+<p class="font-body-md text-body-md text-text-primary">
+                  Your examination window was minimized or left fullscreen. Return to fullscreen mode to resume your examination timer and unlock question input.
+                </p>
+</div>
+</div>
+<div class="bg-surface/80 rounded-[16px] p-space-md flex items-center justify-between">
+<div class="flex items-center gap-space-sm">
+<span class="material-symbols-outlined text-secondary text-[20px]">lock_clock</span>
+<span class="font-body-sm text-body-sm text-text-secondary">Exam timer paused safely • 00:42:15 remaining</span>
+</div>
+<button class="px-5 py-2 rounded-full bg-primary text-on-primary font-label-md text-label-md shadow-sm hover:bg-primary-hover transition-colors flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[16px]">fullscreen</span> Return to Fullscreen
+              </button>
+</div>
+</div>
+<div class="mt-space-sm flex items-center justify-between text-text-muted font-body-sm text-body-sm">
+<span>Timer pauses automatically without penalty</span>
+<span class="font-code-md text-code-md">AUTO_PAUSE_ON_BLUR</span>
+</div>
+</div>
+<!-- 1.4 Tab Switched State -->
+<div class="bg-surface rounded-[24px] p-space-lg shadow-sm flex flex-col justify-between">
+<div class="flex items-center justify-between pb-space-md">
+<div class="flex items-center gap-space-xs">
+<span class="w-3 h-3 rounded-full bg-peach"></span>
+<span class="font-label-md text-label-md text-text-primary font-semibold">State 04: Active Tab Switched</span>
+</div>
+<span class="font-code-md text-code-md text-text-muted bg-surface-soft px-2.5 py-0.5 rounded-full">Window Telemetry</span>
+</div>
+<div class="rounded-[20px] bg-surface-soft p-space-lg space-y-space-md">
+<div class="flex items-center gap-space-md">
+<div class="w-12 h-12 rounded-full bg-peach/60 flex items-center justify-center flex-shrink-0">
+<span class="material-symbols-outlined text-text-primary text-[24px]">tab_unselected</span>
+</div>
+<div>
+<div class="font-headline-sm text-headline-sm text-text-primary">Active Browser Tab Changed</div>
+<div class="font-body-sm text-body-sm text-text-secondary">Candidate window lost foreground active status</div>
+</div>
+</div>
+<p class="font-body-md text-body-md text-text-primary">
+              Active browser tab changed. Your exam input is momentarily paused until focus is restored to the primary Proxam assessment window.
+            </p>
+<div class="flex items-center justify-between pt-1">
+<span class="font-label-sm text-label-sm text-text-secondary bg-surface px-3 py-1.5 rounded-full shadow-sm">
+                Recorded incident: Switch 1 of 3 permitted
+              </span>
+<button class="px-5 py-2 rounded-full bg-primary text-on-primary font-label-md text-label-md hover:bg-primary-hover transition-colors">
+                Restore Focus Now
+              </button>
+</div>
+</div>
+<div class="mt-space-sm flex items-center justify-between text-text-muted font-body-sm text-body-sm">
+<span>Gentle telemetry notification with soft reset</span>
+<span class="font-code-md text-code-md">DOM: VISIBILITY_CHANGE</span>
+</div>
+</div>
+<!-- 1.5 Camera Disconnected Banner -->
+<div class="bg-surface rounded-[24px] p-space-lg shadow-sm flex flex-col justify-between">
+<div class="flex items-center justify-between pb-space-md">
+<div class="flex items-center gap-space-xs">
+<span class="w-3 h-3 rounded-full bg-pink"></span>
+<span class="font-label-md text-label-md text-text-primary font-semibold">State 05: Video Feed Interrupted</span>
+</div>
+<span class="font-code-md text-code-md text-text-muted bg-surface-soft px-2.5 py-0.5 rounded-full">Hardware Stream</span>
+</div>
+<div class="rounded-[20px] bg-pink/20 p-space-lg space-y-space-md">
+<div class="flex items-start gap-space-md">
+<div class="w-12 h-12 rounded-full bg-surface flex items-center justify-center flex-shrink-0 shadow-sm text-error">
+<span class="material-symbols-outlined text-[24px]">videocam_off</span>
+</div>
+<div class="space-y-1">
+<div class="font-headline-sm text-headline-sm text-text-primary">Video Feed Interrupted</div>
+<p class="font-body-md text-body-md text-text-primary">
+                  Camera disconnected. Video feed interrupted. Please check your webcam connection to continue your assessment session.
+                </p>
+</div>
+</div>
+<div class="bg-surface/80 rounded-[16px] p-space-md flex flex-col sm:flex-row items-center justify-between gap-space-sm">
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-danger animate-pulse"></span>
+<span class="font-code-md text-code-md text-text-secondary">Stream: /dev/video0 missing</span>
+</div>
+<div class="flex items-center gap-2">
+<button class="px-4 py-1.5 rounded-full bg-surface text-text-primary font-label-sm text-label-sm shadow-sm hover:bg-surface-container transition-colors">Select Another Cam</button>
+<button class="px-4 py-1.5 rounded-full bg-primary text-on-primary font-label-sm text-label-sm shadow-sm hover:bg-primary-hover transition-colors">Reconnect Feed</button>
+</div>
+</div>
+</div>
+<div class="mt-space-sm flex items-center justify-between text-text-muted font-body-sm text-body-sm">
+<span>Hardware unplug failover guide</span>
+<span class="font-code-md text-code-md">WEBRTC_TRACK_ENDED</span>
+</div>
+</div>
+<!-- 1.6 Network Disconnected (AES-256 local cache guarantee) -->
+<div class="bg-surface rounded-[24px] p-space-lg shadow-sm flex flex-col justify-between">
+<div class="flex items-center justify-between pb-space-md">
+<div class="flex items-center gap-space-xs">
+<span class="w-3 h-3 rounded-full bg-blue"></span>
+<span class="font-label-md text-label-md text-text-primary font-semibold">State 06: Network Offline • Safe Cache</span>
+</div>
+<span class="font-code-md text-code-md text-text-muted bg-surface-soft px-2.5 py-0.5 rounded-full">Data Assurance</span>
+</div>
+<div class="rounded-[20px] bg-blue/30 p-space-lg space-y-space-md">
+<div class="flex items-start gap-space-md">
+<div class="w-12 h-12 rounded-full bg-surface flex items-center justify-center flex-shrink-0 shadow-sm text-text-primary">
+<span class="material-symbols-outlined text-[24px]">wifi_off</span>
+</div>
+<div class="space-y-1">
+<div class="flex items-center gap-2">
+<span class="font-headline-sm text-headline-sm text-text-primary">Connection Interrupted</span>
+<span class="px-2.5 py-0.5 rounded-full bg-mint font-label-sm text-label-sm text-on-secondary-fixed">Local Cache Active</span>
+</div>
+<p class="font-body-md text-body-md text-text-primary">
+                  Connection interrupted. Your answers are saved locally (AES-256 local cache). Reconnecting to Proxam verification node...
+                </p>
+</div>
+</div>
+<!-- Sync Status Indicator -->
+<div class="bg-surface/90 rounded-[16px] p-space-md flex items-center justify-between">
+<div class="flex items-center gap-3">
+<svg class="w-5 h-5 animate-spin text-text-secondary" fill="none" viewbox="0 0 24 24">
+<circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+<path class="opacity-75" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" fill="currentColor"></path>
+</svg>
+<div class="flex flex-col">
+<span class="font-label-md text-label-md text-text-primary">Attempting reconnect (attempt 3/10)</span>
+<span class="font-body-sm text-body-sm text-text-secondary">42 answers safely stored in encrypted sandbox</span>
+</div>
+</div>
+<button class="px-4 py-2 rounded-full bg-surface-container hover:bg-surface-container-high text-text-primary font-label-sm text-label-sm transition-colors">
+                Force Ping
+              </button>
+</div>
+</div>
+<div class="mt-space-sm flex items-center justify-between text-text-muted font-body-sm text-body-sm">
+<span>Preserves high psychological safety during wifi dropouts</span>
+<span class="font-code-md text-code-md">INDEXED_DB: ENCRYPTED</span>
+</div>
+</div>
+</div>
+<!-- 1.7 Dual Permission Banner Prompt (Microphone & Camera Denied Step-by-Step Card) -->
+<div class="bg-surface rounded-[28px] p-space-lg md:p-space-xl shadow-sm">
+<div class="flex items-center justify-between pb-space-lg">
+<div class="flex items-center gap-space-xs">
+<span class="w-3 h-3 rounded-full bg-peach"></span>
+<span class="font-headline-md text-headline-md text-text-primary">State 07: Browser Hardware Permission Denied</span>
+</div>
+<span class="font-code-md text-code-md text-secondary bg-mint/50 px-3 py-1 rounded-full font-semibold">Self-Healing Guided Flow</span>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-space-lg">
+<!-- Main Prompt Card -->
+<div class="lg:col-span-2 bg-surface-soft rounded-[22px] p-space-lg flex flex-col justify-between">
+<div class="space-y-space-md">
+<div class="flex items-center gap-space-md">
+<div class="w-12 h-12 rounded-full bg-peach flex items-center justify-center text-text-primary shadow-sm">
+<span class="material-symbols-outlined text-[26px]">lock</span>
+</div>
+<div>
+<div class="font-headline-sm text-headline-sm text-text-primary">Camera &amp; Microphone Permission Blocked</div>
+<div class="font-body-sm text-body-sm text-text-secondary">Your browser currently prevents Proxam from accessing video and audio sensors.</div>
+</div>
+</div>
+<!-- Step by Step Unblock Guide -->
+<div class="grid grid-cols-1 sm:grid-cols-3 gap-space-md pt-space-xs">
+<div class="bg-surface p-space-md rounded-[16px] shadow-sm space-y-1">
+<div class="font-label-sm text-label-sm text-secondary font-bold uppercase">Step 01</div>
+<div class="font-label-lg text-label-lg text-text-primary">Click Address Lock</div>
+<div class="font-body-sm text-body-sm text-text-secondary">Click the lock or tune icon beside proxam.ai in your browser URL bar.</div>
+</div>
+<div class="bg-surface p-space-md rounded-[16px] shadow-sm space-y-1">
+<div class="font-label-sm text-label-sm text-secondary font-bold uppercase">Step 02</div>
+<div class="font-label-lg text-label-lg text-text-primary">Toggle Permissions</div>
+<div class="font-body-sm text-body-sm text-text-secondary">Switch Camera and Microphone sliders from "Block" to "Allow".</div>
+</div>
+<div class="bg-surface p-space-md rounded-[16px] shadow-sm space-y-1">
+<div class="font-label-sm text-label-sm text-secondary font-bold uppercase">Step 03</div>
+<div class="font-label-lg text-label-lg text-text-primary">Refresh Enclave</div>
+<div class="font-body-sm text-body-sm text-text-secondary">Click the re-check button below. Your inputs will restore smoothly.</div>
+</div>
+</div>
+</div>
+<div class="pt-space-lg flex flex-wrap items-center gap-space-sm">
+<button class="px-6 py-2.5 rounded-full bg-primary text-on-primary font-label-lg text-label-lg hover:bg-primary-hover transition-colors shadow-sm flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px]">refresh</span> Check Permissions Again
+              </button>
+<button class="px-5 py-2.5 rounded-full bg-surface text-text-primary font-label-lg text-label-lg shadow-sm hover:bg-surface-container transition-colors">
+                Run Audio/Video Diagnostics
+              </button>
+</div>
+</div>
+<!-- Interactive Browser Sandbox Diagram -->
+<div class="bg-surface-container-low rounded-[22px] p-space-lg flex flex-col justify-center items-center text-center space-y-space-md">
+<div class="w-full bg-surface rounded-[16px] p-3 shadow-sm flex items-center gap-2">
+<span class="material-symbols-outlined text-text-secondary text-[18px]">lock</span>
+<span class="font-code-md text-code-md text-text-primary flex-1 text-left truncate">https://exam.proxam.ai/session/4819</span>
+<span class="w-2 h-2 rounded-full bg-peach"></span>
+</div>
+<div class="w-full space-y-2 text-left">
+<div class="bg-surface p-3 rounded-[12px] flex items-center justify-between shadow-sm">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px] text-text-secondary">videocam</span>
+<span class="font-label-md text-label-md text-text-primary">Camera</span>
+</div>
+<span class="px-2.5 py-0.5 rounded-full bg-peach font-label-sm text-label-sm text-text-primary">Blocked</span>
+</div>
+<div class="bg-surface p-3 rounded-[12px] flex items-center justify-between shadow-sm">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px] text-text-secondary">mic</span>
+<span class="font-label-md text-label-md text-text-primary">Microphone</span>
+</div>
+<span class="px-2.5 py-0.5 rounded-full bg-peach font-label-sm text-label-sm text-text-primary">Blocked</span>
+</div>
+</div>
+<div class="font-body-sm text-body-sm text-text-muted">
+              Standardized prompt adapts automatically to Safari, Edge, Chrome, and Firefox media query flags.
+            </div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- SECTION 2: CONTEXTUAL CONFIRMATION & SESSION MODALS (STATIC SPEC CARDS & INTERACTIVE SHELL) -->
+<section class="catalog-section w-full px-margin py-space-xl bg-surface-bright" id="section-dialogs">
+<div class="max-w-7xl mx-auto space-y-space-xl">
+<!-- Section Meta Header -->
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-space-md">
+<div>
+<span class="font-code-md text-code-md text-secondary font-semibold uppercase tracking-wider">Catalog Enclave 02</span>
+<h2 class="font-headline-lg text-headline-lg text-text-primary tracking-tight mt-1">Contextual Confirmation &amp; Session Dialogs</h2>
+<p class="font-body-md text-body-md text-text-secondary max-w-3xl mt-1">
+            Carefully scaled modals built with warm ivory canvases, ambient drop shadows, and 24px-28px radius contours. Clear primary affirmative actions contrasted against soft outline dismissal.
+          </p>
+</div>
+<div class="font-label-sm text-label-sm text-text-muted">
+          Click buttons inside to view interactive feedback states
+        </div>
+</div>
+<!-- 4 Modal States Displayed in a Bento Grid -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-space-lg">
+<!-- 2.1 Logout Confirmation Dialog -->
+<div class="bg-surface-soft rounded-[28px] p-space-lg flex flex-col justify-between shadow-sm">
+<div class="flex items-center justify-between pb-space-md">
+<span class="font-label-md text-label-md text-text-primary font-semibold">State 08: Logout Confirmation</span>
+<span class="font-code-md text-code-md text-text-muted">DIALOG_LOGOUT</span>
+</div>
+<!-- Dialog Card Render -->
+<div class="bg-surface rounded-[24px] p-space-lg shadow-md space-y-space-md my-auto">
+<div class="w-12 h-12 rounded-full bg-surface-soft flex items-center justify-center text-text-primary">
+<span class="material-symbols-outlined text-[24px]">logout</span>
+</div>
+<div class="space-y-1">
+<div class="font-headline-md text-headline-md text-text-primary">Sign out of your session?</div>
+<p class="font-body-md text-body-md text-text-secondary">
+                Any active pre-flight tokens will be safely cleared. If an exam is currently in-flight, ensure your answers are finalized before disconnecting.
+              </p>
+</div>
+<div class="pt-space-xs flex items-center justify-end gap-space-sm">
+<button class="px-5 py-2.5 rounded-full bg-surface hover:bg-surface-soft text-text-primary font-label-md text-label-md shadow-sm transition-colors" onclick="showMockActionMessage('Logout cancelled. Session remains active.')">
+                Cancel
+              </button>
+<button class="px-6 py-2.5 rounded-full bg-primary text-on-primary font-label-md text-label-md hover:bg-primary-hover shadow-sm transition-colors" onclick="showMockActionMessage('Signed out successfully. Token cache wiped.')">
+                Sign Out
+              </button>
+</div>
+</div>
+<div class="pt-space-md text-center text-text-muted font-label-sm text-label-sm">
+            Pill Radius 999px • 44px Button Height • Secondary Neutral Outlines
+          </div>
+</div>
+<!-- 2.2 Delete Assessment Dialog -->
+<div class="bg-surface-soft rounded-[28px] p-space-lg flex flex-col justify-between shadow-sm">
+<div class="flex items-center justify-between pb-space-md">
+<span class="font-label-md text-label-md text-text-primary font-semibold">State 09: Delete Assessment Confirmation</span>
+<span class="font-code-md text-code-md text-text-muted">DIALOG_ARCHIVE</span>
+</div>
+<!-- Dialog Card Render -->
+<div class="bg-surface rounded-[24px] p-space-lg shadow-md space-y-space-md my-auto">
+<div class="w-12 h-12 rounded-full bg-pink/40 flex items-center justify-center text-error">
+<span class="material-symbols-outlined text-[24px]">delete_sweep</span>
+</div>
+<div class="space-y-1">
+<div class="font-headline-md text-headline-md text-text-primary">Delete this assessment?</div>
+<p class="font-body-md text-body-md text-text-secondary">
+                This will permanently archive the MCQ items, candidate attempts, and generated access codes. This action cannot be reversed by candidates.
+              </p>
+</div>
+<div class="bg-pink/20 p-space-sm rounded-[14px] flex items-center gap-2">
+<span class="material-symbols-outlined text-error text-[18px]">info</span>
+<span class="font-body-sm text-body-sm text-text-primary font-medium">Affects 148 scheduled examinees</span>
+</div>
+<div class="pt-space-xs flex items-center justify-end gap-space-sm">
+<button class="px-5 py-2.5 rounded-full bg-surface hover:bg-surface-soft text-text-primary font-label-md text-label-md shadow-sm transition-colors" onclick="showMockActionMessage('Deletion aborted. Assessment retained.')">
+                Cancel
+              </button>
+<button class="px-6 py-2.5 rounded-full bg-error text-on-error font-label-md text-label-md hover:opacity-90 shadow-sm transition-colors" onclick="showMockActionMessage('Assessment PXAM-819 moved to permanent archive.')">
+                Delete Assessment
+              </button>
+</div>
+</div>
+<div class="pt-space-md text-center text-text-muted font-label-sm text-label-sm">
+            Destructive Accent `#E9A4A4` Fill with High-Contrast Text
+          </div>
+</div>
+<!-- 2.3 Session Expired Modal -->
+<div class="bg-surface-soft rounded-[28px] p-space-lg flex flex-col justify-between shadow-sm">
+<div class="flex items-center justify-between pb-space-md">
+<span class="font-label-md text-label-md text-text-primary font-semibold">State 10: Session Expired (Inactivity)</span>
+<span class="font-code-md text-code-md text-text-muted">TIMEOUT_REAUTH</span>
+</div>
+<!-- Dialog Card Render -->
+<div class="bg-surface rounded-[24px] p-space-lg shadow-md space-y-space-md my-auto">
+<div class="w-12 h-12 rounded-full bg-yellow/40 flex items-center justify-center text-text-primary">
+<span class="material-symbols-outlined text-[24px]">history</span>
+</div>
+<div class="space-y-1">
+<div class="font-headline-md text-headline-md text-text-primary">Session Expired</div>
+<p class="font-body-md text-body-md text-text-secondary">
+                Your authentication session has expired due to inactivity. Re-authenticate to keep your current progress and restore test sync.
+              </p>
+</div>
+<div class="bg-surface-soft p-space-sm rounded-[14px] flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-secondary text-[18px]">verified</span>
+<span class="font-body-sm text-body-sm text-text-secondary">Autosave: 12 seconds ago</span>
+</div>
+<span class="font-code-md text-code-md text-text-primary font-semibold">User: candidate_94</span>
+</div>
+<div class="pt-space-xs flex items-center justify-end gap-space-sm">
+<button class="w-full sm:w-auto px-6 py-2.5 rounded-full bg-primary text-on-primary font-label-md text-label-md hover:bg-primary-hover shadow-sm transition-colors flex items-center justify-center gap-2" onclick="showMockActionMessage('SSO Re-authentication handshake initialized...')">
+<span class="material-symbols-outlined text-[16px]">key</span> Re-authenticate Session
+              </button>
+</div>
+</div>
+<div class="pt-space-md text-center text-text-muted font-label-sm text-label-sm">
+            Protects assessment responses without dumping session cache
+          </div>
+</div>
+<!-- 2.4 Unauthorized Access Drawer / Dialog -->
+<div class="bg-surface-soft rounded-[28px] p-space-lg flex flex-col justify-between shadow-sm">
+<div class="flex items-center justify-between pb-space-md">
+<span class="font-label-md text-label-md text-text-primary font-semibold">State 11: Unauthorized Enclave Drawer</span>
+<span class="font-code-md text-code-md text-text-muted">AUTH_FORBIDDEN_403</span>
+</div>
+<!-- Dialog Card Render -->
+<div class="bg-surface rounded-[24px] p-space-lg shadow-md space-y-space-md my-auto">
+<div class="flex items-start justify-between">
+<div class="w-12 h-12 rounded-full bg-lavender/40 flex items-center justify-center text-text-primary">
+<span class="material-symbols-outlined text-[24px]">gavel</span>
+</div>
+<span class="font-code-md text-code-md bg-surface-soft px-3 py-1 rounded-full text-text-secondary font-medium">Role: Examinee</span>
+</div>
+<div class="space-y-1">
+<div class="font-headline-md text-headline-md text-text-primary">Restricted Access</div>
+<p class="font-body-md text-body-md text-text-secondary">
+                You do not have permission to view this administrative enclave. Live proctor supervisor telemetry is reserved for verified proctors and department deans.
+              </p>
+</div>
+<div class="bg-surface-container-low p-space-sm rounded-[14px] flex items-center gap-2">
+<span class="material-symbols-outlined text-text-secondary text-[18px]">admin_panel_settings</span>
+<span class="font-body-sm text-body-sm text-text-secondary">Required credential: <code class="font-code-md text-text-primary font-bold">supervisor:inspect</code></span>
+</div>
+<div class="pt-space-xs flex items-center justify-end gap-space-sm">
+<button class="px-6 py-2.5 rounded-full bg-primary text-on-primary font-label-md text-label-md hover:bg-primary-hover shadow-sm transition-colors" onclick="showMockActionMessage('Returning to assigned student portal.')">
+                Back to Safe Workspace
+              </button>
+</div>
+</div>
+<div class="pt-space-md text-center text-text-muted font-label-sm text-label-sm">
+            Polite Institutional Demarcation • Zero Intimidation
+          </div>
+</div>
+</div>
+</div>
+</section>
+<!-- SECTION 3: INLINE ERRORS & FORM FEEDBACK (TEST CODE ENTRY) -->
+<section class="catalog-section w-full px-margin py-space-xl bg-surface-container-low" id="section-forms">
+<div class="max-w-7xl mx-auto space-y-space-xl">
+<!-- Section Meta Header -->
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-space-md">
+<div>
+<span class="font-code-md text-code-md text-secondary font-semibold uppercase tracking-wider">Catalog Enclave 03</span>
+<h2 class="font-headline-lg text-headline-lg text-text-primary tracking-tight mt-1">Inline Errors &amp; Form Input Telemetry</h2>
+<p class="font-body-md text-body-md text-text-secondary max-w-3xl mt-1">
+            Exam passcodes, proctor keys, and candidate credentials with 14px rounded fields, subtle 1px hairline borders, and assistive guidance indicators.
+          </p>
+</div>
+<div class="flex items-center gap-2 bg-surface px-4 py-2 rounded-full shadow-sm text-label-sm font-label-sm text-text-primary">
+<span class="material-symbols-outlined text-secondary text-[16px]">check_circle</span>
+          Auto-formatting &amp; Sanitization Active
+        </div>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-space-lg">
+<!-- 3.1 Invalid Test Code Inline Error -->
+<div class="bg-surface rounded-[24px] p-space-lg shadow-sm space-y-space-md">
+<div class="flex items-center justify-between">
+<span class="font-label-md text-label-md text-text-primary font-semibold">State 12: Invalid Code</span>
+<span class="font-code-md text-code-md text-error bg-pink/30 px-2 py-0.5 rounded-full">Format Error</span>
+</div>
+<div class="space-y-2">
+<label class="font-label-md text-label-md text-text-primary block">Examination Passcode</label>
+<div class="relative">
+<input class="w-full h-12 px-4 rounded-[14px] bg-pink/10 text-text-primary font-code-md text-code-md focus:outline-none shadow-sm flex items-center pr-10" readonly="" type="text" value="PXAM-99999"/>
+<span class="material-symbols-outlined absolute right-3 top-3 text-error text-[20px]">error_outline</span>
+</div>
+<div class="flex items-start gap-1.5 pt-1 text-error">
+<span class="material-symbols-outlined text-[16px] mt-0.5 flex-shrink-0">report</span>
+<p class="font-body-sm text-body-sm leading-tight">
+                Code 'PXAM-99999' not recognized. Please double check the 10-character code provided by your instructor.
+              </p>
+</div>
+</div>
+<div class="bg-surface-soft p-space-sm rounded-[14px] text-text-secondary font-body-sm text-body-sm">
+            Accepted format: <span class="font-code-md text-text-primary font-semibold">PXAM-XXXXX</span> (Case-insensitive)
+          </div>
+</div>
+<!-- 3.2 Expired Test Code Inline Error -->
+<div class="bg-surface rounded-[24px] p-space-lg shadow-sm space-y-space-md">
+<div class="flex items-center justify-between">
+<span class="font-label-md text-label-md text-text-primary font-semibold">State 13: Expired Code</span>
+<span class="font-code-md text-code-md text-text-secondary bg-peach/40 px-2 py-0.5 rounded-full">Window Closed</span>
+</div>
+<div class="space-y-2">
+<label class="font-label-md text-label-md text-text-primary block">Examination Passcode</label>
+<div class="relative">
+<input class="w-full h-12 px-4 rounded-[14px] bg-peach/20 text-text-primary font-code-md text-code-md focus:outline-none shadow-sm flex items-center pr-10" readonly="" type="text" value="PXAM-4T2K1"/>
+<span class="material-symbols-outlined absolute right-3 top-3 text-text-secondary text-[20px]">event_busy</span>
+</div>
+<div class="flex items-start gap-1.5 pt-1 text-text-primary">
+<span class="material-symbols-outlined text-warning text-[16px] mt-0.5 flex-shrink-0">schedule</span>
+<p class="font-body-sm text-body-sm leading-tight">
+                Code 'PXAM-4T2K1' expired on Oct 20, 2026. The examination submission window has closed.
+              </p>
+</div>
+</div>
+<div class="bg-surface-soft p-space-sm rounded-[14px] flex items-center justify-between text-body-sm text-body-sm">
+<span class="text-text-secondary">Contact Invigilator:</span>
+<a class="font-label-sm text-label-sm text-text-primary underline" href="mailto:support@proxam.ai">Request Makeup Window</a>
+</div>
+</div>
+<!-- 3.3 Valid Input & Active Entry Field -->
+<div class="bg-surface rounded-[24px] p-space-lg shadow-sm space-y-space-md">
+<div class="flex items-center justify-between">
+<span class="font-label-md text-label-md text-text-primary font-semibold">State 14: Validated Entry Field</span>
+<span class="font-code-md text-code-md text-secondary bg-mint/50 px-2 py-0.5 rounded-full">Verified Code</span>
+</div>
+<div class="space-y-2">
+<label class="font-label-md text-label-md text-text-primary block">Examination Passcode</label>
+<div class="relative">
+<input class="w-full h-12 px-4 rounded-[14px] bg-mint/20 text-text-primary font-code-md text-code-md focus:outline-none shadow-sm pr-10" id="interactive-code-input" placeholder="PXAM-XXXXX" type="text" value="PXAM-7K4Q2"/>
+<span class="material-symbols-outlined absolute right-3 top-3 text-secondary text-[20px]">check_circle</span>
+</div>
+<div class="flex items-center gap-1.5 pt-1 text-secondary">
+<span class="material-symbols-outlined text-[16px]">verified</span>
+<p class="font-body-sm text-body-sm font-medium">
+                Passcode verified: "Advanced Cognitive Neurobiology Midterm"
+              </p>
+</div>
+</div>
+<button class="w-full h-11 rounded-full bg-primary text-on-primary font-label-md text-label-md hover:bg-primary-hover shadow-sm transition-colors flex items-center justify-center gap-2" onclick="handleCodeEntrySubmit()">
+            Enter Assessment Enclave <span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+</button>
+</div>
+</div>
+</div>
+</section>
+<!-- SECTION 4: TOAST NOTIFICATIONS STACK -->
+<section class="catalog-section w-full px-margin py-space-xl bg-surface-bright" id="section-toasts">
+<div class="max-w-7xl mx-auto space-y-space-xl">
+<!-- Section Meta Header -->
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-space-md">
+<div>
+<span class="font-code-md text-code-md text-secondary font-semibold uppercase tracking-wider">Catalog Enclave 04</span>
+<h2 class="font-headline-lg text-headline-lg text-text-primary tracking-tight mt-1">Toast Notification Stacks</h2>
+<p class="font-body-md text-body-md text-text-secondary max-w-3xl mt-1">
+            Transient floating feedback pills with pastel accents, ambient shadows, and dismissible controls. Click any toast to trigger active dismiss animations.
+          </p>
+</div>
+<button class="px-5 py-2.5 rounded-full bg-surface-soft hover:bg-surface-container text-text-primary font-label-md text-label-md shadow-sm transition-colors flex items-center gap-2" onclick="spawnSampleToast()">
+<span class="material-symbols-outlined text-[18px]">add_alert</span> Trigger New Toast
+        </button>
+</div>
+<!-- Static Display of Requested Toasts in Context -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-space-lg">
+<!-- 4.1 Test Code Copied Toast -->
+<div class="bg-surface rounded-[24px] p-space-lg shadow-sm space-y-space-md relative overflow-hidden" id="toast-demo-1">
+<div class="flex items-center justify-between">
+<span class="font-label-md text-label-md text-text-primary font-semibold">State 15: Clipboard Confirmation</span>
+<span class="font-code-md text-code-md text-text-muted">TOAST_CLIPBOARD</span>
+</div>
+<!-- Toast Preview Pill -->
+<div class="bg-surface-soft p-space-md rounded-[20px] flex items-center justify-center">
+<div class="inline-flex items-center gap-space-sm px-4 py-2.5 rounded-full bg-mint shadow-md text-text-primary">
+<span class="w-6 h-6 rounded-full bg-secondary text-on-secondary flex items-center justify-center">
+<span class="material-symbols-outlined text-[14px]">check</span>
+</span>
+<span class="font-label-md text-label-md font-semibold">Test code copied to clipboard</span>
+<button class="text-text-secondary hover:text-text-primary ml-1 flex items-center" onclick="dismissToastCard('toast-demo-1')">
+<span class="material-symbols-outlined text-[16px]">close</span>
+</button>
+</div>
+</div>
+<div class="font-body-sm text-body-sm text-text-muted text-center">
+            Mint Pastel Pill • Duration 3500ms • Native Clipboard API
+          </div>
+</div>
+<!-- 4.2 Test Created Successfully Toast -->
+<div class="bg-surface rounded-[24px] p-space-lg shadow-sm space-y-space-md relative overflow-hidden" id="toast-demo-2">
+<div class="flex items-center justify-between">
+<span class="font-label-md text-label-md text-text-primary font-semibold">State 16: Entity Creation Success</span>
+<span class="font-code-md text-code-md text-text-muted">TOAST_EXAM_CREATED</span>
+</div>
+<!-- Toast Preview Pill -->
+<div class="bg-surface-soft p-space-md rounded-[20px] flex items-center justify-center">
+<div class="inline-flex items-center gap-space-sm px-4 py-2.5 rounded-full bg-mint-strong/40 shadow-md text-text-primary">
+<span class="material-symbols-outlined text-secondary text-[20px]">check_circle</span>
+<div class="flex items-center gap-2">
+<span class="font-label-md text-label-md font-semibold">Test created! <code class="font-code-md">PXAM-7K4Q2</code> is live</span>
+<a class="font-label-sm text-label-sm underline text-secondary hover:text-text-primary flex items-center gap-0.5" href="#" onclick="showMockActionMessage('Opening candidate invite link generator...')">
+                  Share <span class="material-symbols-outlined text-[12px]">open_in_new</span>
+</a>
+</div>
+<button class="text-text-secondary hover:text-text-primary ml-1 flex items-center" onclick="dismissToastCard('toast-demo-2')">
+<span class="material-symbols-outlined text-[16px]">close</span>
+</button>
+</div>
+</div>
+<div class="font-body-sm text-body-sm text-text-muted text-center">
+            Embedded Quick Action Share Link • Auto-persists until dismiss
+          </div>
+</div>
+<!-- 4.3 Profile Settings Updated Toast -->
+<div class="bg-surface rounded-[24px] p-space-lg shadow-sm space-y-space-md relative overflow-hidden" id="toast-demo-3">
+<div class="flex items-center justify-between">
+<span class="font-label-md text-label-md text-text-primary font-semibold">State 17: User Profile Settings</span>
+<span class="font-code-md text-code-md text-text-muted">TOAST_PROFILE_SAVE</span>
+</div>
+<!-- Toast Preview Pill -->
+<div class="bg-surface-soft p-space-md rounded-[20px] flex items-center justify-center">
+<div class="inline-flex items-center gap-space-sm px-4 py-2.5 rounded-full bg-lavender/70 shadow-md text-text-primary">
+<span class="material-symbols-outlined text-on-tertiary-fixed text-[20px]">manage_accounts</span>
+<span class="font-label-md text-label-md font-semibold">Profile settings updated</span>
+<span class="px-2 py-0.5 rounded-full bg-surface/80 font-label-sm text-label-sm text-text-secondary">Sync OK</span>
+<button class="text-text-secondary hover:text-text-primary ml-1 flex items-center" onclick="dismissToastCard('toast-demo-3')">
+<span class="material-symbols-outlined text-[16px]">close</span>
+</button>
+</div>
+</div>
+<div class="font-body-sm text-body-sm text-text-muted text-center">
+            Pale Lavender Pill • Verified Badge Indicator
+          </div>
+</div>
+</div>
+</div>
+</section>
+<!-- SECTION 5: STANDARD SYSTEM STATUS & FALLBACK VIEWS -->
+<section class="catalog-section w-full px-margin py-space-xl bg-surface-container-low" id="section-fallbacks">
+<div class="max-w-7xl mx-auto space-y-space-xl">
+<!-- Section Meta Header -->
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-space-md">
+<div>
+<span class="font-code-md text-code-md text-secondary font-semibold uppercase tracking-wider">Catalog Enclave 05</span>
+<h2 class="font-headline-lg text-headline-lg text-text-primary tracking-tight mt-1">Standard System Status &amp; Fallbacks</h2>
+<p class="font-body-md text-body-md text-text-secondary max-w-3xl mt-1">
+            Warm, humanized fallback panels designed to replace cold browser error screens. Featuring shimmers, zero-state nudges, and resilient error recovery links.
+          </p>
+</div>
+<span class="font-code-md text-code-md text-text-muted bg-surface px-3 py-1.5 rounded-full shadow-sm">HTTP 404 • HTTP 500 • Skeletons • Zero States</span>
+</div>
+<!-- Bento Grid for 4 Core Fallbacks -->
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-space-lg">
+<!-- 5.1 404 Not Found Panel -->
+<div class="bg-surface rounded-[28px] p-space-lg md:p-space-xl shadow-sm flex flex-col justify-between">
+<div class="flex items-center justify-between pb-space-md">
+<span class="font-label-md text-label-md text-text-primary font-semibold">State 18: 404 Assessment Not Found</span>
+<span class="font-code-md text-code-md text-text-muted bg-surface-soft px-3 py-0.5 rounded-full">HTTP_STATUS_404</span>
+</div>
+<div class="my-auto py-space-lg text-center flex flex-col items-center max-w-md mx-auto space-y-space-md">
+<!-- Decorative Pastel SVG Compass Illustration -->
+<div class="w-24 h-24 rounded-full bg-peach/40 flex items-center justify-center shadow-inner relative">
+<svg class="w-14 h-14 text-text-primary" fill="none" viewbox="0 0 48 48">
+<circle cx="24" cy="24" r="20" stroke="currentColor" stroke-width="2.5"></circle>
+<polygon fill="currentColor" points="24,10 29,24 24,21 19,24"></polygon>
+<polygon class="opacity-40" fill="currentColor" points="24,38 29,24 24,27 19,24"></polygon>
+<circle cx="24" cy="24" fill="currentColor" r="3"></circle>
+</svg>
+</div>
+<div class="space-y-1">
+<h3 class="font-headline-md text-headline-md text-text-primary">Assessment or Page Not Found</h3>
+<p class="font-body-md text-body-md text-text-secondary">
+                The link you followed may be incorrect, expired, or relocated to an archived testing semester.
+              </p>
+</div>
+<div class="flex flex-wrap items-center justify-center gap-space-sm pt-space-xs">
+<button class="px-6 py-2.5 rounded-full bg-primary text-on-primary font-label-md text-label-md hover:bg-primary-hover shadow-sm transition-colors" onclick="showMockActionMessage('Redirecting to Proxam Central Dashboard...')">
+                Return to Dashboard
+              </button>
+<button class="px-5 py-2.5 rounded-full bg-surface-soft hover:bg-surface-container text-text-primary font-label-md text-label-md shadow-sm transition-colors" onclick="showMockActionMessage('Opening exam code search drawer...')">
+                Search Test Code
+              </button>
+</div>
+</div>
+<div class="pt-space-md border-t-0 flex items-center justify-between text-text-muted font-label-sm text-label-sm">
+<span>Canonical fallback route</span>
+<span class="font-code-md">ERROR_ROUTE_MISSING</span>
+</div>
+</div>
+<!-- 5.2 500 Server Error Panel -->
+<div class="bg-surface rounded-[28px] p-space-lg md:p-space-xl shadow-sm flex flex-col justify-between">
+<div class="flex items-center justify-between pb-space-md">
+<span class="font-label-md text-label-md text-text-primary font-semibold">State 19: 500 Internal Enclave Error</span>
+<span class="font-code-md text-code-md text-text-muted bg-surface-soft px-3 py-0.5 rounded-full">HTTP_STATUS_500</span>
+</div>
+<div class="my-auto py-space-lg text-center flex flex-col items-center max-w-md mx-auto space-y-space-md">
+<!-- Decorative Pastel SVG Enclave Calibrating Shield -->
+<div class="w-24 h-24 rounded-full bg-lavender/50 flex items-center justify-center shadow-inner relative">
+<svg class="w-14 h-14 text-on-tertiary-fixed" fill="none" viewbox="0 0 48 48">
+<path d="M24 4L8 10V22C8 32.5 14.8 42.3 24 44C33.2 42.3 40 32.5 40 22V10L24 4Z" stroke="currentColor" stroke-linejoin="round" stroke-width="2.5"></path>
+<circle cx="24" cy="24" r="6" stroke="currentColor" stroke-width="2.5"></circle>
+<path d="M24 14V16 M24 32V34 M14 24H16 M32 24H34" stroke="currentColor" stroke-linecap="round" stroke-width="2.5"></path>
+</svg>
+</div>
+<div class="space-y-1">
+<h3 class="font-headline-md text-headline-md text-text-primary">Temporary Connection Hiccup</h3>
+<p class="font-body-md text-body-md text-text-secondary">
+                Our secure verification enclave is recalibrating. Try refreshing in a moment. All submitted responses remain securely preserved.
+              </p>
+</div>
+<div class="flex flex-wrap items-center justify-center gap-space-sm pt-space-xs">
+<button class="px-6 py-2.5 rounded-full bg-primary text-on-primary font-label-md text-label-md hover:bg-primary-hover shadow-sm transition-colors flex items-center gap-2" onclick="showMockActionMessage('Handshake retry initiated. Rebuilding telemetry pipe...')">
+<span class="material-symbols-outlined text-[18px]">cached</span> Retry Handshake
+              </button>
+<button class="px-5 py-2.5 rounded-full bg-surface-soft hover:bg-surface-container text-text-primary font-label-md text-label-md shadow-sm transition-colors" onclick="showMockActionMessage('Proxam Node Health: All clusters operating nominal.')">
+                Check Cluster Status
+              </button>
+</div>
+</div>
+<div class="pt-space-md border-t-0 flex items-center justify-between text-text-muted font-label-sm text-label-sm">
+<span>Automatic load balancer failover active</span>
+<span class="font-code-md">TRACE: ENCLAVE_TIMEOUT_500</span>
+</div>
+</div>
+<!-- 5.3 Loading State (Pastel Skeleton Shimmer Cards) -->
+<div class="bg-surface rounded-[28px] p-space-lg md:p-space-xl shadow-sm flex flex-col justify-between">
+<div class="flex items-center justify-between pb-space-md">
+<span class="font-label-md text-label-md text-text-primary font-semibold">State 20: Loading State (Pastel Shimmer)</span>
+<span class="font-code-md text-code-md text-secondary bg-mint/50 px-3 py-0.5 rounded-full">SKELETON_STAGE</span>
+</div>
+<!-- Shimmer Skeleton Card Stack -->
+<div class="space-y-space-md py-space-md">
+<!-- Simulated Exam Header Loading -->
+<div class="p-space-md rounded-[20px] bg-surface-soft space-y-3 animate-pulse">
+<div class="flex items-center justify-between">
+<div class="h-5 w-40 bg-surface-container-high rounded-full"></div>
+<div class="h-6 w-20 bg-mint/60 rounded-full"></div>
+</div>
+<div class="h-3 w-3/4 bg-surface-container-high rounded-full"></div>
+</div>
+<!-- Simulated Question Card Loading with Options -->
+<div class="p-space-md rounded-[20px] bg-surface-soft space-y-space-md animate-pulse">
+<div class="space-y-2">
+<div class="h-4 w-28 bg-surface-container-high rounded-full"></div>
+<div class="h-6 w-full bg-surface-container-highest rounded-full"></div>
+<div class="h-6 w-5/6 bg-surface-container-highest rounded-full"></div>
+</div>
+<!-- Skeleton MCQ options -->
+<div class="space-y-2 pt-1">
+<div class="h-12 w-full bg-surface rounded-[14px] flex items-center px-4 gap-3">
+<div class="w-5 h-5 rounded-full bg-surface-container-high"></div>
+<div class="h-3 w-1/2 bg-surface-container-high rounded-full"></div>
+</div>
+<div class="h-12 w-full bg-surface rounded-[14px] flex items-center px-4 gap-3">
+<div class="w-5 h-5 rounded-full bg-surface-container-high"></div>
+<div class="h-3 w-2/3 bg-surface-container-high rounded-full"></div>
+</div>
+<div class="h-12 w-full bg-surface rounded-[14px] flex items-center px-4 gap-3">
+<div class="w-5 h-5 rounded-full bg-surface-container-high"></div>
+<div class="h-3 w-1/3 bg-surface-container-high rounded-full"></div>
+</div>
+</div>
+</div>
+</div>
+<div class="pt-space-md flex items-center justify-between text-text-muted font-label-sm text-label-sm">
+<span>Soft pastel pulse replaces jagged spinners</span>
+<span class="font-code-md">ASYNC_LOAD_QUESTIONS</span>
+</div>
+</div>
+<!-- 5.4 Empty State Panel -->
+<div class="bg-surface rounded-[28px] p-space-lg md:p-space-xl shadow-sm flex flex-col justify-between">
+<div class="flex items-center justify-between pb-space-md">
+<span class="font-label-md text-label-md text-text-primary font-semibold">State 21: Zero Records Empty State</span>
+<span class="font-code-md text-code-md text-text-muted bg-surface-soft px-3 py-0.5 rounded-full">EMPTY_RECORDS_0</span>
+</div>
+<div class="my-auto py-space-lg text-center flex flex-col items-center max-w-md mx-auto space-y-space-md">
+<!-- Decorative SVG Empty Paper Stack -->
+<div class="w-24 h-24 rounded-full bg-mint/50 flex items-center justify-center shadow-inner">
+<svg class="w-12 h-12 text-secondary" fill="none" viewbox="0 0 48 48">
+<rect height="32" rx="4" stroke="currentColor" stroke-width="2.5" width="28" x="10" y="8"></rect>
+<line stroke="currentColor" stroke-linecap="round" stroke-width="2.5" x1="16" x2="32" y1="16" y2="16"></line>
+<line stroke="currentColor" stroke-linecap="round" stroke-width="2.5" x1="16" x2="28" y1="24" y2="24"></line>
+<line stroke="currentColor" stroke-linecap="round" stroke-width="2.5" x1="16" x2="22" y1="32" y2="32"></line>
+<circle cx="34" cy="34" fill="#FFFFFF" r="7" stroke="currentColor" stroke-width="2"></circle>
+<path d="M34 31V37 M31 34H37" stroke="currentColor" stroke-linecap="round" stroke-width="2"></path>
+</svg>
+</div>
+<div class="space-y-1">
+<h3 class="font-headline-md text-headline-md text-text-primary">No Active Examination Records Yet</h3>
+<p class="font-body-md text-body-md text-text-secondary">
+                No active examination records yet. Enter a test code provided by your instructor to begin your proctored assessment.
+              </p>
+</div>
+<div class="pt-space-xs">
+<button class="px-6 py-2.5 rounded-full bg-primary text-on-primary font-label-md text-label-md hover:bg-primary-hover shadow-sm transition-colors flex items-center gap-2" onclick="scrollToInputSection()">
+<span class="material-symbols-outlined text-[18px]">vpn_key</span> Enter Test Code
+              </button>
+</div>
+</div>
+<div class="pt-space-md flex items-center justify-between text-text-muted font-label-sm text-label-sm">
+<span>Immediate primary call to action</span>
+<span class="font-code-md">ZERO_RECORDS_PROMPT</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Interactive Dynamic Feedback Snack Pill (Global Floating Notification) -->
+<div class="fixed bottom-6 right-6 z-50 pointer-events-none flex flex-col gap-2" id="dynamic-toast-container"></div>
+<!-- Interactive Fullscreen Proctoring Simulation Modal Backdrop -->
+<div class="fixed inset-0 z-50 bg-primary/60 backdrop-blur-md hidden items-center justify-center p-margin" id="interactive-overlay-sim">
+<div class="bg-surface rounded-[28px] max-w-xl w-full p-space-xl shadow-2xl space-y-space-lg relative animate-fade-in">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-space-xs bg-mint/50 px-3 py-1 rounded-full text-secondary font-label-sm text-label-sm font-semibold">
+<span class="w-2 h-2 rounded-full bg-secondary animate-ping"></span> Live Supervisor HUD Mode
+        </div>
+<button class="w-8 h-8 rounded-full bg-surface-soft hover:bg-surface-container flex items-center justify-center text-text-primary transition-colors" onclick="closeLiveOverlaySimulation()">
+<span class="material-symbols-outlined text-[18px]">close</span>
+</button>
+</div>
+<div class="space-y-space-md text-center flex flex-col items-center">
+<!-- Interactive Webcam HUD Reticle Container -->
+<div class="relative w-48 h-48 rounded-full bg-surface-container flex items-center justify-center shadow-inner overflow-hidden">
+<div class="absolute inset-2 rounded-full border-2 border-dashed border-peach animate-spin" style="animation-duration: 20s;"></div>
+<div class="w-24 h-24 rounded-full bg-surface flex items-center justify-center shadow-sm">
+<span class="material-symbols-outlined text-text-primary text-[48px]">face</span>
+</div>
+<div class="absolute bottom-2 px-3 py-0.5 rounded-full bg-mint text-on-secondary-container font-label-sm text-label-sm font-bold shadow-sm">
+            CALM MODE • RETICLE LOCK
+          </div>
+</div>
+<div class="space-y-1">
+<h3 class="font-headline-lg text-headline-lg text-text-primary">Camera Alignment Simulation</h3>
+<p class="font-body-md text-body-md text-text-secondary max-w-md">
+            "Please adjust your camera or lighting so your face remains centered in the reticle." All timer counters remain paused and protected.
+          </p>
+</div>
+</div>
+<div class="bg-surface-soft p-space-md rounded-[20px] flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-secondary text-[20px]">cloud_done</span>
+<span class="font-body-sm text-body-sm text-text-secondary">Local responses synced: 100%</span>
+</div>
+<button class="px-5 py-2 rounded-full bg-primary text-on-primary font-label-md text-label-md hover:bg-primary-hover shadow-sm transition-colors" onclick="closeLiveOverlaySimulation()">
+          Resume Assessment
+        </button>
+</div>
+</div>
+</div>
+<!-- Dedicated Modal Enclave for Interactive Header Triggers -->
+<div class="fixed inset-0 z-50 bg-primary/60 backdrop-blur-sm hidden items-center justify-center p-margin" id="generic-modal-backdrop">
+<div class="bg-surface rounded-[28px] max-w-md w-full p-space-xl shadow-2xl space-y-space-md relative" id="generic-modal-card">
+<!-- Injected via JavaScript based on triggered modal id -->
+</div>
+</div>
+<!-- Client-side Interactive Logic -->
+<script>
+    // Catalog Filtering Logic
+    function filterCatalog(category) {
+      const buttons = document.querySelectorAll('.catalog-filter-btn');
+      buttons.forEach(btn => {
+        btn.classList.remove('bg-primary', 'text-on-primary');
+        btn.classList.add('text-text-secondary');
+      });
+
+      const activeBtn = document.getElementById('filter-' + category);
+      if (activeBtn) {
+        activeBtn.classList.remove('text-text-secondary');
+        activeBtn.classList.add('bg-primary', 'text-on-primary');
+      }
+
+      const sections = document.querySelectorAll('.catalog-section');
+      sections.forEach(sec => {
+        if (category === 'all') {
+          sec.classList.remove('hidden');
+        } else {
+          if (sec.id === 'section-' + category) {
+            sec.classList.remove('hidden');
+            sec.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          } else {
+            sec.classList.add('hidden');
+          }
+        }
+      });
+    }
+
+    // Dynamic Floating Toast Notifications
+    function showMockActionMessage(msg) {
+      const container = document.getElementById('dynamic-toast-container');
+      const toast = document.createElement('div');
+      toast.className = 'pointer-events-auto bg-primary text-on-primary px-5 py-3 rounded-full shadow-xl flex items-center gap-3 transition-all transform translate-y-2 opacity-0 text-label-md font-label-md';
+      toast.innerHTML = `
+        <span class="material-symbols-outlined text-[18px] text-mint">info</span>
+        <span>${msg}</span>
+      `;
+      container.appendChild(toast);
+
+      requestAnimationFrame(() => {
+        toast.classList.remove('translate-y-2', 'opacity-0');
+      });
+
+      setTimeout(() => {
+        toast.classList.add('translate-y-2', 'opacity-0');
+        setTimeout(() => toast.remove(), 300);
+      }, 3500);
+    }
+
+    function spawnSampleToast() {
+      const messages = [
+        "Test code 'PXAM-8812A' copied to clipboard!",
+        "Environment audio calibration completed successfully.",
+        "Candidate snapshot verified with institutional database."
+      ];
+      const randomMsg = messages[Math.floor(Math.random() * messages.length)];
+      showMockActionMessage(randomMsg);
+    }
+
+    function dismissToastCard(elementId) {
+      const el = document.getElementById(elementId);
+      if (el) {
+        el.style.transition = 'opacity 0.25s ease, transform 0.25s ease';
+        el.style.opacity = '0';
+        el.style.transform = 'scale(0.95)';
+        setTimeout(() => {
+          el.style.visibility = 'hidden';
+          showMockActionMessage('Toast notification dismissed.');
+        }, 250);
+      }
+    }
+
+    // Interactive Fullscreen Proctoring Simulation Demo
+    function triggerLiveOverlaySimulation() {
+      const modal = document.getElementById('interactive-overlay-sim');
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+    }
+
+    function closeLiveOverlaySimulation() {
+      const modal = document.getElementById('interactive-overlay-sim');
+      modal.classList.add('hidden');
+      modal.classList.remove('flex');
+      showMockActionMessage('Fullscreen examination focus restored.');
+    }
+
+    // Interactive Trigger Tray Modal Handlers
+    function triggerInteractiveModal(type) {
+      const backdrop = document.getElementById('generic-modal-backdrop');
+      const card = document.getElementById('generic-modal-card');
+
+      if (type === 'modal-logout') {
+        card.innerHTML = `
+          <div class="w-12 h-12 rounded-full bg-surface-soft flex items-center justify-center text-text-primary">
+            <span class="material-symbols-outlined text-[24px]">logout</span>
+          </div>
+          <div class="space-y-1">
+            <div class="font-headline-md text-headline-md text-text-primary">Sign out of your session?</div>
+            <p class="font-body-md text-body-md text-text-secondary">
+              Any active pre-flight tokens will be safely cleared. You will be redirected to the institutional login gate.
+            </p>
+          </div>
+          <div class="pt-space-md flex items-center justify-end gap-space-sm">
+            <button onclick="closeGenericModal()" class="px-5 py-2.5 rounded-full bg-surface-soft hover:bg-surface-container text-text-primary font-label-md text-label-md transition-colors">
+              Cancel
+            </button>
+            <button onclick="closeGenericModal(); showMockActionMessage('Session safely concluded. Tokens invalidated.');" class="px-6 py-2.5 rounded-full bg-primary text-on-primary font-label-md text-label-md hover:bg-primary-hover shadow-sm transition-colors">
+              Sign Out
+            </button>
+          </div>
+        `;
+      } else if (type === 'modal-delete') {
+        card.innerHTML = `
+          <div class="w-12 h-12 rounded-full bg-pink/40 flex items-center justify-center text-error">
+            <span class="material-symbols-outlined text-[24px]">delete</span>
+          </div>
+          <div class="space-y-1">
+            <div class="font-headline-md text-headline-md text-text-primary">Delete this assessment?</div>
+            <p class="font-body-md text-body-md text-text-secondary">
+              This will permanently archive the MCQ items, student submissions, and access codes. This cannot be undone.
+            </p>
+          </div>
+          <div class="pt-space-md flex items-center justify-end gap-space-sm">
+            <button onclick="closeGenericModal()" class="px-5 py-2.5 rounded-full bg-surface-soft hover:bg-surface-container text-text-primary font-label-md text-label-md transition-colors">
+              Cancel
+            </button>
+            <button onclick="closeGenericModal(); showMockActionMessage('Assessment archived permanently.');" class="px-6 py-2.5 rounded-full bg-error text-on-error font-label-md text-label-md hover:opacity-90 shadow-sm transition-colors">
+              Confirm Delete
+            </button>
+          </div>
+        `;
+      } else if (type === 'modal-session-expired') {
+        card.innerHTML = `
+          <div class="w-12 h-12 rounded-full bg-peach/60 flex items-center justify-center text-text-primary">
+            <span class="material-symbols-outlined text-[24px]">timer_off</span>
+          </div>
+          <div class="space-y-1">
+            <div class="font-headline-md text-headline-md text-text-primary">Session Expired</div>
+            <p class="font-body-md text-body-md text-text-secondary">
+              Your authentication session has expired due to inactivity. Re-authenticate to keep your current progress and resume timer.
+            </p>
+          </div>
+          <div class="pt-space-md flex items-center justify-end gap-space-sm">
+            <button onclick="closeGenericModal(); showMockActionMessage('Re-authentication token established. Progress intact.');" class="w-full px-6 py-2.5 rounded-full bg-primary text-on-primary font-label-md text-label-md hover:bg-primary-hover shadow-sm transition-colors">
+              Re-authenticate Session
+            </button>
+          </div>
+        `;
+      }
+
+      backdrop.classList.remove('hidden');
+      backdrop.classList.add('flex');
+    }
+
+    function closeGenericModal() {
+      const backdrop = document.getElementById('generic-modal-backdrop');
+      backdrop.classList.add('hidden');
+      backdrop.classList.remove('flex');
+    }
+
+    function handleCodeEntrySubmit() {
+      const input = document.getElementById('interactive-code-input');
+      showMockActionMessage(`Code '${input.value}' validated. Initializing encrypted testing enclave.`);
+    }
+
+    function scrollToInputSection() {
+      filterCatalog('forms');
+      const section = document.getElementById('section-forms');
+      if (section) {
+        section.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
+    }
+  </script>
+</div></main><footer class="w-full bg-surface-container-low py-space-lg shadow-[0_1px_8px_rgba(20,20,20,0.02)]"><div class="w-full px-margin flex flex-col sm:flex-row items-center justify-between gap-space-md"><div class="flex items-center gap-space-sm"><span class="w-2 h-2 rounded-full bg-mint-strong"></span><span class="font-body-sm text-body-sm text-text-secondary">Proxam Design Core • Calm Educational Assessment Environment</span></div><span class="font-label-sm text-label-sm text-text-muted">© 2025 Proxam AI Systems. All rights reserved.</span></div></footer></body></html>
