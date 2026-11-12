@@ -5,6 +5,7 @@ from sqlmodel import Field, SQLModel, UniqueConstraint
 
 
 class AttemptStatus(str, Enum):
+    created = "created"
     in_progress = "in_progress"
     submitted = "submitted"
     timed_out = "timed_out"
@@ -19,8 +20,9 @@ class Attempt(SQLModel, table=True):
     id: Optional[int] = Field(default=None, primary_key=True)
     test_id: int = Field(foreign_key="tests.id", index=True)
     student_id: int = Field(foreign_key="users.id", index=True)
-    status: AttemptStatus = Field(default=AttemptStatus.in_progress)
-    started_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
+    status: AttemptStatus = Field(default=AttemptStatus.created)
+    started_at: Optional[datetime] = Field(default=None)
     submitted_at: Optional[datetime] = Field(default=None)
-    time_limit_ends_at: datetime
+    time_limit_ends_at: Optional[datetime] = Field(default=None)
     identity_verified: bool = Field(default=False)
+    created_at: Optional[datetime] = Field(default=None)

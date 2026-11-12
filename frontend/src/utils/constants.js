@@ -20,7 +20,7 @@ export const ROUTES = {
   STUDENT_DASHBOARD: '/student/dashboard',
   STUDENT_ENTER_CODE: '/student/enter-code',
   STUDENT_TEST_DETAILS: '/student/tests/:testId',
-  STUDENT_SYSTEM_CHECK: '/student/tests/:testId/system-check',
+  STUDENT_SYSTEM_CHECK: '/student/attempts/:attemptId/system-check',
   STUDENT_VERIFICATION: '/student/tests/:testId/verification',
   STUDENT_EXAM: '/student/attempts/:attemptId/exam',
   STUDENT_SUBMITTED: '/student/attempts/:attemptId/submitted',

@@ -32,53 +32,57 @@ def create_test(db: Session, teacher_id: int, payload: TestCreateRequest) -> dic
     Persist examination, questions, and options within a single database transaction.
     Automatically assigns an active status and unique test code.
     """
-    test_code = generate_unique_test_code(db)
-    total_marks = sum(q.marks for q in payload.questions)
+    try:
+        test_code = generate_unique_test_code(db)
+        total_marks = sum(q.marks for q in payload.questions)
 
-    now = datetime.now(timezone.utc)
-    test = Test(
-        title=payload.title,
-        description=payload.description,
-        instructions=payload.instructions,
-        duration_minutes=payload.duration_minutes,
-        total_marks=total_marks,
-        status=TestStatus.active,
-        test_code=test_code,
-        created_by=teacher_id,
-        created_at=now,
-        updated_at=now,
-    )
-    db.add(test)
-    db.flush()  # Populates test.id for foreign keys
-
-    created_questions = []
-    for q_idx, q_data in enumerate(payload.questions):
-        question = Question(
-            test_id=test.id,
-            question_text=q_data.question_text,
-            marks=q_data.marks,
-            order_index=q_data.order_index if q_data.order_index is not None else q_idx,
+        now = datetime.now(timezone.utc)
+        test = Test(
+            title=payload.title,
+            description=payload.description,
+            instructions=payload.instructions,
+            duration_minutes=payload.duration_minutes,
+            total_marks=total_marks,
+            status=TestStatus.active,
+            test_code=test_code,
+            created_by=teacher_id,
+            created_at=now,
+            updated_at=now,
         )
-        db.add(question)
-        db.flush()  # Populates question.id for option foreign keys
+        db.add(test)
+        db.flush()  # Populates test.id for foreign keys
 
-        created_options = []
-        for opt_data in q_data.options:
-            option = Option(
-                question_id=question.id,
-                label=opt_data.label,
-                option_text=opt_data.option_text,
-                is_correct=opt_data.is_correct,
+        created_questions = []
+        for q_idx, q_data in enumerate(payload.questions):
+            question = Question(
+                test_id=test.id,
+                question_text=q_data.question_text,
+                marks=q_data.marks,
+                order_index=q_data.order_index if q_data.order_index is not None else q_idx,
             )
-            db.add(option)
-            created_options.append(option)
+            db.add(question)
+            db.flush()  # Populates question.id for option foreign keys
 
-        created_questions.append((question, created_options))
+            created_options = []
+            for opt_data in q_data.options:
+                option = Option(
+                    question_id=question.id,
+                    label=opt_data.label,
+                    option_text=opt_data.option_text,
+                    is_correct=opt_data.is_correct,
+                )
+                db.add(option)
+                created_options.append(option)
 
-    db.commit()
-    db.refresh(test)
+            created_questions.append((question, created_options))
 
-    return build_test_detail_dict(test, created_questions, attempt_count=0)
+        db.commit()
+        db.refresh(test)
+
+        return build_test_detail_dict(test, created_questions, attempt_count=0)
+    except Exception:
+        db.rollback()
+        raise
 
 
 def get_teacher_tests(db: Session, teacher_id: int) -> list[dict]:
@@ -146,69 +150,67 @@ def update_test(db: Session, test_id: int, teacher_id: int, payload: TestUpdateR
     """
     Update test parameters. If attempts already exist, question modification is forbidden.
     """
-    test = db.get(Test, test_id)
-    if not test:
-        raise ValueError("Examination not found")
-    if test.created_by != teacher_id:
-        raise PermissionError("You do not have permission to modify this examination")
+    try:
+        test = db.get(Test, test_id)
+        if not test or test.created_by != teacher_id:
+            raise ValueError("Examination not found")
 
-    attempt_count = db.exec(
-        select(func.count(Attempt.id)).where(Attempt.test_id == test.id)
-    ).one()
+        attempt_count = db.exec(
+            select(func.count(Attempt.id)).where(Attempt.test_id == test.id)
+        ).one()
 
-    if payload.questions is not None and attempt_count > 0:
-        raise ValueError("Cannot modify questions on an examination that already has candidate attempts.")
+        if payload.questions is not None and attempt_count > 0:
+            raise ValueError("Cannot modify questions on an examination that already has candidate attempts.")
 
-    # Update metadata fields
-    if payload.title is not None:
-        test.title = payload.title
-    if payload.description is not None:
-        test.description = payload.description
-    if payload.instructions is not None:
-        test.instructions = payload.instructions
-    if payload.duration_minutes is not None:
-        test.duration_minutes = payload.duration_minutes
+        if payload.title is not None:
+            test.title = payload.title
+        if payload.description is not None:
+            test.description = payload.description
+        if payload.instructions is not None:
+            test.instructions = payload.instructions
+        if payload.duration_minutes is not None:
+            test.duration_minutes = payload.duration_minutes
 
-    test.updated_at = datetime.now(timezone.utc)
+        test.updated_at = datetime.now(timezone.utc)
 
-    # If updating questions and no attempts exist, replace question set
-    if payload.questions is not None and attempt_count == 0:
-        # Delete existing options & questions
-        existing_questions = db.exec(select(Question).where(Question.test_id == test.id)).all()
-        for eq in existing_questions:
-            existing_options = db.exec(select(Option).where(Option.question_id == eq.id)).all()
-            for eo in existing_options:
-                db.delete(eo)
-            db.delete(eq)
-        db.flush()
-
-        # Add new questions & options
-        total_marks = sum(q.marks for q in payload.questions)
-        test.total_marks = total_marks
-
-        for q_idx, q_data in enumerate(payload.questions):
-            question = Question(
-                test_id=test.id,
-                question_text=q_data.question_text,
-                marks=q_data.marks,
-                order_index=q_data.order_index if q_data.order_index is not None else q_idx,
-            )
-            db.add(question)
+        if payload.questions is not None and attempt_count == 0:
+            existing_questions = db.exec(select(Question).where(Question.test_id == test.id)).all()
+            for eq in existing_questions:
+                existing_options = db.exec(select(Option).where(Option.question_id == eq.id)).all()
+                for eo in existing_options:
+                    db.delete(eo)
+                db.delete(eq)
             db.flush()
 
-            for opt_data in q_data.options:
-                option = Option(
-                    question_id=question.id,
-                    label=opt_data.label,
-                    option_text=opt_data.option_text,
-                    is_correct=opt_data.is_correct,
+            total_marks = sum(q.marks for q in payload.questions)
+            test.total_marks = total_marks
+
+            for q_idx, q_data in enumerate(payload.questions):
+                question = Question(
+                    test_id=test.id,
+                    question_text=q_data.question_text,
+                    marks=q_data.marks,
+                    order_index=q_data.order_index if q_data.order_index is not None else q_idx,
                 )
-                db.add(option)
+                db.add(question)
+                db.flush()
 
-    db.commit()
-    db.refresh(test)
+                for opt_data in q_data.options:
+                    option = Option(
+                        question_id=question.id,
+                        label=opt_data.label,
+                        option_text=opt_data.option_text,
+                        is_correct=opt_data.is_correct,
+                    )
+                    db.add(option)
 
-    return get_test_by_id_for_teacher(db, test_id, teacher_id)
+        db.commit()
+        db.refresh(test)
+
+        return get_test_by_id_for_teacher(db, test_id, teacher_id)
+    except Exception:
+        db.rollback()
+        raise
 
 
 def delete_test(db: Session, test_id: int, teacher_id: int) -> bool:
@@ -216,29 +218,30 @@ def delete_test(db: Session, test_id: int, teacher_id: int) -> bool:
     Safely delete test and its associated questions/options.
     Fails if any candidate attempts exist.
     """
-    test = db.get(Test, test_id)
-    if not test:
-        raise ValueError("Examination not found")
-    if test.created_by != teacher_id:
-        raise PermissionError("You do not have permission to delete this examination")
+    try:
+        test = db.get(Test, test_id)
+        if not test or test.created_by != teacher_id:
+            raise ValueError("Examination not found")
 
-    attempt_count = db.exec(
-        select(func.count(Attempt.id)).where(Attempt.test_id == test.id)
-    ).one()
-    if attempt_count > 0:
-        raise ValueError("Cannot delete an examination with existing candidate attempts.")
+        attempt_count = db.exec(
+            select(func.count(Attempt.id)).where(Attempt.test_id == test.id)
+        ).one()
+        if attempt_count > 0:
+            raise ValueError("Cannot delete an examination with existing candidate attempts.")
 
-    # Cascading delete of options and questions
-    questions = db.exec(select(Question).where(Question.test_id == test.id)).all()
-    for q in questions:
-        options = db.exec(select(Option).where(Option.question_id == q.id)).all()
-        for opt in options:
-            db.delete(opt)
-        db.delete(q)
+        questions = db.exec(select(Question).where(Question.test_id == test.id)).all()
+        for q in questions:
+            options = db.exec(select(Option).where(Option.question_id == q.id)).all()
+            for opt in options:
+                db.delete(opt)
+            db.delete(q)
 
-    db.delete(test)
-    db.commit()
-    return True
+        db.delete(test)
+        db.commit()
+        return True
+    except Exception:
+        db.rollback()
+        raise
 
 
 def get_teacher_stats(db: Session, teacher_id: int) -> dict:

@@ -3,6 +3,10 @@ Authentication integration tests for Proxam AI.
 Verifies registration, login, logout, cookie handling, password reset,
 and role-based access control.
 """
+import os
+
+os.environ.setdefault("SECRET_KEY", "test-secret-key-for-testing-only")
+
 import pytest
 from fastapi import Depends
 from fastapi.testclient import TestClient
@@ -14,6 +18,7 @@ from app.database import get_session
 from app.dependencies import get_current_user, require_student, require_teacher, require_admin
 from app.models.user import User, UserRole
 from app.modules.auth.service import hash_password, create_password_reset_token
+from app.modules.auth.router import _reset_rate_limit_state, _set_rate_limit_enabled
 
 
 # In-memory database fixture for isolated testing
@@ -61,7 +66,8 @@ def test_register_student_success(client: TestClient):
     assert "access_token" in resp.cookies
 
 
-def test_register_teacher_success(client: TestClient):
+def test_register_teacher_rejected(client: TestClient):
+    """Public registration must always create a Student account."""
     resp = client.post(
         "/api/auth/register",
         json={
@@ -71,9 +77,8 @@ def test_register_teacher_success(client: TestClient):
             "role": "teacher",
         },
     )
-    assert resp.status_code == 201
-    assert resp.json()["role"] == "teacher"
-    assert "access_token" in resp.cookies
+    assert resp.status_code == 422
+    assert "student" in resp.json()["detail"][0]["msg"].lower()
 
 
 def test_register_duplicate_email_fails(client: TestClient):
@@ -252,15 +257,22 @@ def test_reset_password_invalid_token(client: TestClient):
 # Change Password Tests
 # ---------------------------------------------------------------------------
 
-def test_change_password_flow(client: TestClient):
+def test_change_password_flow(client: TestClient, session: Session):
+    # Create student directly via session (public registration is student-only)
+    user = User(
+        full_name="Frank",
+        email="frank@test.edu",
+        hashed_password=hash_password("Password123!"),
+        role=UserRole.student,
+        is_active=True,
+    )
+    session.add(user)
+    session.commit()
+
+    # Login first to set the auth cookie
     client.post(
-        "/api/auth/register",
-        json={
-            "full_name": "Frank",
-            "email": "frank@test.edu",
-            "password": "Password123!",
-            "role": "teacher",
-        },
+        "/api/auth/login",
+        json={"email": "frank@test.edu", "password": "Password123!"},
     )
     # Change password
     chg_resp = client.post(
@@ -309,16 +321,22 @@ def test_rbac_student_cannot_access_teacher_route(client: TestClient):
     assert resp.json()["detail"] == "Insufficient permissions"
 
 
-def test_rbac_teacher_cannot_access_student_route(client: TestClient):
-    # Register as teacher
+def test_rbac_teacher_cannot_access_student_route(client: TestClient, session: Session):
+    # Create teacher directly (public registration no longer allows teacher role)
+    teacher = User(
+        full_name="Teacher Only",
+        email="teacheronly@test.edu",
+        hashed_password=hash_password("Password123!"),
+        role=UserRole.teacher,
+        is_active=True,
+    )
+    session.add(teacher)
+    session.commit()
+
+    # Login as teacher to set the auth cookie
     client.post(
-        "/api/auth/register",
-        json={
-            "full_name": "Teacher Only",
-            "email": "teacheronly@test.edu",
-            "password": "Password123!",
-            "role": "teacher",
-        },
+        "/api/auth/login",
+        json={"email": "teacheronly@test.edu", "password": "Password123!"},
     )
 
     @app.get("/api/test-student-only")
@@ -354,3 +372,215 @@ def test_rbac_admin_access(client: TestClient, session: Session):
     resp = client.get("/api/test-admin-only")
     assert resp.status_code == 200
     assert resp.json()["admin"] == "superadmin@test.edu"
+
+
+# ---------------------------------------------------------------------------
+# Authentication Rate Limiting Tests
+# ---------------------------------------------------------------------------
+
+
+@pytest.fixture(autouse=True)
+def reset_rate_limit_between_tests():
+    """Reset and disable rate limiting before each test for isolation."""
+    _set_rate_limit_enabled(False)
+    _reset_rate_limit_state()
+    yield
+    _set_rate_limit_enabled(False)
+    _reset_rate_limit_state()
+
+
+@pytest.fixture(name="rate_limit_enabled")
+def rate_limit_enabled_fixture():
+    """Enable rate limiting for tests that specifically test rate-limit behavior."""
+    _set_rate_limit_enabled(True)
+    _reset_rate_limit_state()
+    yield
+    _set_rate_limit_enabled(False)
+    _reset_rate_limit_state()
+
+
+def _login_user(client: TestClient, email: str, password: str = "Password123!"):
+    return client.post(
+        "/api/auth/login",
+        json={"email": email, "password": password},
+    )
+
+
+def test_login_rate_limit_allows_under_limit(client: TestClient, session: Session, rate_limit_enabled):
+    """Requests below the rate limit should succeed."""
+    # Create user directly since public registration is student-only
+    user = User(
+        full_name="Rate Limit User",
+        email="ratelimit@test.edu",
+        hashed_password=hash_password("Password123!"),
+        role=UserRole.student,
+        is_active=True,
+    )
+    session.add(user)
+    session.commit()
+
+    # 5 requests should all succeed (default limit)
+    for i in range(5):
+        resp = _login_user(client, "ratelimit@test.edu")
+        assert resp.status_code == 200, f"Request {i + 1} should succeed: {resp.status_code}"
+
+
+def test_login_rate_limit_blocks_over_limit(client: TestClient, session: Session, rate_limit_enabled):
+    """Requests above the rate limit should return 429."""
+    user = User(
+        full_name="Rate Limit User",
+        email="ratelimit2@test.edu",
+        hashed_password=hash_password("Password123!"),
+        role=UserRole.student,
+        is_active=True,
+    )
+    session.add(user)
+    session.commit()
+
+    # Exhaust the limit (5 requests)
+    for i in range(5):
+        resp = _login_user(client, "ratelimit2@test.edu")
+        assert resp.status_code == 200
+
+    # 6th request should be rate limited
+    resp = _login_user(client, "ratelimit2@test.edu")
+    assert resp.status_code == 429
+    assert "Too many requests" in resp.json()["detail"]
+
+
+def test_register_rate_limit_blocks_over_limit(client: TestClient, session: Session, rate_limit_enabled):
+    """Register endpoint should enforce its own rate limit."""
+    # 5 registrations with different emails should succeed
+    for i in range(5):
+        resp = client.post(
+            "/api/auth/register",
+            json={
+                "full_name": f"Reg User {i}",
+                "email": f"reguser{i}@test.edu",
+                "password": "Password123!",
+                "role": "student",
+            },
+        )
+        assert resp.status_code == 201, f"Register {i + 1} should succeed: {resp.status_code}"
+
+    # 6th registration should be rate limited
+    resp = client.post(
+        "/api/auth/register",
+        json={
+            "full_name": "Blocked User",
+            "email": "blocked@test.edu",
+            "password": "Password123!",
+            "role": "student",
+        },
+    )
+    assert resp.status_code == 429
+    assert "Too many requests" in resp.json()["detail"]
+
+
+def test_forgot_password_rate_limit_blocks_over_limit(client: TestClient, session: Session, rate_limit_enabled):
+    """Forgot-password endpoint should enforce its own rate limit."""
+    user = User(
+        full_name="FP User",
+        email="fpuser@test.edu",
+        hashed_password=hash_password("Password123!"),
+        role=UserRole.student,
+        is_active=True,
+    )
+    session.add(user)
+    session.commit()
+
+    # 5 forgot-password requests should succeed
+    for i in range(5):
+        resp = client.post(
+            "/api/auth/forgot-password",
+            json={"email": "fpuser@test.edu"},
+        )
+        assert resp.status_code == 200, f"FP {i + 1} should succeed: {resp.status_code}"
+
+    # 6th should be rate limited
+    resp = client.post(
+        "/api/auth/forgot-password",
+        json={"email": "fpuser@test.edu"},
+    )
+    assert resp.status_code == 429
+    assert "Too many requests" in resp.json()["detail"]
+
+
+def test_reset_password_rate_limit_blocks_over_limit(client: TestClient, session: Session, rate_limit_enabled):
+    """Reset-password endpoint should enforce its own rate limit."""
+    user = User(
+        full_name="RP User",
+        email="rpuser@test.edu",
+        hashed_password=hash_password("Password123!"),
+        role=UserRole.student,
+        is_active=True,
+    )
+    session.add(user)
+    session.commit()
+
+    # Create a valid reset token
+    from app.modules.auth.service import create_password_reset_token
+    token = create_password_reset_token(db=session, user=user)
+
+    # 5 reset-password requests with the same token should succeed
+    # (token is single-use, so we need to create a new one each time,
+    # but rate limit should kick in before token exhaustion matters)
+    for i in range(5):
+        # Create a fresh token for each attempt since they're single-use
+        token = create_password_reset_token(db=session, user=user)
+        resp = client.post(
+            "/api/auth/reset-password",
+            json={"token": token, "new_password": "NewPassword123!"},
+        )
+        assert resp.status_code == 200, f"RP {i + 1} should succeed: {resp.status_code}"
+
+    # 6th should be rate limited
+    token = create_password_reset_token(db=session, user=user)
+    resp = client.post(
+        "/api/auth/reset-password",
+        json={"token": token, "new_password": "NewPassword123!"},
+    )
+    assert resp.status_code == 429
+    assert "Too many requests" in resp.json()["detail"]
+
+
+def test_rate_limits_are_independent_per_endpoint(client: TestClient, session: Session, rate_limit_enabled):
+    """Different endpoints should have independent rate limits."""
+    user = User(
+        full_name="Independent User",
+        email="independent@test.edu",
+        hashed_password=hash_password("Password123!"),
+        role=UserRole.student,
+        is_active=True,
+    )
+    session.add(user)
+    session.commit()
+
+    # Exhaust register limit (5 requests)
+    for i in range(5):
+        resp = client.post(
+            "/api/auth/register",
+            json={
+                "full_name": f"Ind {i}",
+                "email": f"ind{i}@test.edu",
+                "password": "Password123!",
+                "role": "student",
+            },
+        )
+        assert resp.status_code == 201
+
+    # Register should now be rate limited
+    resp = client.post(
+        "/api/auth/register",
+        json={
+            "full_name": "Blocked",
+            "email": "blocked@test.edu",
+            "password": "Password123!",
+            "role": "student",
+        },
+    )
+    assert resp.status_code == 429
+
+    # Login should still work (different endpoint, independent limit)
+    resp = _login_user(client, "independent@test.edu")
+    assert resp.status_code == 200

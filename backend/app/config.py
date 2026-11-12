@@ -1,4 +1,5 @@
 from functools import lru_cache
+from pydantic import Field, field_validator, model_validator
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
@@ -13,10 +14,19 @@ class Settings(BaseSettings):
     # Database
     database_url: str = "sqlite:///./proxam_ai.db"
 
-    # JWT
-    secret_key: str = "proxam-ai-super-secret-jwt-key-minimum-32-chars-2026"
+    # JWT (must be configured via environment variable; no production fallback)
+    secret_key: str = Field(default="", description="JWT signing key - required")
     algorithm: str = "HS256"
     access_token_expire_minutes: int = 60
+
+    @field_validator("secret_key")
+    @classmethod
+    def validate_secret_key(cls, v: str) -> str:
+        if not v:
+            raise ValueError("SECRET_KEY must be set via environment variable or .env file")
+        if v == "proxam-ai-super-secret-jwt-key-minimum-32-chars-2026":
+            raise ValueError("SECRET_KEY must not use the hardcoded development value")
+        return v
 
     # Cookie
     cookie_secure: bool = False
@@ -33,16 +43,30 @@ class Settings(BaseSettings):
     smtp_from_email: str = "noreply@proxamai.com"
     smtp_from_name: str = "Proxam AI"
 
-    # Dev mode: log reset URLs to console instead of sending email
-    dev_mode: bool = True
+    # Dev mode: log reset URLs to console instead of sending email (default off)
+    dev_mode: bool = False
 
     # Password reset token expiry in minutes
     password_reset_expire_minutes: int = 30
 
-    # Admin seed config
-    admin_email: str = "admin@proxamai.com"
-    admin_password: str = "AdminSecurePassword123!"
+    # Admin seed config (no predictable defaults; must be explicitly configured)
+    admin_email: str | None = None
+    admin_password: str | None = None
     admin_full_name: str = "Platform Administrator"
+
+    # Authentication rate limiting (requests per minute per IP)
+    auth_rate_limit_requests: int = 5
+    auth_rate_limit_window_seconds: int = 60
+
+    @model_validator(mode="after")
+    def validate_production_cookie_security(self) -> "Settings":
+        """Require Secure cookies in production (dev_mode=False)."""
+        if not self.dev_mode and not self.cookie_secure:
+            raise ValueError(
+                "COOKIE_SECURE must be true in production (DEV_MODE=false). "
+                "Set COOKIE_SECURE=true for production deployments."
+            )
+        return self
 
 
 @lru_cache

@@ -38,3 +38,23 @@ export function formatPercentage(value) {
   if (value === null || value === undefined) return '—'
   return `${Math.round(value)}%`
 }
+
+export async function copyToClipboard(text) {
+  if (navigator.clipboard?.writeText) {
+    await navigator.clipboard.writeText(text)
+    return
+  }
+  const input = document.createElement('textarea')
+  input.value = text
+  input.setAttribute('readonly', '')
+  input.style.position = 'absolute'
+  input.style.left = '-9999px'
+  document.body.appendChild(input)
+  input.select()
+  document.execCommand('copy')
+  document.body.removeChild(input)
+}
+
+export function teacherTestPath(route, testId) {
+  return route.replace(':testId', String(testId))
+}

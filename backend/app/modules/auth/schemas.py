@@ -25,9 +25,9 @@ class RegisterRequest(BaseModel):
 
     @field_validator("role")
     @classmethod
-    def no_admin_self_register(cls, v: UserRole) -> UserRole:
-        if v == UserRole.admin:
-            raise ValueError("Cannot register as admin")
+    def no_privileged_self_register(cls, v: UserRole) -> UserRole:
+        if v != UserRole.student:
+            raise ValueError("Public registration is limited to student accounts")
         return v
 
 

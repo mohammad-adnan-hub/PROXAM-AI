@@ -3,6 +3,10 @@ Integration tests for Teacher Examination Creation Module.
 Covers creation, listing, details, updating, deletion, authorization,
 and validation logic.
 """
+import os
+
+os.environ.setdefault("SECRET_KEY", "test-secret-key-for-testing-only")
+
 import pytest
 from datetime import datetime, timedelta, timezone
 from fastapi.testclient import TestClient
@@ -296,3 +300,88 @@ def test_cannot_delete_test_with_existing_attempts(client: TestClient, session: 
     del_resp = client.delete(f"/api/tests/{exam['id']}")
     assert del_resp.status_code == 400
     assert "attempts" in del_resp.json()["detail"].lower()
+
+
+def test_cannot_update_questions_when_attempts_exist(client: TestClient, session: Session):
+    create_user(session, "teacher1@test.edu", UserRole.teacher)
+    student = create_user(session, "student1@test.edu", UserRole.student)
+
+    client.post("/api/auth/login", json={"email": "teacher1@test.edu", "password": "Password123!"})
+    exam = client.post("/api/tests/", json=valid_exam_payload("Locked Exam")).json()
+
+    now = datetime.now(timezone.utc)
+    session.add(
+        Attempt(
+            test_id=exam["id"],
+            student_id=student.id,
+            status=AttemptStatus.submitted,
+            started_at=now,
+            submitted_at=now,
+            time_limit_ends_at=now + timedelta(minutes=45),
+            identity_verified=True,
+        )
+    )
+    session.commit()
+
+    payload = valid_exam_payload("Locked Exam")
+    resp = client.put(f"/api/tests/{exam['id']}", json={"questions": payload["questions"]})
+    assert resp.status_code == 400
+    assert "attempts" in resp.json()["detail"].lower()
+
+
+def test_unique_test_codes_are_generated(client: TestClient, session: Session):
+    create_user(session, "teacher1@test.edu", UserRole.teacher)
+    client.post("/api/auth/login", json={"email": "teacher1@test.edu", "password": "Password123!"})
+
+    first = client.post("/api/tests/", json=valid_exam_payload("Exam One")).json()
+    second = client.post("/api/tests/", json=valid_exam_payload("Exam Two")).json()
+
+    assert first["test_code"] != second["test_code"]
+    for code in (first["test_code"], second["test_code"]):
+        assert code.startswith("PXAM-")
+        assert len(code) == 10
+
+
+def test_unauthenticated_requests_are_rejected(client: TestClient):
+    assert client.get("/api/tests/").status_code == 401
+    assert client.get("/api/tests/stats").status_code == 401
+    assert client.post("/api/tests/", json=valid_exam_payload()).status_code == 401
+    assert client.put("/api/tests/1", json={"title": "Nope"}).status_code == 401
+    assert client.delete("/api/tests/1").status_code == 401
+
+
+def test_student_cannot_access_teacher_test_endpoints(client: TestClient, session: Session):
+    create_user(session, "teacher1@test.edu", UserRole.teacher)
+    create_user(session, "student1@test.edu", UserRole.student)
+
+    client.post("/api/auth/login", json={"email": "teacher1@test.edu", "password": "Password123!"})
+    exam = client.post("/api/tests/", json=valid_exam_payload()).json()
+
+    client.post("/api/auth/login", json={"email": "student1@test.edu", "password": "Password123!"})
+    assert client.get("/api/tests/").status_code == 403
+    assert client.get("/api/tests/stats").status_code == 403
+    assert client.get(f"/api/tests/{exam['id']}").status_code == 403
+    assert client.put(f"/api/tests/{exam['id']}", json={"title": "Hacked"}).status_code == 403
+    assert client.delete(f"/api/tests/{exam['id']}").status_code == 403
+
+
+def test_teacher_cannot_update_or_delete_another_teachers_exam(client: TestClient, session: Session):
+    create_user(session, "teacher1@test.edu", UserRole.teacher)
+    create_user(session, "teacher2@test.edu", UserRole.teacher)
+
+    client.post("/api/auth/login", json={"email": "teacher1@test.edu", "password": "Password123!"})
+    exam = client.post("/api/tests/", json=valid_exam_payload("Private Exam")).json()
+
+    client.post("/api/auth/login", json={"email": "teacher2@test.edu", "password": "Password123!"})
+    assert client.put(f"/api/tests/{exam['id']}", json={"title": "Stolen"}).status_code == 404
+    assert client.delete(f"/api/tests/{exam['id']}").status_code == 404
+
+
+def test_create_exam_empty_questions_rejected(client: TestClient, session: Session):
+    create_user(session, "teacher1@test.edu", UserRole.teacher)
+    client.post("/api/auth/login", json={"email": "teacher1@test.edu", "password": "Password123!"})
+
+    payload = valid_exam_payload()
+    payload["questions"] = []
+    resp = client.post("/api/tests/", json=payload)
+    assert resp.status_code == 422

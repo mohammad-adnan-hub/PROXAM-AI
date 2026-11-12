@@ -61,8 +61,10 @@ def decode_access_token(token: str) -> Optional[dict]:
 # User registration and login
 # ---------------------------------------------------------------------------
 
-def register_user(db: Session, full_name: str, email: str, password: str, role: UserRole) -> User:
-    """Create a new user. Raises ValueError if email already registered."""
+def register_user(db: Session, full_name: str, email: str, password: str, role: UserRole = UserRole.student) -> User:
+    """Create a new user. Public registration always creates a Student account.
+    Raises ValueError if email already registered.
+    """
     existing = db.exec(select(User).where(User.email == email.lower())).first()
     if existing:
         raise ValueError("Email already registered")
@@ -70,7 +72,8 @@ def register_user(db: Session, full_name: str, email: str, password: str, role: 
         full_name=full_name.strip(),
         email=email.lower(),
         hashed_password=hash_password(password),
-        role=role,
+        role=UserRole.student,
+        is_active=True,
     )
     db.add(user)
     db.commit()
