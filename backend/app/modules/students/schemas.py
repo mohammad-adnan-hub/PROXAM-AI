@@ -3,6 +3,7 @@ from datetime import datetime
 from pydantic import BaseModel, Field, field_validator
 from app.models.attempt import AttemptStatus
 from app.models.test import TestStatus
+from app.models.identity_verification import IdentityVerificationStatus
 
 
 class TestCodeValidationRequest(BaseModel):
@@ -140,3 +141,26 @@ class AttemptFinalizationResponse(BaseModel):
     result: Optional[ResultResponse] = None
 
     model_config = {"from_attributes": True}
+
+
+class IdentityVerificationStatusResponse(BaseModel):
+    attempt_id: int
+    status: IdentityVerificationStatus
+    submitted_at: Optional[datetime] = None
+    reviewed_at: Optional[datetime] = None
+    reviewer_notes: Optional[str] = None
+    can_start_examination: bool
+    message: Optional[str] = None
+
+    model_config = {"from_attributes": True}
+
+
+class IdentityVerificationSubmitResponse(BaseModel):
+    attempt_id: int
+    status: IdentityVerificationStatus
+    submitted_at: datetime
+    can_start_examination: bool
+    message: str
+
+    model_config = {"from_attributes": True}
+

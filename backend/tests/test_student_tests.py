@@ -1,4 +1,4 @@
-"""
+﻿"""
 Integration tests for Student Test Code Validation Module.
 Covers valid/invalid codes, inactive examinations, authorization,
 and correct-answer data leakage prevention.
@@ -7,6 +7,7 @@ import os
 
 os.environ.setdefault("SECRET_KEY", "test-secret-key-for-testing-only")
 
+import io
 import pytest
 from datetime import datetime, timezone
 from fastapi.testclient import TestClient
@@ -21,6 +22,7 @@ from app.models.question import Question
 from app.models.attempt import Attempt, AttemptStatus
 from app.models.option import Option
 from app.models.result import Result
+from app.modules.auth.router import _reset_rate_limit_state, _set_rate_limit_enabled
 from app.modules.auth.service import hash_password
 
 
@@ -45,6 +47,15 @@ def client_fixture(session: Session):
     client = TestClient(app)
     yield client
     app.dependency_overrides.clear()
+
+
+@pytest.fixture(autouse=True)
+def reset_rate_limit_fixture():
+    _set_rate_limit_enabled(False)
+    _reset_rate_limit_state()
+    yield
+    _set_rate_limit_enabled(False)
+    _reset_rate_limit_state()
 
 
 def create_user(session: Session, email: str, role: UserRole) -> User:
@@ -120,6 +131,15 @@ def add_options(session: Session, question_id: int, correct_label: str = "B"):
 
 def login_student(client: TestClient, email: str, password: str = "Password123!"):
     client.post("/api/auth/login", json={"email": email, "password": password})
+
+
+MINIMAL_JPEG = bytes.fromhex('ffd8ffe000104a46494600010100000100010000ffd9')
+
+def submit_identity_photo(client: TestClient, attempt_id: int, content: bytes = MINIMAL_JPEG, filename: str = 'photo.jpg', content_type: str = 'image/jpeg'):
+    return client.post(
+        f'/api/student/attempts/{attempt_id}/identity-verification',
+        files={'photo': (filename, io.BytesIO(content), content_type)},
+    )
 
 
 # ---------------------------------------------------------------------------
@@ -536,7 +556,7 @@ def test_create_attempt_ownership_enforced(client: TestClient, session: Session)
     assert resp2.status_code == 201
     assert resp2.json()["student_id"] == student2.id
 
-    # Student 1 cannot create a second attempt — gets their existing attempt back
+    # Student 1 cannot create a second attempt â€” gets their existing attempt back
     login_student(client, "student1@test.edu")
     resp3 = client.post(f"/api/student/tests/{test.id}/attempt")
     assert resp3.status_code == 201
@@ -562,6 +582,7 @@ def test_start_attempt_success(client: TestClient, session: Session):
     attempt_id = create_resp.json()["id"]
 
     # Start the attempt
+    submit_identity_photo(client, attempt_id)
     resp = client.post(f"/api/student/attempts/{attempt_id}/start")
     assert resp.status_code == 200
     data = resp.json()
@@ -585,6 +606,7 @@ def test_start_attempt_deadline_uses_exam_duration(client: TestClient, session: 
     create_resp = client.post(f"/api/student/tests/{test.id}/attempt")
     attempt_id = create_resp.json()["id"]
 
+    submit_identity_photo(client, attempt_id)
     resp = client.post(f"/api/student/attempts/{attempt_id}/start")
     assert resp.status_code == 200
     data = resp.json()
@@ -612,6 +634,7 @@ def test_start_attempt_repeated_does_not_reset_timestamps(client: TestClient, se
     attempt_id = create_resp.json()["id"]
 
     # First start
+    submit_identity_photo(client, attempt_id)
     resp1 = client.post(f"/api/student/attempts/{attempt_id}/start")
     assert resp1.status_code == 200
     data1 = resp1.json()
@@ -619,6 +642,7 @@ def test_start_attempt_repeated_does_not_reset_timestamps(client: TestClient, se
     ends_1 = data1["time_limit_ends_at"]
 
     # Second start should not reset timestamps
+    submit_identity_photo(client, attempt_id)
     resp2 = client.post(f"/api/student/attempts/{attempt_id}/start")
     assert resp2.status_code == 200
     data2 = resp2.json()
@@ -639,10 +663,12 @@ def test_start_attempt_wrong_student_403(client: TestClient, session: Session):
     create_resp = client.post(f"/api/student/tests/{test.id}/attempt")
     assert create_resp.status_code == 201
     attempt_id = create_resp.json()["id"]
+    submit_identity_photo(client, attempt_id)
     client.post(f"/api/student/attempts/{attempt_id}/start")
 
     # Student 2 tries to start student 1's attempt
     login_student(client, "student2@test.edu")
+    submit_identity_photo(client, attempt_id)
     resp = client.post(f"/api/student/attempts/{attempt_id}/start")
     assert resp.status_code == 403
 
@@ -680,6 +706,7 @@ def test_start_attempt_submitted_cannot_restart(client: TestClient, session: Ses
     attempt_id = create_resp.json()["id"]
 
     # Start the attempt
+    submit_identity_photo(client, attempt_id)
     start_resp = client.post(f"/api/student/attempts/{attempt_id}/start")
     assert start_resp.status_code == 200
 
@@ -692,6 +719,7 @@ def test_start_attempt_submitted_cannot_restart(client: TestClient, session: Ses
     session.commit()
 
     # Try to start again - should fail
+    submit_identity_photo(client, attempt_id)
     resp = client.post(f"/api/student/attempts/{attempt_id}/start")
     assert resp.status_code == 409
 
@@ -707,6 +735,7 @@ def test_start_attempt_timed_out_cannot_restart(client: TestClient, session: Ses
     attempt_id = create_resp.json()["id"]
 
     # Start the attempt
+    submit_identity_photo(client, attempt_id)
     client.post(f"/api/student/attempts/{attempt_id}/start")
 
     # Manually mark as timed_out
@@ -716,6 +745,7 @@ def test_start_attempt_timed_out_cannot_restart(client: TestClient, session: Ses
     session.add(attempt)
     session.commit()
 
+    submit_identity_photo(client, attempt_id)
     resp = client.post(f"/api/student/attempts/{attempt_id}/start")
     assert resp.status_code == 409
 
@@ -743,6 +773,7 @@ def test_get_attempt_questions_success(client: TestClient, session: Session):
     attempt_id = create_resp.json()["id"]
 
     # Start the attempt
+    submit_identity_photo(client, attempt_id)
     client.post(f"/api/student/attempts/{attempt_id}/start")
 
     resp = client.get(f"/api/student/attempts/{attempt_id}/questions")
@@ -775,6 +806,7 @@ def test_get_attempt_questions_excludes_correct_answers(client: TestClient, sess
     add_options(session, question.id, correct_label="B")
 
     # Start the attempt
+    submit_identity_photo(client, attempt_id)
     client.post(f"/api/student/attempts/{attempt_id}/start")
 
     resp = client.get(f"/api/student/attempts/{attempt_id}/questions")
@@ -800,6 +832,7 @@ def test_get_attempt_questions_wrong_student_403(client: TestClient, session: Se
     login_student(client, "student1@test.edu")
     create_resp = client.post(f"/api/student/tests/{test.id}/attempt")
     attempt_id = create_resp.json()["id"]
+    submit_identity_photo(client, attempt_id)
     client.post(f"/api/student/attempts/{attempt_id}/start")
 
     # Student 2 tries to retrieve questions
@@ -842,6 +875,7 @@ def test_get_attempt_questions_submitted_403(client: TestClient, session: Sessio
     attempt_id = create_resp.json()["id"]
 
     # Start then manually submit
+    submit_identity_photo(client, attempt_id)
     client.post(f"/api/student/attempts/{attempt_id}/start")
 
     from app.models.attempt import Attempt
@@ -863,6 +897,7 @@ def _create_and_start_attempt(client: TestClient, session: Session, test_id: int
     create_resp = client.post(f"/api/student/tests/{test_id}/attempt")
     assert create_resp.status_code == 201
     attempt_id = create_resp.json()["id"]
+    submit_identity_photo(client, attempt_id)
     start_resp = client.post(f"/api/student/attempts/{attempt_id}/start")
     assert start_resp.status_code == 200
     return attempt_id
@@ -1365,6 +1400,7 @@ def test_save_answer_submitted_attempt_409(client: TestClient, session: Session)
     login_student(client, "student1@test.edu")
     create_resp = client.post(f"/api/student/tests/{test.id}/attempt")
     attempt_id = create_resp.json()["id"]
+    submit_identity_photo(client, attempt_id)
     client.post(f"/api/student/attempts/{attempt_id}/start")
 
     # Manually submit
@@ -1391,6 +1427,7 @@ def test_clear_answer_submitted_attempt_409(client: TestClient, session: Session
     login_student(client, "student1@test.edu")
     create_resp = client.post(f"/api/student/tests/{test.id}/attempt")
     attempt_id = create_resp.json()["id"]
+    submit_identity_photo(client, attempt_id)
     client.post(f"/api/student/attempts/{attempt_id}/start")
 
     from app.models.attempt import Attempt
@@ -1415,6 +1452,7 @@ def test_save_answer_timed_out_attempt_409(client: TestClient, session: Session)
     login_student(client, "student1@test.edu")
     create_resp = client.post(f"/api/student/tests/{test.id}/attempt")
     attempt_id = create_resp.json()["id"]
+    submit_identity_photo(client, attempt_id)
     client.post(f"/api/student/attempts/{attempt_id}/start")
 
     from app.models.attempt import Attempt
@@ -1439,6 +1477,7 @@ def test_clear_answer_timed_out_attempt_409(client: TestClient, session: Session
     login_student(client, "student1@test.edu")
     create_resp = client.post(f"/api/student/tests/{test.id}/attempt")
     attempt_id = create_resp.json()["id"]
+    submit_identity_photo(client, attempt_id)
     client.post(f"/api/student/attempts/{attempt_id}/start")
 
     from app.models.attempt import Attempt
@@ -2534,3 +2573,8 @@ def test_history_admin_forbidden_403(client: TestClient, session: Session):
 
     resp = client.get("/api/student/attempts")
     assert resp.status_code == 403
+
+
+
+
+

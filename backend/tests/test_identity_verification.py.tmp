@@ -1,0 +1,356 @@
+﻿"""
+Tests for Phase 5.7: Manual Identity Verification.
+Covers secure submission/status, validation, ownership, lifecycle, privacy constraints,
+and start-gating behavior. Does not implement automated face recognition or review UI.
+"""
+import io
+import os
+
+os.environ.setdefault("SECRET_KEY", "test-secret-key-for-testing-only")
+
+import pytest
+from datetime import datetime, timezone
+from fastapi.testclient import TestClient
+from sqlmodel import Session, SQLModel, create_engine, select
+from sqlmodel.pool import StaticPool
+
+from app.main import app
+from app.database import get_session
+from app.models.user import User, UserRole
+from app.models.test import Test, TestStatus
+from app.models.attempt import Attempt, AttemptStatus
+from app.models.identity_verification import AttemptIdentityVerification, IdentityVerificationStatus
+from app.modules.auth.service import hash_password
+from app.modules.auth.router import _reset_rate_limit_state, _set_rate_limit_enabled
+
+
+MINIMAL_JPEG = bytes.fromhex("ffd8ffe000104a46494600010100000100010000ffd9")
+MINIMAL_PNG = bytes.fromhex(
+    "89504e470d0a1a0a0000000d4948445200000001000000010806000000"
+    "1f15c4890000000a49444154789c63000100000500010d0a2db40000000049454e44ae426082"
+)
+
+
+@pytest.fixture(name="session")
+def session_fixture():
+    engine = create_engine(
+        "sqlite:///:memory:",
+        connect_args={"check_same_thread": False},
+        poolclass=StaticPool,
+    )
+    SQLModel.metadata.create_all(engine)
+    with Session(engine) as session:
+        yield session
+
+
+@pytest.fixture(name="client")
+def client_fixture(session: Session):
+    def get_session_override():
+        return session
+
+    app.dependency_overrides[get_session] = get_session_override
+    client = TestClient(app)
+    yield client
+    app.dependency_overrides.clear()
+
+
+@pytest.fixture(autouse=True)
+def reset_rate_limit_fixture():
+    _set_rate_limit_enabled(False)
+    _reset_rate_limit_state()
+    yield
+    _set_rate_limit_enabled(False)
+    _reset_rate_limit_state()
+
+
+def create_user(session: Session, email: str, role: UserRole) -> User:
+    user = User(
+        full_name=f"User {email}",
+        email=email,
+        hashed_password=hash_password("Password123!"),
+        role=role,
+        is_active=True,
+    )
+    session.add(user)
+    session.commit()
+    session.refresh(user)
+    return user
+
+
+def create_active_test(session: Session, title: str, code: str, created_by: int, status: TestStatus = TestStatus.active) -> Test:
+    test = Test(
+        title=title,
+        description="Test description",
+        duration_minutes=30,
+        total_marks=10.0,
+        status=status,
+        test_code=code,
+        created_by=created_by,
+    )
+    session.add(test)
+    session.commit()
+    session.refresh(test)
+    return test
+
+
+def login(client: TestClient, email: str, password: str = "Password123!"):
+    resp = client.post("/api/auth/login", json={"email": email, "password": password})
+    assert resp.status_code == 200
+    return resp
+
+
+def create_attempt_via_api(client: TestClient, test_id: int) -> int:
+    resp = client.post(f"/api/student/tests/{test_id}/attempt")
+    assert resp.status_code == 201
+    return resp.json()["id"]
+
+
+def submit_identity(client: TestClient, attempt_id: int, content: bytes = MINIMAL_JPEG, filename: str = "photo.jpg", content_type: str = "image/jpeg"):
+    return client.post(
+        f"/api/student/attempts/{attempt_id}/identity-verification",
+        files={"photo": (filename, io.BytesIO(content), content_type)},
+    )
+
+
+# ---------------------------------------------------------------------------
+# Successful submission and status
+# ---------------------------------------------------------------------------
+
+def test_submit_identity_photo_success_sets_pending(client: TestClient, session: Session):
+    teacher = create_user(session, "teacher@test.edu", UserRole.teacher)
+    student = create_user(session, "student@test.edu", UserRole.student)
+    test = create_active_test(session, "Exam", "PXAM-ID001", teacher.id)
+    login(client, "student@test.edu")
+    attempt_id = create_attempt_via_api(client, test.id)
+
+    resp = submit_identity(client, attempt_id, MINIMAL_JPEG)
+    assert resp.status_code == 201
+    data = resp.json()
+    assert data["attempt_id"] == attempt_id
+    assert data["status"] == "pending"
+    assert data["submitted_at"] is not None
+    assert data["can_start_examination"] is True
+
+    record = session.exec(select(AttemptIdentityVerification).where(AttemptIdentityVerification.attempt_id == attempt_id)).first()
+    assert record is not None
+    assert record.status == IdentityVerificationStatus.pending
+    assert record.student_id == student.id
+    assert record.image_path is not None
+    assert record.content_type == "image/jpeg"
+    assert record.file_size_bytes == len(MINIMAL_JPEG)
+    assert record.reviewer_id is None
+    assert record.reviewed_at is None
+
+    attempt = session.get(Attempt, attempt_id)
+    assert attempt.identity_verified is False  # not auto-verified on upload
+
+
+def test_submit_identity_png_success(client: TestClient, session: Session):
+    teacher = create_user(session, "teacher@test.edu", UserRole.teacher)
+    create_user(session, "student@test.edu", UserRole.student)
+    test = create_active_test(session, "Exam", "PXAM-ID002", teacher.id)
+    login(client, "student@test.edu")
+    attempt_id = create_attempt_via_api(client, test.id)
+    resp = submit_identity(client, attempt_id, MINIMAL_PNG, filename="photo.png", content_type="image/png")
+    assert resp.status_code == 201
+    assert resp.json()["status"] == "pending"
+
+
+def test_get_identity_status_not_submitted(client: TestClient, session: Session):
+    teacher = create_user(session, "teacher@test.edu", UserRole.teacher)
+    create_user(session, "student@test.edu", UserRole.student)
+    test = create_active_test(session, "Exam", "PXAM-ID003", teacher.id)
+    login(client, "student@test.edu")
+    attempt_id = create_attempt_via_api(client, test.id)
+
+    resp = client.get(f"/api/student/attempts/{attempt_id}/identity-verification")
+    assert resp.status_code == 200
+    data = resp.json()
+    assert data["attempt_id"] == attempt_id
+    assert data["status"] == "not_submitted"
+    assert data["submitted_at"] is None
+    assert data["can_start_examination"] is False
+    # must not leak storage details
+    assert "image_path" not in data
+    assert "storage" not in str(data).lower()
+
+
+def test_get_identity_status_after_submission(client: TestClient, session: Session):
+    teacher = create_user(session, "teacher@test.edu", UserRole.teacher)
+    create_user(session, "student@test.edu", UserRole.student)
+    test = create_active_test(session, "Exam", "PXAM-ID004", teacher.id)
+    login(client, "student@test.edu")
+    attempt_id = create_attempt_via_api(client, test.id)
+    assert submit_identity(client, attempt_id).status_code == 201
+
+    resp = client.get(f"/api/student/attempts/{attempt_id}/identity-verification")
+    assert resp.status_code == 200
+    data = resp.json()
+    assert data["status"] == "pending"
+    assert data["submitted_at"] is not None
+    assert data["can_start_examination"] is True
+
+
+# ---------------------------------------------------------------------------
+# Validation failures
+# ---------------------------------------------------------------------------
+
+def test_submit_identity_invalid_format_rejected(client: TestClient, session: Session):
+    teacher = create_user(session, "teacher@test.edu", UserRole.teacher)
+    create_user(session, "student@test.edu", UserRole.student)
+    test = create_active_test(session, "Exam", "PXAM-ID005", teacher.id)
+    login(client, "student@test.edu")
+    attempt_id = create_attempt_via_api(client, test.id)
+    resp = submit_identity(client, attempt_id, b"not-an-image", filename="file.txt", content_type="text/plain")
+    assert resp.status_code == 400
+
+
+def test_submit_identity_oversized_rejected(client: TestClient, session: Session):
+    teacher = create_user(session, "teacher@test.edu", UserRole.teacher)
+    create_user(session, "student@test.edu", UserRole.student)
+    test = create_active_test(session, "Exam", "PXAM-ID006", teacher.id)
+    login(client, "student@test.edu")
+    attempt_id = create_attempt_via_api(client, test.id)
+    big = MINIMAL_JPEG + b"\x00" * (5 * 1024 * 1024 + 1)
+    resp = submit_identity(client, attempt_id, big)
+    assert resp.status_code == 400
+    assert "size" in resp.json()["detail"].lower() or "exceed" in resp.json()["detail"].lower()
+
+
+def test_submit_identity_malformed_content_rejected(client: TestClient, session: Session):
+    teacher = create_user(session, "teacher@test.edu", UserRole.teacher)
+    create_user(session, "student@test.edu", UserRole.student)
+    test = create_active_test(session, "Exam", "PXAM-ID007", teacher.id)
+    login(client, "student@test.edu")
+    attempt_id = create_attempt_via_api(client, test.id)
+    # JPEG signature but broken/truncated body
+    malformed = b"\xff\xd8\xff\xe0broken"
+    resp = submit_identity(client, attempt_id, malformed, filename="x.jpg", content_type="image/jpeg")
+    assert resp.status_code == 400
+
+
+# ---------------------------------------------------------------------------
+# Auth / ownership / isolation
+# ---------------------------------------------------------------------------
+
+def test_submit_identity_unauthenticated(client: TestClient, session: Session):
+    resp = client.post("/api/student/attempts/1/identity-verification", files={"photo": ("p.jpg", io.BytesIO(MINIMAL_JPEG), "image/jpeg")})
+    assert resp.status_code == 401
+
+
+def test_get_identity_unauthenticated(client: TestClient, session: Session):
+    resp = client.get("/api/student/attempts/1/identity-verification")
+    assert resp.status_code == 401
+
+
+def test_submit_identity_other_students_attempt_forbidden(client: TestClient, session: Session):
+    teacher = create_user(session, "teacher@test.edu", UserRole.teacher)
+    create_user(session, "s1@test.edu", UserRole.student)
+    create_user(session, "s2@test.edu", UserRole.student)
+    test = create_active_test(session, "Exam", "PXAM-ID008", teacher.id)
+    login(client, "s1@test.edu")
+    attempt_id = create_attempt_via_api(client, test.id)
+    login(client, "s2@test.edu")
+    resp = submit_identity(client, attempt_id)
+    assert resp.status_code == 403
+
+
+def test_get_identity_other_students_attempt_forbidden(client: TestClient, session: Session):
+    teacher = create_user(session, "teacher@test.edu", UserRole.teacher)
+    create_user(session, "s1@test.edu", UserRole.student)
+    create_user(session, "s2@test.edu", UserRole.student)
+    test = create_active_test(session, "Exam", "PXAM-ID009", teacher.id)
+    login(client, "s1@test.edu")
+    attempt_id = create_attempt_via_api(client, test.id)
+    submit_identity(client, attempt_id)
+    login(client, "s2@test.edu")
+    resp = client.get(f"/api/student/attempts/{attempt_id}/identity-verification")
+    assert resp.status_code == 403
+
+
+# ---------------------------------------------------------------------------
+# Lifecycle / duplicate / start gating
+# ---------------------------------------------------------------------------
+
+def test_submit_identity_invalid_attempt_status_finalized(client: TestClient, session: Session):
+    teacher = create_user(session, "teacher@test.edu", UserRole.teacher)
+    create_user(session, "student@test.edu", UserRole.student)
+    test = create_active_test(session, "Exam", "PXAM-ID010", teacher.id)
+    login(client, "student@test.edu")
+    attempt_id = create_attempt_via_api(client, test.id)
+    attempt = session.get(Attempt, attempt_id)
+    attempt.status = AttemptStatus.submitted
+    attempt.submitted_at = datetime.now(timezone.utc)
+    session.add(attempt)
+    session.commit()
+    resp = submit_identity(client, attempt_id)
+    assert resp.status_code == 409
+
+
+def test_duplicate_identity_submission_rejected(client: TestClient, session: Session):
+    teacher = create_user(session, "teacher@test.edu", UserRole.teacher)
+    create_user(session, "student@test.edu", UserRole.student)
+    test = create_active_test(session, "Exam", "PXAM-ID011", teacher.id)
+    login(client, "student@test.edu")
+    attempt_id = create_attempt_via_api(client, test.id)
+    assert submit_identity(client, attempt_id).status_code == 201
+    resp = submit_identity(client, attempt_id)
+    assert resp.status_code == 409
+
+
+def test_start_attempt_requires_identity_submission(client: TestClient, session: Session):
+    teacher = create_user(session, "teacher@test.edu", UserRole.teacher)
+    create_user(session, "student@test.edu", UserRole.student)
+    test = create_active_test(session, "Exam", "PXAM-ID012", teacher.id)
+    login(client, "student@test.edu")
+    attempt_id = create_attempt_via_api(client, test.id)
+    resp = client.post(f"/api/student/attempts/{attempt_id}/start")
+    assert resp.status_code == 409
+    assert "identity" in resp.json()["detail"].lower()
+
+
+def test_start_attempt_allowed_after_pending_submission(client: TestClient, session: Session):
+    teacher = create_user(session, "teacher@test.edu", UserRole.teacher)
+    create_user(session, "student@test.edu", UserRole.student)
+    test = create_active_test(session, "Exam", "PXAM-ID013", teacher.id)
+    login(client, "student@test.edu")
+    attempt_id = create_attempt_via_api(client, test.id)
+    assert submit_identity(client, attempt_id).status_code == 201
+    resp = client.post(f"/api/student/attempts/{attempt_id}/start")
+    assert resp.status_code == 200
+    assert resp.json()["status"] == "in_progress"
+
+
+# ---------------------------------------------------------------------------
+# Student cannot change verification/reviewer decisions; privacy protections
+# ---------------------------------------------------------------------------
+
+def test_student_cannot_change_verification_status_via_student_apis(client: TestClient, session: Session):
+    teacher = create_user(session, "teacher@test.edu", UserRole.teacher)
+    create_user(session, "student@test.edu", UserRole.student)
+    test = create_active_test(session, "Exam", "PXAM-ID014", teacher.id)
+    login(client, "student@test.edu")
+    attempt_id = create_attempt_via_api(client, test.id)
+    assert submit_identity(client, attempt_id).status_code == 201
+    # no student endpoint exists to review/verify; submitting again is blocked
+    assert submit_identity(client, attempt_id).status_code == 409
+    record = session.exec(select(AttemptIdentityVerification).where(AttemptIdentityVerification.attempt_id == attempt_id)).first()
+    assert record.status == IdentityVerificationStatus.pending
+    assert record.reviewer_id is None
+    assert record.reviewed_at is None
+
+
+def test_identity_status_does_not_expose_internal_storage_or_paths(client: TestClient, session: Session):
+    teacher = create_user(session, "teacher@test.edu", UserRole.teacher)
+    create_user(session, "student@test.edu", UserRole.student)
+    test = create_active_test(session, "Exam", "PXAM-ID015", teacher.id)
+    login(client, "student@test.edu")
+    attempt_id = create_attempt_via_api(client, test.id)
+    submit_identity(client, attempt_id)
+    resp = client.get(f"/api/student/attempts/{attempt_id}/identity-verification")
+    body = resp.text.lower()
+    assert "image_path" not in body
+    assert "storage" not in body
+    assert "backend\\" not in body and "backend/" not in body
+    assert "attempt_" not in body  # relative path fragment must not leak
+

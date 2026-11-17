@@ -5,9 +5,13 @@ import Badge from '../../components/shared/Badge'
 import Button from '../../components/shared/Button'
 import Card from '../../components/shared/Card'
 import EmptyState from '../../components/shared/EmptyState'
+import ExamCameraPreview from '../../components/shared/ExamCameraPreview'
 import Modal from '../../components/shared/Modal'
 import Spinner from '../../components/shared/Spinner'
 import { useToast } from '../../components/shared/Toast'
+import useBrowserProctoring from '../../hooks/useBrowserProctoring'
+import useFaceDetection, { FACE_DETECTION_STATUS } from '../../hooks/useFaceDetection'
+import { MEDIA_PERMISSION_STATUS, useMediaProctoring } from '../../context/MediaProctoringContext'
 import { studentService } from '../../services/studentService'
 import { ROUTES } from '../../utils/constants'
 import { formatCountdown } from '../../utils/formatters'
@@ -476,6 +480,89 @@ export default function StudentExaminationPage() {
   const isLowTime = remainingSeconds !== null && remainingSeconds <= 60 && remainingSeconds > 0
   const showTimer = deadline !== null && remainingSeconds !== null
 
+  const proctoringActive =
+    !loading && !error && !isFinalized() && submissionState !== 'submitting'
+
+  const {
+    isFullscreen,
+    isOnline,
+    warningNotice,
+    proctoringError,
+    clearWarning,
+    requestFullscreen,
+  } = useBrowserProctoring({ attemptId, isActive: proctoringActive })
+
+  const {
+    stream: mediaStream,
+    cameraStatus,
+    microphoneStatus,
+    permissionError: mediaPermissionError,
+    stopMedia,
+    isReady: isMediaReady,
+  } = useMediaProctoring()
+
+  const handleFaceProctoringEvent = useCallback(
+    async (eventData) => {
+      if (!proctoringActive || !attemptId || !eventData?.event_type) return
+      try {
+        await studentService.recordProctoringEvent(attemptId, {
+          event_type: eventData.event_type,
+          description: eventData.description,
+        })
+      } catch {
+        // Best-effort: face events must not affect exam flow; backend is authoritative.
+      }
+    },
+    [attemptId, proctoringActive],
+  )
+
+  const faceDetectionActive =
+    proctoringActive &&
+    cameraStatus === MEDIA_PERMISSION_STATUS.GRANTED &&
+    !!mediaStream
+
+  const { status: faceStatus, message: faceMessage } = useFaceDetection({
+    attemptId,
+    stream: mediaStream,
+    isActive: faceDetectionActive,
+    onProctoringEvent: handleFaceProctoringEvent,
+  })
+
+  const mediaStoppedRef = useRef(false)
+  const stopMediaOnce = useCallback(() => {
+    if (mediaStoppedRef.current) return
+    mediaStoppedRef.current = true
+    try {
+      stopMedia()
+    } catch {
+      // ignore
+    }
+  }, [stopMedia])
+
+  useEffect(() => {
+    if (!isFinalized()) return
+
+    stopMediaOnce()
+
+    const exitFullscreen = async () => {
+      if (!document.fullscreenElement) return
+      try {
+        await document.exitFullscreen()
+      } catch {
+        // Browser denied or no active fullscreen — ignore.
+      }
+    }
+
+    exitFullscreen()
+  }, [submissionState, stopMediaOnce])
+
+  // Stop camera/microphone when leaving the examination flow or unmounting.
+  useEffect(() => {
+    return () => {
+      stopMediaOnce()
+    }
+  }, [stopMediaOnce])
+
   if (loading) {
     return (
       <AppLayout>
@@ -577,7 +664,7 @@ export default function StudentExaminationPage() {
   return (
     <AppLayout>
       <div className="space-y-6">
-        <div className="flex flex-col md:flex-row md:items-start justify-between gap-4">
+        <div className="flex flex-col lg:flex-row lg:items-start justify-between gap-4">
           <div>
             <LinkBack onClick={handleBack}>
               ← Return to Dashboard
@@ -587,26 +674,113 @@ export default function StudentExaminationPage() {
               Attempt ID: {attemptId}
             </p>
           </div>
-          <div className="flex items-center gap-3">
-            {showTimer && (
-              <Badge
-                variant={isLowTime ? 'danger' : 'primary'}
-                className={isLowTime ? 'animate-pulse' : ''}
-              >
-                ⏰ {formatCountdown(remainingSeconds)}
+          <div className="flex flex-col sm:flex-row sm:items-start gap-4 justify-end">
+            <div className="flex flex-col items-start sm:items-end gap-2">
+              <ExamCameraPreview
+                stream={mediaStream}
+                faceStatus={faceDetectionActive ? faceStatus : FACE_DETECTION_STATUS.UNAVAILABLE}
+                faceMessage={faceDetectionActive ? faceMessage : (cameraStatus === MEDIA_PERMISSION_STATUS.GRANTED ? 'Face detection inactive.' : 'Camera stream unavailable.')}
+              />
+              <div className="flex flex-wrap items-center gap-2 justify-end">
+                <Badge variant={cameraStatus === MEDIA_PERMISSION_STATUS.GRANTED ? 'primary' : 'danger'}>
+                  Camera: {cameraStatus === MEDIA_PERMISSION_STATUS.GRANTED ? 'On' : 'Unavailable'}
+                </Badge>
+                <Badge variant={microphoneStatus === MEDIA_PERMISSION_STATUS.GRANTED ? 'primary' : 'danger'}>
+                  Mic: {microphoneStatus === MEDIA_PERMISSION_STATUS.GRANTED ? 'On' : 'Unavailable'}
+                </Badge>
+              </div>
+            </div>
+            <div className="flex flex-wrap items-center gap-3 justify-end">
+              {showTimer && (
+                <Badge
+                  variant={isLowTime ? 'danger' : 'primary'}
+                  className={isLowTime ? 'animate-pulse' : ''}
+                >
+                  ⏰ {formatCountdown(remainingSeconds)}
+                </Badge>
+              )}
+              <Badge variant={isOnline ? 'primary' : 'danger'}>
+                {isOnline ? 'Online' : 'Offline'}
               </Badge>
-            )}
-            <Button
-              variant="primary"
-              size="sm"
-              onClick={() => setConfirmOpen(true)}
-              disabled={submissionState === 'submitting'}
-              loading={submissionState === 'submitting'}
-            >
-              Submit Examination
-            </Button>
+              <Badge variant={isFullscreen ? 'primary' : 'warning'}>
+                {isFullscreen ? 'Fullscreen' : 'Not Fullscreen'}
+              </Badge>
+              {!isFullscreen && (
+                <Button variant="secondary" size="sm" onClick={requestFullscreen}>
+                  Enter Fullscreen
+                </Button>
+              )}
+              <Button
+                variant="primary"
+                size="sm"
+                onClick={() => setConfirmOpen(true)}
+                disabled={submissionState === 'submitting'}
+                loading={submissionState === 'submitting'}
+              >
+                Submit Examination
+              </Button>
+            </div>
           </div>
         </div>
+
+        {proctoringError && (
+          <Card className="border border-[var(--color-danger)] bg-[var(--color-danger-soft)]">
+            <p className="text-sm">{proctoringError}</p>
+          </Card>
+        )}
+
+        {(!isMediaReady || mediaPermissionError) && (
+          <Card className="border border-[var(--color-warning)] bg-[var(--color-warning-soft)]">
+            <p className="text-sm font-medium mb-1">Camera or microphone issue</p>
+            <p className="text-sm">
+              {mediaPermissionError || 'Camera and microphone are not currently available. Return to system check if you need to restore access.'}
+            </p>
+          </Card>
+        )}
+
+        {faceDetectionActive && faceStatus === FACE_DETECTION_STATUS.LOOKING_AWAY && (
+          <Card className="border border-[var(--color-warning)] bg-[var(--color-warning-soft)]">
+            <p className="text-sm">Please look towards the screen.</p>
+          </Card>
+        )}
+
+        {faceDetectionActive && (faceStatus === FACE_DETECTION_STATUS.NOT_DETECTED || faceStatus === FACE_DETECTION_STATUS.MULTIPLE) && (
+          <Card className="border border-[var(--color-warning)] bg-[var(--color-warning-soft)]">
+            <p className="text-sm">
+              {faceStatus === FACE_DETECTION_STATUS.MULTIPLE
+                ? 'Multiple faces detected. Please ensure only you are visible in the camera view.'
+                : 'No face detected. Please stay clearly visible to the camera.'}
+            </p>
+          </Card>
+        )}
+
+        {faceDetectionActive && (faceStatus === FACE_DETECTION_STATUS.GAZE_UNAVAILABLE || faceStatus === FACE_DETECTION_STATUS.ERROR || faceStatus === FACE_DETECTION_STATUS.UNAVAILABLE) && (
+          <Card className="border border-[var(--color-warning)] bg-[var(--color-warning-soft)]">
+            <p className="text-sm">
+              {faceStatus === FACE_DETECTION_STATUS.GAZE_UNAVAILABLE
+                ? 'Looking-direction detection unavailable.'
+                : (faceMessage || 'Face detection is currently unavailable.')}
+            </p>
+          </Card>
+        )}
+
+        {warningNotice && (
+          <Card className="border border-[var(--color-warning)] bg-[var(--color-warning-soft)]">
+            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+              <p className="text-sm">{warningNotice}</p>
+              <div className="flex items-center gap-2">
+                {!isFullscreen && (
+                  <Button variant="secondary" size="sm" onClick={requestFullscreen}>
+                    Enter Fullscreen
+                  </Button>
+                )}
+                <Button variant="ghost" size="sm" onClick={clearWarning}>
+                  Dismiss
+                </Button>
+              </div>
+            </div>
+          </Card>
+        )}
 
         <div className="space-y-6">
           {questions.map((question) => {

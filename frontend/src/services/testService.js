@@ -59,6 +59,39 @@ export const testService = {
     const response = await api.delete(`/tests/${testId}`)
     return response.data
   },
+
+  /**
+   * Get identity verification records for a teacher's examination.
+   * @param {number|string} testId
+   * @returns {Promise<Array>} List of identity verification records
+   */
+  async getTestIdentityVerifications(testId) {
+    const response = await api.get(`/teacher/tests/${testId}/identity-verifications`)
+    return response.data
+  },
+
+  /**
+   * Get a specific identity verification record for teacher review.
+   * @param {number|string} verificationId
+   * @returns {Promise<Object>} Identity verification record with student info
+   */
+  async getIdentityVerificationForReview(verificationId) {
+    const response = await api.get(`/teacher/identity-verifications/${verificationId}`)
+    return response.data
+  },
+
+  /**
+   * Get the identity verification image for teacher review.
+   * @param {number|string} verificationId
+   * @returns {Promise<Blob>} Identity photograph blob
+   */
+  async getIdentityVerificationImage(verificationId) {
+    const response = await api.get(
+      `/teacher/identity-verifications/${verificationId}/image`,
+      { responseType: 'blob' }
+    )
+    return response.data
+  },
 }
 
 export default testService

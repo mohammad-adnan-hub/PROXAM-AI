@@ -1,9 +1,10 @@
-import { Routes, Route, Navigate, Outlet } from 'react-router-dom'
+﻿import { Routes, Route, Navigate, Outlet } from 'react-router-dom'
 import { Suspense, lazy } from 'react'
 import ProtectedRoute from './ProtectedRoute'
 import Spinner from '../components/shared/Spinner'
 import { ROUTES } from '../utils/constants'
 import { TestCreationProvider } from '../context/TestCreationContext'
+import { MediaProctoringProvider } from '../context/MediaProctoringContext'
 
 const LandingPage = lazy(() => import('../pages/public/LandingPage'))
 const AboutPage = lazy(() => import('../pages/public/AboutPage'))
@@ -53,6 +54,14 @@ function TestCreationLayout() {
   )
 }
 
+function StudentAttemptMediaLayout() {
+  return (
+    <MediaProctoringProvider>
+      <Outlet />
+    </MediaProctoringProvider>
+  )
+}
+
 export default function AppRoutes() {
   return (
     <Suspense fallback={<PageLoader />}>
@@ -70,8 +79,10 @@ export default function AppRoutes() {
         <Route path="/student/history" element={<ProtectedRoute roles={['student']}><StudentHistory /></ProtectedRoute>} />
         <Route path="/student/enter-code" element={<ProtectedRoute roles={['student']}><EnterTestCodePage /></ProtectedRoute>} />
         <Route path="/student/tests/:testId" element={<ProtectedRoute roles={['student']}><StudentTestDetailsPage /></ProtectedRoute>} />
-        <Route path="/student/attempts/:attemptId/system-check" element={<ProtectedRoute roles={['student']}><StudentPreExamPage /></ProtectedRoute>} />
-        <Route path="/student/attempts/:attemptId/exam" element={<ProtectedRoute roles={['student']}><StudentExaminationPage /></ProtectedRoute>} />
+        <Route element={<ProtectedRoute roles={['student']}><StudentAttemptMediaLayout /></ProtectedRoute>}>
+          <Route path="/student/attempts/:attemptId/system-check" element={<StudentPreExamPage />} />
+          <Route path="/student/attempts/:attemptId/exam" element={<StudentExaminationPage />} />
+        </Route>
         <Route path="/student/*" element={<Navigate to="/student/dashboard" replace />} />
 
         <Route path="/teacher" element={<TeacherGuard />}>

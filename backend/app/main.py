@@ -8,6 +8,8 @@ from app.database import create_db_and_tables
 from app.modules.auth.router import router as auth_router
 from app.modules.students.router import router as student_router, attempts_router
 from app.modules.tests.router import router as test_router
+from app.modules.proctoring.router import router as proctoring_router
+from app.modules.identity_review.router import router as identity_review_router
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger("proxam_ai")
@@ -48,6 +50,8 @@ app.include_router(auth_router, prefix="/api")
 app.include_router(test_router, prefix="/api")
 app.include_router(student_router, prefix="/api")
 app.include_router(attempts_router, prefix="/api")
+app.include_router(proctoring_router, prefix="/api")
+app.include_router(identity_review_router, prefix="/api")
 
 
 @app.get("/api/health", tags=["health"])

@@ -154,6 +154,53 @@ export const studentService = {
     const response = await api.get('/student/attempts')
     return response.data
   },
+
+  /**
+   * Record a browser-detected proctoring event for an active examination attempt.
+   * @param {number|string} attemptId
+   * @param {Object} eventData
+   * @returns {Promise<Object>} Created proctoring event details
+   */
+  async recordProctoringEvent(attemptId, eventData) {
+    const response = await api.post(
+      `/student/attempts/${attemptId}/proctoring-events`,
+      eventData,
+    )
+    return response.data
+  },
+
+  /**
+   * Get identity verification status for the authenticated student's attempt.
+   * @param {number|string} attemptId
+   * @returns {Promise<Object>} Identity verification status details
+   */
+  async getIdentityVerificationStatus(attemptId) {
+    const response = await api.get(`/student/attempts/${attemptId}/identity-verification`)
+    return response.data
+  },
+
+  /**
+   * Submit a one-time identity photograph for manual review.
+   * @param {number|string} attemptId
+   * @param {Blob|File} photoBlob
+   * @returns {Promise<Object>} Submission result (status pending, not auto-verified)
+   */
+  async submitIdentityVerification(attemptId, photoBlob) {
+    const formData = new FormData()
+    const file =
+      photoBlob instanceof File
+        ? photoBlob
+        : new File([photoBlob], 'identity-photo.jpg', { type: photoBlob?.type || 'image/jpeg' })
+    formData.append('photo', file)
+    // Let the browser/axios set multipart boundary automatically.
+    const response = await api.post(
+      `/student/attempts/${attemptId}/identity-verification`,
+      formData,
+      { headers: { 'Content-Type': undefined } }
+    )
+    return response.data
+  },
+
 }
 
 export default studentService

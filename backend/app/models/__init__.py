@@ -7,6 +7,7 @@ from app.models.attempt import Attempt, AttemptStatus
 from app.models.answer import Answer
 from app.models.result import Result
 from app.models.proctoring_event import ProctoringEvent, EventType, ReviewStatus
+from app.models.identity_verification import AttemptIdentityVerification, IdentityVerificationStatus
 
 __all__ = [
     "User",
@@ -23,4 +24,6 @@ __all__ = [
     "ProctoringEvent",
     "EventType",
     "ReviewStatus",
+    "AttemptIdentityVerification",
+    "IdentityVerificationStatus",
 ]

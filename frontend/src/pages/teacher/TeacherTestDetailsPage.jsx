@@ -4,6 +4,7 @@ import AppLayout from '../../components/layout/AppLayout'
 import Badge from '../../components/shared/Badge'
 import Button from '../../components/shared/Button'
 import Card from '../../components/shared/Card'
+import IdentityVerificationReview from '../../components/teacher/IdentityVerificationReview'
 import Modal from '../../components/shared/Modal'
 import Spinner from '../../components/shared/Spinner'
 import { useToast } from '../../components/shared/Toast'
@@ -136,6 +137,8 @@ export default function TeacherTestDetailsPage() {
               <p className="text-sm text-[var(--color-text-secondary)] whitespace-pre-wrap">{test.instructions}</p>
             </Card>
           )}
+
+          <IdentityVerificationReview testId={testId} test={test} />
 
           <p className="text-xs text-[var(--color-text-muted)]">
             Created {formatDateTime(test.created_at)}

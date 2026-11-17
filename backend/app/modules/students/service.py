@@ -14,11 +14,19 @@ from app.models.question import Question
 from app.models.option import Option
 from app.models.answer import Answer
 from app.models.result import Result
+from app.models.identity_verification import AttemptIdentityVerification, IdentityVerificationStatus
+from app.modules.students.identity_storage import (
+    IdentityImageStorageError,
+    delete_identity_image,
+    save_identity_image,
+    validate_image_content,
+)
 
 settings = get_settings()
 
 VALIDATION_TOKEN_TYPE = "test_validation"
 VALIDATION_TOKEN_EXPIRE_MINUTES = 10
+
 
 
 def _as_utc(dt: Optional[datetime]) -> Optional[datetime]:
@@ -350,6 +358,15 @@ def start_attempt(db: Session, student_id: int, attempt_id: int) -> Attempt:
     if attempt.status in (AttemptStatus.submitted, AttemptStatus.timed_out):
         raise ValueError("Attempt cannot be started again")
 
+    # Phase 5.7: require successful identity-photo submission before exam start.
+    # Teacher approval is not required before start unless policy explicitly requires it.
+    identity = get_identity_verification(db, attempt.id)
+    if not identity or identity.status not in (
+        IdentityVerificationStatus.pending,
+        IdentityVerificationStatus.verified,
+    ):
+        raise ValueError("Identity verification photo must be submitted before starting the examination")
+
     now = datetime.now(timezone.utc)
     attempt.status = AttemptStatus.in_progress
     attempt.started_at = now
@@ -358,6 +375,7 @@ def start_attempt(db: Session, student_id: int, attempt_id: int) -> Attempt:
     db.commit()
     db.refresh(attempt)
     return attempt
+
 
 
 def get_attempt_questions(
@@ -605,6 +623,174 @@ def submit_attempt(
         return attempt
 
     return finalized[0]
+
+
+def get_identity_verification(db: Session, attempt_id: int) -> Optional[AttemptIdentityVerification]:
+    return db.exec(
+        select(AttemptIdentityVerification).where(
+            AttemptIdentityVerification.attempt_id == attempt_id
+        )
+    ).first()
+
+
+def _get_owned_attempt_for_identity(
+    db: Session, attempt_id: int, student_id: int
+) -> Attempt:
+    attempt = db.get(Attempt, attempt_id)
+    if not attempt:
+        raise ValueError("Attempt not found")
+    if attempt.student_id != student_id:
+        raise ValueError("You do not own this attempt")
+    return attempt
+
+
+def get_identity_verification_status(
+    db: Session, attempt_id: int, student_id: int
+) -> dict:
+    attempt = _get_owned_attempt_for_identity(db, attempt_id, student_id)
+    record = get_identity_verification(db, attempt_id)
+    if not record:
+        status_value = IdentityVerificationStatus.not_submitted
+        submitted_at = None
+        reviewed_at = None
+        reviewer_notes = None
+    else:
+        status_value = record.status
+        submitted_at = record.submitted_at
+        reviewed_at = record.reviewed_at
+        # Do not expose reviewer notes to student in status payload for now unless needed;
+        # keep minimal. Students can see reviewed/rejected state.
+        reviewer_notes = None
+
+    can_start = status_value in (
+        IdentityVerificationStatus.pending,
+        IdentityVerificationStatus.verified,
+    ) and attempt.status in (AttemptStatus.created, AttemptStatus.in_progress)
+
+    message = None
+    if status_value == IdentityVerificationStatus.not_submitted:
+        message = "Identity photo has not been submitted."
+    elif status_value == IdentityVerificationStatus.pending:
+        message = "Identity photo submitted and pending manual review."
+    elif status_value == IdentityVerificationStatus.verified:
+        message = "Identity photo verified."
+    elif status_value == IdentityVerificationStatus.rejected:
+        message = "Identity photo was rejected. Please contact your instructor or follow provided instructions."
+
+    return {
+        "attempt_id": attempt.id,
+        "status": status_value,
+        "submitted_at": submitted_at,
+        "reviewed_at": reviewed_at,
+        "reviewer_notes": reviewer_notes,
+        "can_start_examination": can_start,
+        "message": message,
+    }
+
+
+def submit_identity_verification_photo(
+    db: Session,
+    attempt_id: int,
+    student_id: int,
+    content: bytes,
+    claimed_content_type: Optional[str],
+    filename: Optional[str],
+) -> AttemptIdentityVerification:
+    attempt = _get_owned_attempt_for_identity(db, attempt_id, student_id)
+
+    # Submission allowed only before finalization and for attempts that can still proceed.
+    if attempt.status in (AttemptStatus.submitted, AttemptStatus.timed_out):
+        raise ValueError("Identity verification cannot be submitted for a finalized attempt")
+
+    test = db.get(Test, attempt.test_id)
+    if not test:
+        raise ValueError("Examination not found")
+    if test.status != TestStatus.active:
+        raise ValueError("Examination is not currently active")
+
+    existing = get_identity_verification(db, attempt_id)
+    if existing and existing.status in (
+        IdentityVerificationStatus.pending,
+        IdentityVerificationStatus.verified,
+    ):
+        raise ValueError("Identity verification photo has already been submitted")
+
+    try:
+        actual_mime, ext = validate_image_content(content, claimed_content_type, filename)
+    except IdentityImageStorageError as exc:
+        raise ValueError(str(exc))
+
+    # Save new image before DB mutation so validation/storage failures cannot create incomplete DB records.
+    try:
+        relative_path, saved_path = save_identity_image(content, attempt_id, student_id, actual_mime, ext)
+    except (OSError, IdentityImageStorageError) as exc:
+        raise ValueError("Failed to store identity image securely.") from exc
+
+    previous_path = existing.image_path if existing else None
+    now = datetime.now(timezone.utc)
+
+    try:
+        if existing:
+            # Resubmission allowed only after rejection; replace image/metadata and return to pending.
+            existing.status = IdentityVerificationStatus.pending
+            existing.image_path = relative_path
+            existing.original_filename = (filename or "")[:255] or None
+            existing.content_type = actual_mime
+            existing.file_size_bytes = len(content)
+            existing.submitted_at = now
+            existing.reviewer_id = None
+            existing.reviewed_at = None
+            existing.reviewer_notes = None
+            existing.updated_at = now
+            record = existing
+        else:
+            record = AttemptIdentityVerification(
+                attempt_id=attempt.id,
+                student_id=student_id,
+                status=IdentityVerificationStatus.pending,
+                image_path=relative_path,
+                original_filename=(filename or "")[:255] or None,
+                content_type=actual_mime,
+                file_size_bytes=len(content),
+                submitted_at=now,
+                created_at=now,
+                updated_at=now,
+            )
+            db.add(record)
+
+        # Do NOT auto-mark attempt.identity_verified on upload/pending submission.
+        # attempt.identity_verified remains reviewer-controlled/future use.
+        db.commit()
+        db.refresh(record)
+    except IntegrityError:
+        db.rollback()
+        # Cleanup newly stored file; DB state remains unchanged or consistent.
+        try:
+            if saved_path.exists():
+                saved_path.unlink()
+        except OSError:
+            pass
+        existing_after = get_identity_verification(db, attempt_id)
+        if existing_after and existing_after.status in (
+            IdentityVerificationStatus.pending,
+            IdentityVerificationStatus.verified,
+        ):
+            raise ValueError("Identity verification photo has already been submitted")
+        raise
+    except Exception:
+        db.rollback()
+        try:
+            if saved_path.exists():
+                saved_path.unlink()
+        except OSError:
+            pass
+        raise
+
+    # Best-effort cleanup of replaced rejected photo after successful commit.
+    if previous_path and previous_path != relative_path:
+        delete_identity_image(previous_path)
+
+    return record
 
 
 def get_student_attempts_history(

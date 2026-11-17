@@ -1,6 +1,5 @@
 from typing import Optional
-from fastapi import APIRouter, Depends, HTTPException, status
-from fastapi import Header
+from fastapi import APIRouter, Depends, File, Header, HTTPException, UploadFile, status
 from sqlmodel import Session
 
 from app.dependencies import get_db, require_student
@@ -20,10 +19,13 @@ from app.modules.students.schemas import (
     ResultResponse,
     AttemptFinalizationResponse,
     AttemptHistoryItem,
+    IdentityVerificationStatusResponse,
+    IdentityVerificationSubmitResponse,
 )
 from app.models.option import Option
 from app.models.result import Result
 from sqlmodel import select
+
 
 router = APIRouter(prefix="/student/tests", tags=["student-tests"])
 
@@ -196,25 +198,28 @@ def start_student_attempt(
     try:
         attempt = service.start_attempt(db, current_user.id, attempt_id)
     except ValueError as exc:
-        if "not found" in str(exc).lower():
+        detail = str(exc)
+        lower = detail.lower()
+        if "not found" in lower:
             raise HTTPException(
                 status_code=status.HTTP_404_NOT_FOUND,
-                detail=str(exc),
+                detail=detail,
             )
-        if "not currently active" in str(exc).lower():
+        if "not currently active" in lower or "do not own" in lower:
             raise HTTPException(
                 status_code=status.HTTP_403_FORBIDDEN,
-                detail=str(exc),
+                detail=detail,
             )
-        if "do not own" in str(exc).lower():
+        if "identity verification photo must be submitted" in lower:
             raise HTTPException(
-                status_code=status.HTTP_403_FORBIDDEN,
-                detail=str(exc),
+                status_code=status.HTTP_409_CONFLICT,
+                detail=detail,
             )
         raise HTTPException(
             status_code=status.HTTP_409_CONFLICT,
-            detail=str(exc),
+            detail=detail,
         )
+
     return AttemptResponse.model_validate(attempt)
 
 
@@ -529,11 +534,90 @@ def submit_student_attempt(
     })
 
 
+@attempts_router.post(
+    "/{attempt_id}/identity-verification",
+    response_model=IdentityVerificationSubmitResponse,
+    status_code=status.HTTP_201_CREATED,
+)
+async def submit_identity_verification(
+    attempt_id: int,
+    photo: UploadFile = File(...),
+    current_user: User = Depends(require_student),
+    db: Session = Depends(get_db),
+) -> IdentityVerificationSubmitResponse:
+    """
+    Submit a one-time identity photograph for the authenticated student's own attempt.
+    Stores image privately and sets status to pending review. Does not auto-verify.
+    """
+    content = await photo.read()
+    try:
+        record = service.submit_identity_verification_photo(
+            db=db,
+            attempt_id=attempt_id,
+            student_id=current_user.id,
+            content=content,
+            claimed_content_type=photo.content_type,
+            filename=photo.filename,
+        )
+    except ValueError as exc:
+        detail = str(exc)
+        lower = detail.lower()
+        if "not found" in lower:
+            raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=detail)
+        if "do not own" in lower:
+            raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail=detail)
+        if "already been submitted" in lower or "cannot be submitted" in lower or "rejected" in lower:
+            raise HTTPException(status_code=status.HTTP_409_CONFLICT, detail=detail)
+        if "unsupported" in lower or "invalid" in lower or "malformed" in lower or "empty" in lower or "exceeds" in lower or "match" in lower:
+            raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=detail)
+        if "not currently active" in lower:
+            raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail=detail)
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=detail)
+
+    return IdentityVerificationSubmitResponse.model_validate(
+        {
+            "attempt_id": record.attempt_id,
+            "status": record.status,
+            "submitted_at": record.submitted_at,
+            "can_start_examination": True,
+            "message": "Identity photo submitted and pending manual review.",
+        }
+    )
+
+
+@attempts_router.get(
+    "/{attempt_id}/identity-verification",
+    response_model=IdentityVerificationStatusResponse,
+    status_code=status.HTTP_200_OK,
+)
+def get_identity_verification_status(
+    attempt_id: int,
+    current_user: User = Depends(require_student),
+    db: Session = Depends(get_db),
+) -> IdentityVerificationStatusResponse:
+    """
+    Retrieve identity verification status for the authenticated student's own attempt.
+    Never exposes image bytes, filesystem paths, or internal storage locations.
+    """
+    try:
+        data = service.get_identity_verification_status(db, attempt_id, current_user.id)
+    except ValueError as exc:
+        detail = str(exc)
+        lower = detail.lower()
+        if "not found" in lower:
+            raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=detail)
+        if "do not own" in lower:
+            raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail=detail)
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=detail)
+    return IdentityVerificationStatusResponse.model_validate(data)
+
+
 @attempts_router.get(
     "",
     response_model=list[AttemptHistoryItem],
     status_code=status.HTTP_200_OK,
 )
+
 def get_student_attempts(
     current_user: User = Depends(require_student),
     db: Session = Depends(get_db),

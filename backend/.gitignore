@@ -13,3 +13,7 @@ htmlcov/
 dist/
 build/
 *.egg-info/
+
+# Private identity verification uploads (never served publicly)
+storage/
+
