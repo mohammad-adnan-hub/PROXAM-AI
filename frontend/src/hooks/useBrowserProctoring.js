@@ -76,7 +76,7 @@ function isCurrentlyFullscreen() {
  *   requestFullscreen: () => void,
  * }}
  */
-export default function useBrowserProctoring({ attemptId, isActive }) {
+export default function useBrowserProctoring({ attemptId, isActive, onProctoringEvent }) {
   // ── Reactive state ────────────────────────────────────────────────────────
   const [isFullscreen, setIsFullscreen] = useState(isCurrentlyFullscreen);
   const [isOnline, setIsOnline] = useState(navigator.onLine);
@@ -121,6 +121,9 @@ export default function useBrowserProctoring({ attemptId, isActive }) {
    * Written by a dedicated effect so async closures always read the latest value.
    */
   const attemptIdRef = useRef(attemptId);
+
+  const onProctoringEventRef = useRef(onProctoringEvent);
+  useEffect(() => { onProctoringEventRef.current = onProctoringEvent }, [onProctoringEvent]);
 
   /**
    * Mirror of `isActive` prop.
@@ -245,16 +248,20 @@ export default function useBrowserProctoring({ attemptId, isActive }) {
           }
 
           try {
-            await studentService.recordProctoringEvent(item.attemptId, payload);
+            const response = await studentService.recordProctoringEvent(item.attemptId, payload);
             if (isStale()) {
-              // Request may have completed after invalidation; server may have
-              // recorded it. Remove only this exact event if still present to
-              // avoid resend on resume. Never touch a replaced/new queue head.
               removeExactItem(item);
               stopProcessing = true;
               break;
             }
             succeeded = true;
+            if (onProctoringEventRef.current) {
+              onProctoringEventRef.current({
+                event_type: item.event_type,
+                warning_count: response?.warning_count,
+                terminated: response?.warning_count >= 4,
+              })
+            }
             break;
           } catch (err) {
             if (isStale() || !isActiveRef.current) {
@@ -291,6 +298,15 @@ export default function useBrowserProctoring({ attemptId, isActive }) {
             // ── 409: attempt ended — halt monitoring silently ─────────────
             if (status === 409) {
               stoppedRef.current = true;
+              if (onProctoringEventRef.current) {
+                const detail = err?.response?.data?.detail
+                const wc = typeof detail === 'object' ? detail?.warning_count : undefined
+                onProctoringEventRef.current({
+                  event_type: item.event_type,
+                  warning_count: wc,
+                  terminated: true,
+                })
+              }
               discard = true;
               break;
             }

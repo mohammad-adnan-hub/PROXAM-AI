@@ -1,487 +1,519 @@
-import { useCallback, useEffect, useRef, useState } from 'react'
-import { useLocation, useNavigate, useParams } from 'react-router-dom'
-import AppLayout from '../../components/layout/AppLayout'
-import Badge from '../../components/shared/Badge'
-import Button from '../../components/shared/Button'
-import Card from '../../components/shared/Card'
-import EmptyState from '../../components/shared/EmptyState'
-import ExamCameraPreview from '../../components/shared/ExamCameraPreview'
-import Modal from '../../components/shared/Modal'
-import Spinner from '../../components/shared/Spinner'
-import { useToast } from '../../components/shared/Toast'
-import useBrowserProctoring from '../../hooks/useBrowserProctoring'
-import useFaceDetection, { FACE_DETECTION_STATUS } from '../../hooks/useFaceDetection'
-import { MEDIA_PERMISSION_STATUS, useMediaProctoring } from '../../context/MediaProctoringContext'
-import { studentService } from '../../services/studentService'
-import { ROUTES } from '../../utils/constants'
-import { formatCountdown } from '../../utils/formatters'
+import { useCallback, useEffect, useRef, useState } from "react";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
+import AppLayout from "../../components/layout/AppLayout";
+import Badge from "../../components/shared/Badge";
+import Button from "../../components/shared/Button";
+import Card from "../../components/shared/Card";
+import EmptyState from "../../components/shared/EmptyState";
+import ExamCameraPreview from "../../components/shared/ExamCameraPreview";
+import Modal from "../../components/shared/Modal";
+import Spinner from "../../components/shared/Spinner";
+import { useToast } from "../../components/shared/Toast";
+import useBrowserProctoring from "../../hooks/useBrowserProctoring";
+import useFaceDetection, {
+  FACE_DETECTION_STATUS,
+} from "../../hooks/useFaceDetection";
+import usePhoneDetection from "../../hooks/usePhoneDetection";
+import {
+  MEDIA_PERMISSION_STATUS,
+  useMediaProctoring,
+} from "../../context/MediaProctoringContext";
+import { studentService } from "../../services/studentService";
+import { ROUTES } from "../../utils/constants";
+import { formatCountdown } from "../../utils/formatters";
 
 export default function StudentExaminationPage() {
-  const { attemptId } = useParams()
-  const location = useLocation()
-  const navigate = useNavigate()
-  const toast = useToast()
-  const [questions, setQuestions] = useState([])
-  const [answers, setAnswers] = useState({})
-  const [loading, setLoading] = useState(true)
-  const [error, setError] = useState('')
-  const [pendingSaves, setPendingSaves] = useState(new Set())
-  const [saveErrors, setSaveErrors] = useState({})
-  const [submissionState, setSubmissionState] = useState('idle')
-  const [confirmOpen, setConfirmOpen] = useState(false)
-  const [pendingWriteConfirmOpen, setPendingWriteConfirmOpen] = useState(false)
+  const { attemptId } = useParams();
+  const location = useLocation();
+  const navigate = useNavigate();
+  const toast = useToast();
+  const [questions, setQuestions] = useState([]);
+  const [answers, setAnswers] = useState({});
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
+  const [pendingSaves, setPendingSaves] = useState(new Set());
+  const [saveErrors, setSaveErrors] = useState({});
+  const [submissionState, setSubmissionState] = useState("idle");
+  const [confirmOpen, setConfirmOpen] = useState(false);
+  const [pendingWriteConfirmOpen, setPendingWriteConfirmOpen] = useState(false);
   const [pendingWriteMessage, setPendingWriteMessage] = useState(
-    'Some answer saves are still pending. If you submit now, those answers might not be recorded.',
-  )
-  const [finalStatus, setFinalStatus] = useState(null)
-  const [finalResult, setFinalResult] = useState(null)
-  const [remainingSeconds, setRemainingSeconds] = useState(null)
-  const [deadline, setDeadline] = useState(null)
+    "Some answer saves are still pending. If you submit now, those answers might not be recorded.",
+  );
+  const [finalStatus, setFinalStatus] = useState(null);
+  const [finalResult, setFinalResult] = useState(null);
+  const [remainingSeconds, setRemainingSeconds] = useState(null);
+  const [deadline, setDeadline] = useState(null);
+  const [warningCount, setWarningCount] = useState(0);
+  const [terminatedByWarnings, setTerminatedByWarnings] = useState(false);
+  const [mediaRequestError, setMediaRequestError] = useState("");
+  const [requestingMedia, setRequestingMedia] = useState(false);
 
   // Ref to latest answers state (avoids stale closures in rapid interactions)
-  const answersRef = useRef(answers)
-  answersRef.current = answers
+  const answersRef = useRef(answers);
+  answersRef.current = answers;
 
   // Per-question write queue: one write at a time per question
-  const writeQueueRef = useRef({})
-  const submissionRef = useRef(false)
-  const timerRef = useRef(null)
-  const deadlineRef = useRef(null)
+  const writeQueueRef = useRef({});
+  const submissionRef = useRef(false);
+  const timerRef = useRef(null);
+  const deadlineRef = useRef(null);
 
   const getQueue = (questionId) => {
     if (!writeQueueRef.current[questionId]) {
       writeQueueRef.current[questionId] = {
         inFlight: false,
         queued: null,
-      }
+      };
     }
-    return writeQueueRef.current[questionId]
-  }
+    return writeQueueRef.current[questionId];
+  };
 
   const sendWrite = async (questionId, payload) => {
-    const queue = getQueue(questionId)
-    queue.inFlight = true
+    const queue = getQueue(questionId);
+    queue.inFlight = true;
 
-    setPendingSaves((prev) => new Set([...prev, questionId]))
+    setPendingSaves((prev) => new Set([...prev, questionId]));
     setSaveErrors((prev) => {
-      const next = { ...prev }
-      delete next[questionId]
-      return next
-    })
+      const next = { ...prev };
+      delete next[questionId];
+      return next;
+    });
 
     try {
-      if (payload.type === 'put') {
+      if (payload.type === "put") {
         await studentService.saveAnswer(
           attemptId,
           questionId,
           payload.selectedOptionId,
           payload.isMarkedForReview,
-        )
+        );
       } else {
-        await studentService.clearAnswer(attemptId, questionId)
+        await studentService.clearAnswer(attemptId, questionId);
       }
 
-      queue.inFlight = false
-      const queued = queue.queued
-      queue.queued = null
+      queue.inFlight = false;
+      const queued = queue.queued;
+      queue.queued = null;
 
       setPendingSaves((prev) => {
-        const next = new Set(prev)
-        next.delete(questionId)
-        return next
-      })
+        const next = new Set(prev);
+        next.delete(questionId);
+        return next;
+      });
 
       if (queued) {
-        sendWrite(questionId, queued)
+        sendWrite(questionId, queued);
       }
     } catch (err) {
-      queue.inFlight = false
+      queue.inFlight = false;
 
       setPendingSaves((prev) => {
-        const next = new Set(prev)
-        next.delete(questionId)
-        return next
-      })
+        const next = new Set(prev);
+        next.delete(questionId);
+        return next;
+      });
 
-      const queued = queue.queued
-      queue.queued = null
+      const queued = queue.queued;
+      queue.queued = null;
 
       if (queued) {
         setSaveErrors((prev) => ({
           ...prev,
-          [questionId]: err.message || 'Failed to save answer.',
-        }))
-        toast.error(`Could not save answer for question ${questionId}.`)
-        sendWrite(questionId, queued)
+          [questionId]: err.message || "Failed to save answer.",
+        }));
+        toast.error(`Could not save answer for question ${questionId}.`);
+        sendWrite(questionId, queued);
       } else {
         setSaveErrors((prev) => ({
           ...prev,
-          [questionId]: err.message || 'Failed to save answer.',
-        }))
-        toast.error(`Could not save answer for question ${questionId}.`)
+          [questionId]: err.message || "Failed to save answer.",
+        }));
+        toast.error(`Could not save answer for question ${questionId}.`);
       }
     }
-  }
+  };
 
   const enqueueWrite = (questionId, payload) => {
     if (submissionRef.current) {
-      return
+      return;
     }
-    const queue = getQueue(questionId)
+    const queue = getQueue(questionId);
 
     if (queue.inFlight) {
-      queue.queued = payload
-      return
+      queue.queued = payload;
+      return;
     }
 
-    sendWrite(questionId, payload)
-  }
+    sendWrite(questionId, payload);
+  };
 
   const waitForPendingWrites = useCallback(() => {
     return new Promise((resolve) => {
-      let timeoutId = null
+      let timeoutId = null;
       const startTimeout = () => {
         timeoutId = setTimeout(() => {
-          resolve({ timedOut: true })
-        }, 10000)
-      }
-      startTimeout()
+          resolve({ timedOut: true });
+        }, 10000);
+      };
+      startTimeout();
 
       const check = () => {
         if (pendingSaves.size === 0) {
-          clearTimeout(timeoutId)
-          resolve({ timedOut: false })
+          clearTimeout(timeoutId);
+          resolve({ timedOut: false });
         } else {
-          setTimeout(check, 50)
+          setTimeout(check, 50);
         }
-      }
-      check()
-    })
-  }, [pendingSaves])
+      };
+      check();
+    });
+  }, [pendingSaves]);
 
   const recoverDeadline = useCallback(async () => {
-    const navState = location.state
-    const navDeadline = navState?.timeLimitEndsAt
+    const navState = location.state;
+    const navDeadline = navState?.timeLimitEndsAt;
 
     if (navDeadline) {
-      const deadlineMs = new Date(navDeadline).getTime()
-      deadlineRef.current = deadlineMs
-      setDeadline(deadlineMs)
-      return
+      const deadlineMs = new Date(navDeadline).getTime();
+      deadlineRef.current = deadlineMs;
+      setDeadline(deadlineMs);
+      return;
     }
 
     try {
-      const startedAttempt = await studentService.startAttempt(attemptId)
-      const deadlineMs = new Date(
-        startedAttempt.time_limit_ends_at,
-      ).getTime()
-      deadlineRef.current = deadlineMs
-      setDeadline(deadlineMs)
+      const startedAttempt = await studentService.startAttempt(attemptId);
+      const deadlineMs = new Date(startedAttempt.time_limit_ends_at).getTime();
+      deadlineRef.current = deadlineMs;
+      setDeadline(deadlineMs);
     } catch (err) {
-      throw new Error(
-        err.message || 'Could not recover examination deadline.',
-      )
+      throw new Error(err.message || "Could not recover examination deadline.");
     }
-  }, [attemptId, location.state])
+  }, [attemptId, location.state]);
 
   const handleFinalizedSubmit = async () => {
-    submissionRef.current = true
+    submissionRef.current = true;
     try {
-      const response = await studentService.submitAttempt(attemptId)
-      setSubmissionState(response.status || 'submitted')
-      setFinalStatus(response.status || 'submitted')
-      setFinalResult(response.result || null)
-      submissionRef.current = false
+      const response = await studentService.submitAttempt(attemptId);
+      setSubmissionState(response.status || "submitted");
+      setFinalStatus(response.status || "submitted");
+      setFinalResult(response.result || null);
+      submissionRef.current = false;
       toast.success(
-        response.status === 'timed_out'
-          ? 'Time expired. Your examination has ended.'
-          : 'Examination submitted successfully.',
-      )
+        response.status === "timed_out"
+          ? "Time expired. Your examination has ended."
+          : "Examination submitted successfully.",
+      );
     } catch (err) {
-      submissionRef.current = false
-      toast.error(err.message || 'Could not load examination details.')
+      submissionRef.current = false;
+      toast.error(err.message || "Could not load examination details.");
     }
-  }
+  };
 
   useEffect(() => {
     const load = async () => {
-      setLoading(true)
-      setError('')
+      setLoading(true);
+      setError("");
       try {
         // Step 1: Check if the attempt is already finalized by fetching its result.
         // The result endpoint returns 200 only for submitted/timed_out attempts
         // that have a result record. If it returns 409 "Attempt has not been
         // finalized", we continue with the normal in-progress flow.
-        let resultData = null
+        let resultData = null;
         try {
-          resultData = await studentService.getAttemptResult(attemptId)
+          resultData = await studentService.getAttemptResult(attemptId);
         } catch (resultErr) {
-          const detail = resultErr.message || ''
-          const isNotFinalized = detail.includes('has not been finalized')
-          const isNoResult = detail.includes('Result not yet available')
+          const detail = resultErr.message || "";
+          const isNotFinalized = detail.includes("has not been finalized");
+          const isNoResult = detail.includes("Result not yet available");
 
           if (isNotFinalized) {
             // Attempt is still in progress - continue to normal recovery flow
-            resultData = null
+            resultData = null;
           } else if (isNoResult) {
             // Attempt is finalized but result not yet available.
             // submitAttempt is idempotent and returns the existing status.
-            await handleFinalizedSubmit()
-            setLoading(false)
-            return
+            await handleFinalizedSubmit();
+            setLoading(false);
+            return;
           } else {
-            throw resultErr
+            throw resultErr;
           }
         }
 
         if (resultData) {
           // Attempt is finalized with a result. Restore result UI directly
           // from the GET result response without calling submitAttempt again.
-          setSubmissionState(resultData.status || 'submitted')
-          setFinalStatus(resultData.status || 'submitted')
-          setFinalResult(resultData)
-          setLoading(false)
-          return
+          if (resultData.status === "terminated_by_warnings") {
+            setTerminatedByWarnings(true);
+            setWarningCount(3);
+            setLoading(false);
+            return;
+          }
+          setSubmissionState(resultData.status || "submitted");
+          setFinalStatus(resultData.status || "submitted");
+          setFinalResult(resultData);
+          setLoading(false);
+          return;
         }
 
         // Step 2: Normal in-progress recovery flow.
-        await recoverDeadline()
+        try {
+          await recoverDeadline();
+        } catch (recoverErr) {
+          // Check if attempt was terminated by warnings
+          try {
+            const attemptData =
+              await studentService.getAttemptResult(attemptId);
+            if (attemptData?.status === "terminated_by_warnings") {
+              setTerminatedByWarnings(true);
+              setWarningCount(3);
+              setLoading(false);
+              return;
+            }
+          } catch {
+            // Fall through to original error
+          }
+          throw recoverErr;
+        }
 
         const [questionsData, answersData] = await Promise.all([
           studentService.getAttemptQuestions(attemptId),
           studentService.getSavedAnswers(attemptId),
-        ])
+        ]);
 
-        setQuestions(questionsData || [])
+        setQuestions(questionsData || []);
 
-        const reconstructed = {}
-        ;(answersData || []).forEach((answer) => {
+        const reconstructed = {};
+        (answersData || []).forEach((answer) => {
           reconstructed[answer.question_id] = {
             selectedOptionId: answer.selected_option_id,
             isMarkedForReview: answer.is_marked_for_review,
-          }
-        })
-        setAnswers(reconstructed)
-        answersRef.current = reconstructed
+          };
+        });
+        setAnswers(reconstructed);
+        answersRef.current = reconstructed;
       } catch (err) {
-        setError(err.message || 'Could not load examination. Please try again.')
+        setError(
+          err.message || "Could not load examination. Please try again.",
+        );
       } finally {
-        setLoading(false)
+        setLoading(false);
       }
-    }
-    load()
-  }, [attemptId, recoverDeadline])
+    };
+    load();
+  }, [attemptId, recoverDeadline]);
 
   useEffect(() => {
-    if (!deadline) return
+    if (!deadline) return;
 
-    const initialRemaining = deadlineRef.current - Date.now()
-    setRemainingSeconds(Math.max(0, Math.ceil(initialRemaining / 1000)))
+    const initialRemaining = deadlineRef.current - Date.now();
+    setRemainingSeconds(Math.max(0, Math.ceil(initialRemaining / 1000)));
 
     const tick = () => {
-      const remaining = deadlineRef.current - Date.now()
-      setRemainingSeconds(Math.max(0, Math.ceil(remaining / 1000)))
+      const remaining = deadlineRef.current - Date.now();
+      setRemainingSeconds(Math.max(0, Math.ceil(remaining / 1000)));
       if (remaining <= 0) {
         if (timerRef.current) {
-          clearInterval(timerRef.current)
-          timerRef.current = null
+          clearInterval(timerRef.current);
+          timerRef.current = null;
         }
-        handleAutoSubmit()
+        handleAutoSubmit();
       }
-    }
+    };
 
-    tick()
-    timerRef.current = setInterval(tick, 1000)
+    tick();
+    timerRef.current = setInterval(tick, 1000);
 
     return () => {
       if (timerRef.current) {
-        clearInterval(timerRef.current)
-        timerRef.current = null
+        clearInterval(timerRef.current);
+        timerRef.current = null;
       }
-    }
-  }, [deadline])
+    };
+  }, [deadline]);
 
   const handleBack = () => {
-    navigate(ROUTES.STUDENT_DASHBOARD)
-  }
+    navigate(ROUTES.STUDENT_DASHBOARD);
+  };
 
   const isSelected = (questionId, optionId) => {
-    return answers[questionId]?.selectedOptionId === optionId
-  }
+    return answers[questionId]?.selectedOptionId === optionId;
+  };
 
   const isMarkedForReview = (questionId) => {
-    return answers[questionId]?.isMarkedForReview === true
-  }
+    return answers[questionId]?.isMarkedForReview === true;
+  };
 
   const isSaving = (questionId) => {
-    return pendingSaves.has(questionId)
-  }
+    return pendingSaves.has(questionId);
+  };
 
   const isFinalized = () => {
-    return submissionState === 'submitted' || submissionState === 'timed_out'
-  }
+    return submissionState === "submitted" || submissionState === "timed_out";
+  };
 
   const handleSelectOption = (questionId, optionId) => {
-    if (isFinalized()) return
-    if (submissionRef.current) return
-    const current = answersRef.current[questionId] || {}
+    if (isFinalized()) return;
+    if (submissionRef.current) return;
+    const current = answersRef.current[questionId] || {};
     const nextState = {
       ...current,
       selectedOptionId: optionId,
-    }
+    };
 
-    answersRef.current = { ...answersRef.current, [questionId]: nextState }
+    answersRef.current = { ...answersRef.current, [questionId]: nextState };
     setAnswers((prev) => ({
       ...prev,
       [questionId]: nextState,
-    }))
+    }));
 
     enqueueWrite(questionId, {
-      type: 'put',
+      type: "put",
       selectedOptionId: optionId,
       isMarkedForReview: current.isMarkedForReview ?? false,
-    })
-  }
+    });
+  };
 
   const handleToggleReview = (questionId) => {
-    if (isFinalized()) return
-    if (submissionRef.current) return
-    const current = answersRef.current[questionId] || {}
-    const nextReview = !current.isMarkedForReview
+    if (isFinalized()) return;
+    if (submissionRef.current) return;
+    const current = answersRef.current[questionId] || {};
+    const nextReview = !current.isMarkedForReview;
     const nextState = {
       ...current,
       isMarkedForReview: nextReview,
-    }
+    };
 
-    answersRef.current = { ...answersRef.current, [questionId]: nextState }
+    answersRef.current = { ...answersRef.current, [questionId]: nextState };
     setAnswers((prev) => ({
       ...prev,
       [questionId]: nextState,
-    }))
+    }));
 
     enqueueWrite(questionId, {
-      type: 'put',
+      type: "put",
       selectedOptionId: current.selectedOptionId ?? null,
       isMarkedForReview: nextReview,
-    })
-  }
+    });
+  };
 
   const handleClearAnswer = (questionId) => {
-    if (isFinalized()) return
-    if (submissionRef.current) return
-    const current = answersRef.current[questionId] || {}
+    if (isFinalized()) return;
+    if (submissionRef.current) return;
+    const current = answersRef.current[questionId] || {};
     const nextState = {
       ...current,
       selectedOptionId: null,
-    }
+    };
 
-    answersRef.current = { ...answersRef.current, [questionId]: nextState }
+    answersRef.current = { ...answersRef.current, [questionId]: nextState };
     setAnswers((prev) => ({
       ...prev,
       [questionId]: nextState,
-    }))
+    }));
 
     enqueueWrite(questionId, {
-      type: 'delete',
-    })
-  }
+      type: "delete",
+    });
+  };
 
   const handleSubmitConfirm = () => {
-    setConfirmOpen(false)
-    handleSubmit()
-  }
+    setConfirmOpen(false);
+    handleSubmit();
+  };
 
   const handleSubmit = async () => {
-    if (submissionRef.current) return
-    submissionRef.current = true
+    if (submissionRef.current) return;
+    submissionRef.current = true;
 
     try {
-      const { timedOut } = await waitForPendingWrites()
+      const { timedOut } = await waitForPendingWrites();
 
       if (timedOut) {
         setPendingWriteMessage(
-          'Some answer saves are still pending. If you submit now, those answers might not be recorded.',
-        )
-        setPendingWriteConfirmOpen(true)
-        return
+          "Some answer saves are still pending. If you submit now, those answers might not be recorded.",
+        );
+        setPendingWriteConfirmOpen(true);
+        return;
       }
 
-      const response = await studentService.submitAttempt(attemptId)
+      const response = await studentService.submitAttempt(attemptId);
 
-      setSubmissionState(response.status || 'submitted')
-      setFinalStatus(response.status || 'submitted')
-      setFinalResult(response.result || null)
+      setSubmissionState(response.status || "submitted");
+      setFinalStatus(response.status || "submitted");
+      setFinalResult(response.result || null);
       toast.success(
-        response.status === 'timed_out'
-          ? 'Time expired. Your examination has ended.'
-          : 'Examination submitted successfully.',
-      )
+        response.status === "timed_out"
+          ? "Time expired. Your examination has ended."
+          : "Examination submitted successfully.",
+      );
     } catch (err) {
-      submissionRef.current = false
-      toast.error(err.message || 'Could not submit the examination.')
+      submissionRef.current = false;
+      toast.error(err.message || "Could not submit the examination.");
     }
-  }
+  };
 
   const handleAutoSubmit = async () => {
-    if (submissionRef.current || isFinalized()) return
-    submissionRef.current = true
-    setSubmissionState('submitting')
+    if (submissionRef.current || isFinalized()) return;
+    submissionRef.current = true;
+    setSubmissionState("submitting");
 
     try {
-      const { timedOut } = await waitForPendingWrites()
+      const { timedOut } = await waitForPendingWrites();
 
-      const response = await studentService.submitAttempt(attemptId)
+      const response = await studentService.submitAttempt(attemptId);
 
-      setSubmissionState(response.status || 'timed_out')
-      setFinalStatus(response.status || 'timed_out')
-      setFinalResult(response.result || null)
+      setSubmissionState(response.status || "timed_out");
+      setFinalStatus(response.status || "timed_out");
+      setFinalResult(response.result || null);
 
       if (timedOut) {
         toast.error(
-          'Time expired. Your examination has ended. Some pending answers may not have been saved.',
-        )
+          "Time expired. Your examination has ended. Some pending answers may not have been saved.",
+        );
       } else {
-        toast.error('Time expired. Your examination has ended.')
+        toast.error("Time expired. Your examination has ended.");
       }
     } catch (err) {
-      submissionRef.current = false
-      setSubmissionState('idle')
-      toast.error(err.message || 'Could not submit the examination.')
+      submissionRef.current = false;
+      setSubmissionState("idle");
+      toast.error(err.message || "Could not submit the examination.");
     }
-  }
+  };
 
   const handlePendingWriteConfirm = async () => {
-    setPendingWriteConfirmOpen(false)
+    setPendingWriteConfirmOpen(false);
     try {
-      const response = await studentService.submitAttempt(attemptId)
-      setSubmissionState(response.status || 'submitted')
-      setFinalStatus(response.status || 'submitted')
-      setFinalResult(response.result || null)
+      const response = await studentService.submitAttempt(attemptId);
+      setSubmissionState(response.status || "submitted");
+      setFinalStatus(response.status || "submitted");
+      setFinalResult(response.result || null);
       toast.success(
-        response.status === 'timed_out'
-          ? 'Time expired. Your examination has ended.'
-          : 'Examination submitted successfully.',
-      )
+        response.status === "timed_out"
+          ? "Time expired. Your examination has ended."
+          : "Examination submitted successfully.",
+      );
     } catch (err) {
-      submissionRef.current = false
-      toast.error(err.message || 'Could not submit the examination.')
+      submissionRef.current = false;
+      toast.error(err.message || "Could not submit the examination.");
     }
-  }
+  };
 
   const handlePendingWriteCancel = () => {
-    setPendingWriteConfirmOpen(false)
-    submissionRef.current = false
-  }
+    setPendingWriteConfirmOpen(false);
+    submissionRef.current = false;
+  };
 
   const answeredCount = Object.values(answers).filter(
     (a) => a.selectedOptionId !== null,
-  ).length
-  const unansweredCount = questions.length - answeredCount
-  const isLowTime = remainingSeconds !== null && remainingSeconds <= 60 && remainingSeconds > 0
-  const showTimer = deadline !== null && remainingSeconds !== null
+  ).length;
+  const unansweredCount = questions.length - answeredCount;
+  const isLowTime =
+    remainingSeconds !== null && remainingSeconds <= 60 && remainingSeconds > 0;
+  const showTimer = deadline !== null && remainingSeconds !== null;
 
   const proctoringActive =
-    !loading && !error && !isFinalized() && submissionState !== 'submitting'
+    !loading && !error && !isFinalized() && submissionState !== "submitting";
 
   const {
     isFullscreen,
@@ -490,78 +522,188 @@ export default function StudentExaminationPage() {
     proctoringError,
     clearWarning,
     requestFullscreen,
-  } = useBrowserProctoring({ attemptId, isActive: proctoringActive })
+  } = useBrowserProctoring({
+    attemptId,
+    isActive: proctoringActive,
+    onProctoringEvent: (info) => {
+      if (info?.warning_count !== undefined) {
+        setWarningCount(Math.min(info.warning_count, 3))
+      }
+      if (info?.terminated || info?.warning_count >= 4) {
+        setTerminatedByWarnings(true)
+        setWarningCount(3)
+      }
+    },
+  })
 
   const {
     stream: mediaStream,
     cameraStatus,
     microphoneStatus,
     permissionError: mediaPermissionError,
+    requestPermissions,
     stopMedia,
     isReady: isMediaReady,
-  } = useMediaProctoring()
+  } = useMediaProctoring();
 
   const handleFaceProctoringEvent = useCallback(
     async (eventData) => {
-      if (!proctoringActive || !attemptId || !eventData?.event_type) return
+      if (!proctoringActive || !attemptId || !eventData?.event_type) return;
+
       try {
-        await studentService.recordProctoringEvent(attemptId, {
+        const response = await studentService.recordProctoringEvent(attemptId, {
           event_type: eventData.event_type,
           description: eventData.description,
-        })
-      } catch {
-        // Best-effort: face events must not affect exam flow; backend is authoritative.
+        });
+        if (response?.warning_count !== undefined) {
+          setWarningCount(Math.min(response.warning_count, 3));
+        }
+        if (response?.warning_count >= 4) {
+          setTerminatedByWarnings(true);
+        }
+      } catch (err) {
+        const detail = err?.response?.data?.detail;
+        const msg =
+          (typeof detail === "string" ? detail : detail?.message || "") ||
+          err?.message ||
+          "";
+        if (
+          detail?.warning_count >= 4 ||
+          msg.includes("terminated") ||
+          msg.includes("excessive warnings")
+        ) {
+          setTerminatedByWarnings(true);
+          setWarningCount(3);
+        }
       }
     },
     [attemptId, proctoringActive],
-  )
+  );
 
   const faceDetectionActive =
     proctoringActive &&
     cameraStatus === MEDIA_PERMISSION_STATUS.GRANTED &&
-    !!mediaStream
+    !!mediaStream;
 
   const { status: faceStatus, message: faceMessage } = useFaceDetection({
     attemptId,
     stream: mediaStream,
     isActive: faceDetectionActive,
     onProctoringEvent: handleFaceProctoringEvent,
-  })
+  });
 
-  const mediaStoppedRef = useRef(false)
-  const stopMediaOnce = useCallback(() => {
-    if (mediaStoppedRef.current) return
-    mediaStoppedRef.current = true
+  const phoneDetectionActive =
+    proctoringActive &&
+    cameraStatus === MEDIA_PERMISSION_STATUS.GRANTED &&
+    !!mediaStream;
+
+  const [phoneWarningVisible, setPhoneWarningVisible] = useState(false);
+  const phoneWarningTimerRef = useRef(null);
+
+  const handlePhoneDetected = useCallback(async () => {
+    if (!proctoringActive || !attemptId) return;
+    // Show warning immediately, don't wait for backend
+    setPhoneWarningVisible(true);
+    if (phoneWarningTimerRef.current)
+      clearTimeout(phoneWarningTimerRef.current);
+    phoneWarningTimerRef.current = setTimeout(() => {
+      setPhoneWarningVisible(false);
+    }, 8000);
     try {
-      stopMedia()
+      const response = await studentService.recordProctoringEvent(attemptId, {
+        event_type: "phone_detected",
+        description: "Mobile phone detected in camera view during examination.",
+      });
+      if (response?.warning_count !== undefined) {
+        setWarningCount(Math.min(response.warning_count, 3));
+      }
+      if (response?.warning_count >= 4) {
+        setTerminatedByWarnings(true);
+      }
+    } catch (err) {
+      const detail = err?.response?.data?.detail;
+      const msg =
+        (typeof detail === "string" ? detail : detail?.message || "") ||
+        err?.message ||
+        "";
+      if (
+        detail?.warning_count >= 4 ||
+        msg.includes("terminated") ||
+        msg.includes("excessive warnings")
+      ) {
+        setTerminatedByWarnings(true);
+        setWarningCount(3);
+      }
+      console.error(
+        "[PhoneDetection] Backend event submission failed:",
+        err?.message || err,
+      );
+    }
+  }, [attemptId, proctoringActive]);
+
+  const { phoneDetected } = usePhoneDetection({
+    stream: mediaStream,
+    isActive: phoneDetectionActive,
+    onDetected: handlePhoneDetected,
+  });
+
+  const mediaStoppedRef = useRef(false);
+  const stopMediaOnce = useCallback(() => {
+    if (mediaStoppedRef.current) return;
+    mediaStoppedRef.current = true;
+    try {
+      stopMedia();
     } catch {
       // ignore
     }
-  }, [stopMedia])
+  }, [stopMedia]);
+
+  const handleRequestMediaPermissions = useCallback(async () => {
+    if (isFinalized()) return;
+    setRequestingMedia(true);
+    setMediaRequestError("");
+    try {
+      const result = await requestPermissions();
+      if (!result?.ok) {
+        setMediaRequestError(
+          "Camera and microphone access could not be granted. Please check your device and browser permissions.",
+        );
+      }
+    } catch (err) {
+      setMediaRequestError(
+        err?.message ||
+          "Could not access camera and microphone. Please try again.",
+      );
+    } finally {
+      setRequestingMedia(false);
+    }
+  }, [requestPermissions, isFinalized]);
 
   useEffect(() => {
-    if (!isFinalized()) return
+    if (!isFinalized()) return;
 
-    stopMediaOnce()
+    stopMediaOnce();
 
     const exitFullscreen = async () => {
-      if (!document.fullscreenElement) return
+      if (!document.fullscreenElement) return;
       try {
-        await document.exitFullscreen()
+        await document.exitFullscreen();
       } catch {
         // Browser denied or no active fullscreen — ignore.
       }
-    }
+    };
 
-    exitFullscreen()
-  }, [submissionState, stopMediaOnce])
+    exitFullscreen();
+  }, [submissionState, stopMediaOnce]);
 
   // Stop camera/microphone when leaving the examination flow or unmounting.
   useEffect(() => {
     return () => {
-      stopMediaOnce()
-    }
-  }, [stopMediaOnce])
+      stopMediaOnce();
+      if (phoneWarningTimerRef.current)
+        clearTimeout(phoneWarningTimerRef.current);
+    };
+  }, [stopMediaOnce]);
 
   if (loading) {
     return (
@@ -570,7 +712,7 @@ export default function StudentExaminationPage() {
           <Spinner size="lg" />
         </div>
       </AppLayout>
-    )
+    );
   }
 
   if (error) {
@@ -583,32 +725,28 @@ export default function StudentExaminationPage() {
           </Button>
         </Card>
       </AppLayout>
-    )
+    );
   }
 
   if (isFinalized()) {
     const statusMessage =
-      finalStatus === 'timed_out'
-        ? 'Time expired. Your examination has ended.'
-        : 'Examination submitted successfully.'
+      finalStatus === "timed_out"
+        ? "Time expired. Your examination has ended."
+        : "Examination submitted successfully.";
 
     return (
       <AppLayout>
         <div className="space-y-6">
           <div className="flex flex-col md:flex-row md:items-start justify-between gap-4">
             <div>
-              <LinkBack onClick={handleBack}>
-                ← Return to Dashboard
-              </LinkBack>
+              <LinkBack onClick={handleBack}>← Return to Dashboard</LinkBack>
               <h1 className="page-title mt-2">Examination Ended</h1>
               <p className="text-xs text-[var(--color-text-muted)]">
                 Attempt ID: {attemptId}
               </p>
             </div>
-            <Badge
-              variant={finalStatus === 'timed_out' ? 'danger' : 'primary'}
-            >
-              {finalStatus === 'timed_out' ? 'Timed Out' : 'Submitted'}
+            <Badge variant={finalStatus === "timed_out" ? "danger" : "primary"}>
+              {finalStatus === "timed_out" ? "Timed Out" : "Submitted"}
             </Badge>
           </div>
 
@@ -620,16 +758,19 @@ export default function StudentExaminationPage() {
                   Results
                 </p>
                 <p className="text-sm">
-                  Score: <span className="font-semibold">{finalResult.score}</span> /
+                  Score:{" "}
+                  <span className="font-semibold">{finalResult.score}</span> /
                   {finalResult.total_marks}
                 </p>
                 <p className="text-sm">
-                  Percentage:{' '}
-                  <span className="font-semibold">{finalResult.percentage}%</span>
+                  Percentage:{" "}
+                  <span className="font-semibold">
+                    {finalResult.percentage}%
+                  </span>
                 </p>
                 <p className="text-sm">
-                  Correct: {finalResult.correct_count} | Incorrect: {' '}
-                  {finalResult.incorrect_count} | Unanswered:{' '}
+                  Correct: {finalResult.correct_count} | Incorrect:{" "}
+                  {finalResult.incorrect_count} | Unanswered:{" "}
                   {finalResult.unanswered_count}
                 </p>
               </div>
@@ -641,7 +782,34 @@ export default function StudentExaminationPage() {
           </Button>
         </div>
       </AppLayout>
-    )
+    );
+  }
+
+  if (terminatedByWarnings) {
+    return (
+      <AppLayout>
+        <Card className="max-w-lg mx-auto text-center">
+          <div className="space-y-4">
+            <span className="text-4xl" aria-hidden="true">
+              ⛔
+            </span>
+            <h1 className="text-xl font-bold text-[var(--color-text-primary)]">
+              Examination Terminated
+            </h1>
+            <p className="text-sm text-[var(--color-text-secondary)]">
+              Your examination has been terminated because you exceeded the
+              maximum number of allowed warnings (3).
+            </p>
+            <p className="text-xs text-[var(--color-text-muted)]">
+              Warnings: 3/3
+            </p>
+            <Button variant="secondary" onClick={handleBack} fullWidth>
+              Return to Dashboard
+            </Button>
+          </div>
+        </Card>
+      </AppLayout>
+    );
   }
 
   if (!questions || questions.length === 0) {
@@ -658,7 +826,7 @@ export default function StudentExaminationPage() {
           }
         />
       </AppLayout>
-    )
+    );
   }
 
   return (
@@ -666,47 +834,90 @@ export default function StudentExaminationPage() {
       <div className="space-y-6">
         <div className="flex flex-col lg:flex-row lg:items-start justify-between gap-4">
           <div>
-            <LinkBack onClick={handleBack}>
-              ← Return to Dashboard
-            </LinkBack>
+            <LinkBack onClick={handleBack}>← Return to Dashboard</LinkBack>
             <h1 className="page-title mt-2">Examination</h1>
             <p className="text-xs text-[var(--color-text-muted)]">
               Attempt ID: {attemptId}
             </p>
+            <div className="mt-2">
+              <Badge
+                variant={
+                  warningCount >= 3
+                    ? "danger"
+                    : warningCount >= 2
+                      ? "warning"
+                      : "primary"
+                }
+              >
+                Warnings: {warningCount}/3
+              </Badge>
+            </div>
           </div>
           <div className="flex flex-col sm:flex-row sm:items-start gap-4 justify-end">
             <div className="flex flex-col items-start sm:items-end gap-2">
               <ExamCameraPreview
                 stream={mediaStream}
-                faceStatus={faceDetectionActive ? faceStatus : FACE_DETECTION_STATUS.UNAVAILABLE}
-                faceMessage={faceDetectionActive ? faceMessage : (cameraStatus === MEDIA_PERMISSION_STATUS.GRANTED ? 'Face detection inactive.' : 'Camera stream unavailable.')}
+                faceStatus={
+                  faceDetectionActive
+                    ? faceStatus
+                    : FACE_DETECTION_STATUS.UNAVAILABLE
+                }
+                faceMessage={
+                  faceDetectionActive
+                    ? faceMessage
+                    : cameraStatus === MEDIA_PERMISSION_STATUS.GRANTED
+                      ? "Face detection inactive."
+                      : "Camera stream unavailable."
+                }
               />
               <div className="flex flex-wrap items-center gap-2 justify-end">
-                <Badge variant={cameraStatus === MEDIA_PERMISSION_STATUS.GRANTED ? 'primary' : 'danger'}>
-                  Camera: {cameraStatus === MEDIA_PERMISSION_STATUS.GRANTED ? 'On' : 'Unavailable'}
+                <Badge
+                  variant={
+                    cameraStatus === MEDIA_PERMISSION_STATUS.GRANTED
+                      ? "primary"
+                      : "danger"
+                  }
+                >
+                  Camera:{" "}
+                  {cameraStatus === MEDIA_PERMISSION_STATUS.GRANTED
+                    ? "On"
+                    : "Unavailable"}
                 </Badge>
-                <Badge variant={microphoneStatus === MEDIA_PERMISSION_STATUS.GRANTED ? 'primary' : 'danger'}>
-                  Mic: {microphoneStatus === MEDIA_PERMISSION_STATUS.GRANTED ? 'On' : 'Unavailable'}
+                <Badge
+                  variant={
+                    microphoneStatus === MEDIA_PERMISSION_STATUS.GRANTED
+                      ? "primary"
+                      : "danger"
+                  }
+                >
+                  Mic:{" "}
+                  {microphoneStatus === MEDIA_PERMISSION_STATUS.GRANTED
+                    ? "On"
+                    : "Unavailable"}
                 </Badge>
               </div>
             </div>
             <div className="flex flex-wrap items-center gap-3 justify-end">
               {showTimer && (
                 <Badge
-                  variant={isLowTime ? 'danger' : 'primary'}
-                  className={isLowTime ? 'animate-pulse' : ''}
+                  variant={isLowTime ? "danger" : "primary"}
+                  className={isLowTime ? "animate-pulse" : ""}
                 >
                   ⏰ {formatCountdown(remainingSeconds)}
                 </Badge>
               )}
-              <Badge variant={isOnline ? 'primary' : 'danger'}>
-                {isOnline ? 'Online' : 'Offline'}
+              <Badge variant={isOnline ? "primary" : "danger"}>
+                {isOnline ? "Online" : "Offline"}
               </Badge>
-              <Badge variant={isFullscreen ? 'primary' : 'warning'}>
-                {isFullscreen ? 'Fullscreen' : 'Not Fullscreen'}
+              <Badge variant={isFullscreen ? "primary" : "warning"}>
+                {isFullscreen ? "Fullscreen" : "Not Fullscreen"}
               </Badge>
               {!isFullscreen && (
-                <Button variant="secondary" size="sm" onClick={requestFullscreen}>
+                <Button
+                  variant="secondary"
+                  size="sm"
+                  onClick={requestFullscreen}
+                >
                   Enter Fullscreen
                 </Button>
               )}
@@ -714,8 +925,8 @@ export default function StudentExaminationPage() {
                 variant="primary"
                 size="sm"
                 onClick={() => setConfirmOpen(true)}
-                disabled={submissionState === 'submitting'}
-                loading={submissionState === 'submitting'}
+                disabled={submissionState === "submitting"}
+                loading={submissionState === "submitting"}
               >
                 Submit Examination
               </Button>
@@ -729,48 +940,124 @@ export default function StudentExaminationPage() {
           </Card>
         )}
 
-        {(!isMediaReady || mediaPermissionError) && (
+        {(!isMediaReady || mediaPermissionError || mediaRequestError) && (
           <Card className="border border-[var(--color-warning)] bg-[var(--color-warning-soft)]">
-            <p className="text-sm font-medium mb-1">Camera or microphone issue</p>
-            <p className="text-sm">
-              {mediaPermissionError || 'Camera and microphone are not currently available. Return to system check if you need to restore access.'}
+            <p className="text-sm font-medium mb-1">
+              Camera or microphone issue
             </p>
+            <p className="text-sm">
+              {mediaPermissionError ||
+                mediaRequestError ||
+                "Camera and microphone are not currently available. Click the button below to enable access."}
+            </p>
+            {!isFinalized() && !isMediaReady && (
+              <div className="mt-3">
+                <Button
+                  variant="primary"
+                  size="sm"
+                  onClick={handleRequestMediaPermissions}
+                  loading={requestingMedia}
+                  disabled={requestingMedia}
+                >
+                  Enable Camera & Microphone
+                </Button>
+              </div>
+            )}
           </Card>
         )}
 
-        {faceDetectionActive && faceStatus === FACE_DETECTION_STATUS.LOOKING_AWAY && (
-          <Card className="border border-[var(--color-warning)] bg-[var(--color-warning-soft)]">
-            <p className="text-sm">Please look towards the screen.</p>
-          </Card>
-        )}
+        {faceDetectionActive &&
+          faceStatus === FACE_DETECTION_STATUS.LOOKING_AWAY && (
+            <Card className="border-2 border-[var(--color-warning)] bg-[var(--color-warning-soft)]">
+              <div className="flex items-center gap-3">
+                <span className="text-2xl" aria-hidden="true">
+                  ⚠️
+                </span>
+                <div>
+                  <p className="text-base font-bold text-[var(--color-text-primary)]">
+                    Please look towards the screen
+                  </p>
+                  <p className="text-sm text-[var(--color-text-secondary)]">
+                    Your head orientation suggests you may not be looking at the
+                    examination screen.
+                  </p>
+                </div>
+              </div>
+            </Card>
+          )}
 
-        {faceDetectionActive && (faceStatus === FACE_DETECTION_STATUS.NOT_DETECTED || faceStatus === FACE_DETECTION_STATUS.MULTIPLE) && (
-          <Card className="border border-[var(--color-warning)] bg-[var(--color-warning-soft)]">
-            <p className="text-sm">
-              {faceStatus === FACE_DETECTION_STATUS.MULTIPLE
-                ? 'Multiple faces detected. Please ensure only you are visible in the camera view.'
-                : 'No face detected. Please stay clearly visible to the camera.'}
-            </p>
-          </Card>
-        )}
+        {faceDetectionActive &&
+          (faceStatus === FACE_DETECTION_STATUS.NOT_DETECTED ||
+            faceStatus === FACE_DETECTION_STATUS.MULTIPLE) && (
+            <Card className="border-2 border-[var(--color-danger)] bg-[var(--color-danger-soft)]">
+              <div className="flex items-center gap-3">
+                <span className="text-2xl" aria-hidden="true">
+                  🚨
+                </span>
+                <div>
+                  <p className="text-base font-bold text-[var(--color-text-primary)]">
+                    {faceStatus === FACE_DETECTION_STATUS.MULTIPLE
+                      ? "Multiple faces detected"
+                      : "No face detected"}
+                  </p>
+                  <p className="text-sm text-[var(--color-text-secondary)]">
+                    {faceStatus === FACE_DETECTION_STATUS.MULTIPLE
+                      ? "Please ensure only you are visible in the camera view."
+                      : "Please stay clearly visible to the camera."}
+                  </p>
+                </div>
+              </div>
+            </Card>
+          )}
 
-        {faceDetectionActive && (faceStatus === FACE_DETECTION_STATUS.GAZE_UNAVAILABLE || faceStatus === FACE_DETECTION_STATUS.ERROR || faceStatus === FACE_DETECTION_STATUS.UNAVAILABLE) && (
-          <Card className="border border-[var(--color-warning)] bg-[var(--color-warning-soft)]">
-            <p className="text-sm">
-              {faceStatus === FACE_DETECTION_STATUS.GAZE_UNAVAILABLE
-                ? 'Looking-direction detection unavailable.'
-                : (faceMessage || 'Face detection is currently unavailable.')}
-            </p>
+        {faceDetectionActive &&
+          (faceStatus === FACE_DETECTION_STATUS.GAZE_UNAVAILABLE ||
+            faceStatus === FACE_DETECTION_STATUS.ERROR ||
+            faceStatus === FACE_DETECTION_STATUS.UNAVAILABLE) && (
+            <Card className="border border-[var(--color-warning)] bg-[var(--color-warning-soft)]">
+              <p className="text-sm">
+                {faceStatus === FACE_DETECTION_STATUS.GAZE_UNAVAILABLE
+                  ? "Looking-direction detection unavailable."
+                  : faceMessage || "Face detection is currently unavailable."}
+              </p>
+            </Card>
+          )}
+
+        {(phoneDetected || phoneWarningVisible) && (
+          <Card className="border-2 border-[var(--color-danger)] bg-[var(--color-danger-soft)]">
+            <div className="flex items-center gap-3">
+              <span className="text-2xl" aria-hidden="true">
+                📱
+              </span>
+              <div>
+                <p className="text-base font-bold text-[var(--color-text-primary)]">
+                  Mobile phone detected
+                </p>
+                <p className="text-sm text-[var(--color-text-secondary)]">
+                  A mobile phone has been detected in your camera view. Please
+                  remove it from the examination area.
+                </p>
+              </div>
+            </div>
           </Card>
         )}
 
         {warningNotice && (
-          <Card className="border border-[var(--color-warning)] bg-[var(--color-warning-soft)]">
+          <Card className="border-2 border-[var(--color-warning)] bg-[var(--color-warning-soft)]">
             <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
-              <p className="text-sm">{warningNotice}</p>
+              <div className="flex items-center gap-3">
+                <span className="text-xl" aria-hidden="true">
+                  ⚠️
+                </span>
+                <p className="text-base font-semibold">{warningNotice}</p>
+              </div>
               <div className="flex items-center gap-2">
                 {!isFullscreen && (
-                  <Button variant="secondary" size="sm" onClick={requestFullscreen}>
+                  <Button
+                    variant="secondary"
+                    size="sm"
+                    onClick={requestFullscreen}
+                  >
                     Enter Fullscreen
                   </Button>
                 )}
@@ -784,13 +1071,13 @@ export default function StudentExaminationPage() {
 
         <div className="space-y-6">
           {questions.map((question) => {
-            const questionId = question.id
-            const answer = answers[questionId] || {}
-            const selectedOptionId = answer.selectedOptionId
-            const marked = answer.isMarkedForReview === true
-            const saving = isSaving(questionId)
-            const saveError = saveErrors[questionId]
-            const disabled = isFinalized() || saving || submissionRef.current
+            const questionId = question.id;
+            const answer = answers[questionId] || {};
+            const selectedOptionId = answer.selectedOptionId;
+            const marked = answer.isMarkedForReview === true;
+            const saving = isSaving(questionId);
+            const saveError = saveErrors[questionId];
+            const disabled = isFinalized() || saving || submissionRef.current;
 
             return (
               <Card key={question.id} className="max-w-3xl">
@@ -804,18 +1091,25 @@ export default function StudentExaminationPage() {
                     </p>
                   </div>
                   <div className="flex items-center gap-2">
-                    <Badge variant="primary">Question {question.order_index + 1}</Badge>
+                    <Badge variant="primary">
+                      Question {question.order_index + 1}
+                    </Badge>
                     <Button
-                      variant={marked ? 'mint' : 'ghost'}
+                      variant={marked ? "mint" : "ghost"}
                       size="sm"
                       onClick={() => handleToggleReview(questionId)}
                       disabled={disabled}
-                      aria-label={marked ? 'Unmark for review' : 'Mark for review'}
+                      aria-label={
+                        marked ? "Unmark for review" : "Mark for review"
+                      }
                     >
-                      {marked ? '🔖 Review' : 'Review'}
+                      {marked ? "🔖 Review" : "Review"}
                     </Button>
                     {saveError && (
-                      <Badge variant="danger" className="text-[var(--color-text-primary)]">
+                      <Badge
+                        variant="danger"
+                        className="text-[var(--color-text-primary)]"
+                      >
                         Save error
                       </Badge>
                     )}
@@ -826,7 +1120,9 @@ export default function StudentExaminationPage() {
                   {question.options.map((option) => (
                     <Button
                       key={option.id}
-                      variant={isSelected(questionId, option.id) ? 'primary' : 'ghost'}
+                      variant={
+                        isSelected(questionId, option.id) ? "primary" : "ghost"
+                      }
                       size="md"
                       fullWidth
                       className="justify-start text-left"
@@ -855,12 +1151,13 @@ export default function StudentExaminationPage() {
                   </Button>
                 )}
               </Card>
-            )
+            );
           })}
         </div>
 
         <p className="text-xs text-[var(--color-text-muted)] text-center">
-          Selections are saved automatically. Mark questions you want to review later.
+          Selections are saved automatically. Mark questions you want to review
+          later.
         </p>
 
         <Modal
@@ -874,19 +1171,23 @@ export default function StudentExaminationPage() {
             any answers afterward.
           </p>
           <p className="text-sm mb-4">
-            Answered: <span className="font-semibold">{answeredCount}</span> of{' '}
+            Answered: <span className="font-semibold">{answeredCount}</span> of{" "}
             <span className="font-semibold">{questions.length}</span> questions.
           </p>
           <div className="flex justify-end gap-3">
-            <Button variant="secondary" size="sm" onClick={() => setConfirmOpen(false)}>
+            <Button
+              variant="secondary"
+              size="sm"
+              onClick={() => setConfirmOpen(false)}
+            >
               Cancel
             </Button>
             <Button
               variant="danger"
               size="sm"
               onClick={handleSubmitConfirm}
-              disabled={submissionState === 'submitting'}
-              loading={submissionState === 'submitting'}
+              disabled={submissionState === "submitting"}
+              loading={submissionState === "submitting"}
             >
               Confirm Submit
             </Button>
@@ -912,8 +1213,8 @@ export default function StudentExaminationPage() {
               variant="danger"
               size="sm"
               onClick={handlePendingWriteConfirm}
-              disabled={submissionState === 'submitting'}
-              loading={submissionState === 'submitting'}
+              disabled={submissionState === "submitting"}
+              loading={submissionState === "submitting"}
             >
               Submit Anyway
             </Button>
@@ -921,19 +1222,19 @@ export default function StudentExaminationPage() {
         </Modal>
       </div>
     </AppLayout>
-  )
+  );
 }
 
 function LinkBack({ onClick, children }) {
   return (
     <a
       onClick={(e) => {
-        e.preventDefault()
-        onClick()
+        e.preventDefault();
+        onClick();
       }}
       className="text-xs font-semibold text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)]"
     >
       {children}
     </a>
-  )
+  );
 }

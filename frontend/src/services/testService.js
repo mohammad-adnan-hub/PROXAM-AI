@@ -30,10 +30,56 @@ export const testService = {
   },
 
   /**
-   * Get full details of a specific test by ID.
+   * Get attempts for a test (teacher).
    * @param {number|string} testId
-   * @returns {Promise<Object>} Test detail object
+   * @returns {Promise<Array>} List of attempts
    */
+  async getTestAttempts(testId) {
+    const response = await api.get(`/teacher/tests/${testId}/attempts`)
+    return response.data
+  },
+
+  /**
+   * Get attempt detail (teacher).
+   * @param {number|string} attemptId
+   * @returns {Promise<Object>} Attempt detail
+   */
+  async getTeacherAttempt(attemptId) {
+    const response = await api.get(`/teacher/attempts/${attemptId}`)
+    return response.data
+  },
+
+  /**
+   * Review a proctoring event (teacher).
+   * @param {number|string} attemptId
+   * @param {number|string} eventId
+   * @param {Object} payload - { review_status, reviewer_notes }
+   * @returns {Promise<Object>} Updated proctoring event
+   */
+  async reviewProctoringEvent(attemptId, eventId, payload) {
+    const response = await api.put(`/proctoring/attempts/${attemptId}/events/${eventId}`, payload)
+    return response.data
+  },
+
+  /**
+   * Get proctoring events for an attempt (teacher).
+   * @param {number|string} attemptId
+   * @returns {Promise<Array>} List of proctoring events
+   */
+  async getProctoringEvents(attemptId) {
+    const response = await api.get(`/proctoring/attempts/${attemptId}/events`)
+    return response.data
+  },
+
+  /**
+   * Get attempt result (teacher).
+   * @param {number|string} attemptId
+   * @returns {Promise<Object>} Result details
+   */
+  async getTeacherAttemptResult(attemptId) {
+    const response = await api.get(`/teacher/attempts/${attemptId}/result`)
+    return response.data
+  },
   async getTestDetails(testId) {
     const response = await api.get(`/tests/${testId}`)
     return response.data
@@ -89,6 +135,20 @@ export const testService = {
     const response = await api.get(
       `/teacher/identity-verifications/${verificationId}/image`,
       { responseType: 'blob' }
+    )
+    return response.data
+  },
+
+  /**
+   * Approve or reject an identity verification record.
+   * @param {number|string} verificationId
+   * @param {Object} payload - { status: 'verified'|'rejected', reviewer_notes?: string }
+   * @returns {Promise<Object>} Updated identity verification record
+   */
+  async reviewIdentityVerification(verificationId, payload) {
+    const response = await api.put(
+      `/teacher/identity-verifications/${verificationId}`,
+      payload
     )
     return response.data
   },

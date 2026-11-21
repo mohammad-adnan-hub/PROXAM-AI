@@ -437,7 +437,7 @@ def get_student_attempt_result(
             detail="You do not own this attempt",
         )
 
-    if attempt.status not in (AttemptStatus.submitted, AttemptStatus.timed_out):
+    if attempt.status not in (AttemptStatus.submitted, AttemptStatus.timed_out, AttemptStatus.terminated_by_warnings):
         raise HTTPException(
             status_code=status.HTTP_409_CONFLICT,
             detail="Attempt has not been finalized",

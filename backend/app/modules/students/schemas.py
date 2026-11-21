@@ -55,6 +55,7 @@ class AttemptResponse(BaseModel):
     time_limit_ends_at: Optional[datetime] = None
     created_at: Optional[datetime] = None
     identity_verified: bool
+    warning_count: int = 0
 
     model_config = {"from_attributes": True}
 
@@ -164,3 +165,51 @@ class IdentityVerificationSubmitResponse(BaseModel):
 
     model_config = {"from_attributes": True}
 
+
+
+class TeacherAttemptListItem(BaseModel):
+    attempt_id: int
+    student_id: int
+    student_name: str
+    student_email: str
+    status: AttemptStatus
+    warning_count: int
+    started_at: Optional[datetime] = None
+    submitted_at: Optional[datetime] = None
+    identity_verified: bool = False
+    proctoring_event_count: int = 0
+    latest_event_timestamp: Optional[datetime] = None
+    latest_event_type: Optional[str] = None
+    latest_event_severity: Optional[str] = None
+
+    model_config = {"from_attributes": True}
+
+
+class TeacherAttemptDetail(BaseModel):
+    attempt_id: int
+    student_id: int
+    student_name: str
+    student_email: str
+    test_id: int
+    test_title: str
+    status: AttemptStatus
+    warning_count: int
+    started_at: Optional[datetime] = None
+    submitted_at: Optional[datetime] = None
+    identity_verified: bool = False
+    identity_verification_status: Optional[str] = None
+    proctoring_event_count: int = 0
+
+    model_config = {"from_attributes": True}
+
+
+class TeacherAttemptResult(BaseModel):
+    attempt_id: int
+    status: AttemptStatus
+    score: Optional[float] = None
+    total_marks: Optional[float] = None
+    percentage: Optional[float] = None
+    correct_count: Optional[int] = None
+    incorrect_count: Optional[int] = None
+    unanswered_count: Optional[int] = None
+    calculated_at: Optional[datetime] = None

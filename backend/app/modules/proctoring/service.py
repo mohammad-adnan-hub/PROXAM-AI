@@ -1,18 +1,31 @@
 from collections import defaultdict
 from datetime import datetime, timezone
+from sqlalchemy import update as sql_update
 import threading
 import time
 from typing import Optional
 
 from fastapi import HTTPException, status
-from sqlmodel import Session
+from sqlmodel import Session, select
 
+from app.models.attempt import Attempt, AttemptStatus
 from app.models.attempt import Attempt, AttemptStatus
 from app.models.proctoring_event import EventType, ProctoringEvent, ReviewStatus
 from app.modules.proctoring.schemas import ProctoringEventCreate
-from app.modules.students.service import _finalize_attempt_if_expired
+from app.modules.students.service import _finalize_attempt_if_expired, _finalize_attempt
 
-# Centralized server-authoritative severity mapping.
+# Event types that count as qualifying warnings toward the 3-warning limit.
+QUALIFYING_WARNING_EVENTS: set[EventType] = {
+    EventType.face_not_detected,
+    EventType.multiple_faces_detected,
+    EventType.looking_away,
+    EventType.fullscreen_exited,
+    EventType.tab_visibility_changed,
+    EventType.camera_disconnected,
+    EventType.microphone_unavailable,
+    EventType.identity_check_failed,
+    EventType.phone_detected,
+}
 # Severity serves as a review-priority indicator for teachers/reviewers,
 # not as proof or verdict of misconduct.
 DEFAULT_EVENT_SEVERITY: dict[EventType, str] = {
@@ -25,6 +38,7 @@ DEFAULT_EVENT_SEVERITY: dict[EventType, str] = {
     EventType.microphone_unavailable: "low",
     EventType.network_interrupted: "low",
     EventType.identity_check_failed: "high",
+    EventType.phone_detected: "high",
 }
 
 
@@ -136,12 +150,31 @@ def record_student_proctoring_event(
             detail="Examination time has expired",
         )
 
+    if attempt.status == AttemptStatus.terminated_by_warnings:
+        raise HTTPException(
+            status_code=status.HTTP_409_CONFLICT,
+            detail="Examination has been terminated due to excessive warnings",
+        )
+
     # Event flooding protection check
     if not rate_limiter.check_limit(attempt_id, payload.event_type):
         raise HTTPException(
             status_code=status.HTTP_429_TOO_MANY_REQUESTS,
             detail="Too many proctoring events reported. Please wait before submitting again.",
         )
+
+    # Qualifying warning handling: increment count
+    is_qualifying = payload.event_type in QUALIFYING_WARNING_EVENTS
+    if is_qualifying:
+        # Atomic increment with conditional check
+        stmt = sql_update(Attempt).where(
+            Attempt.id == attempt_id,
+            Attempt.status == AttemptStatus.in_progress,
+            Attempt.warning_count < 4,
+        ).values(warning_count=Attempt.warning_count + 1)
+        db.exec(stmt)
+        db.commit()
+        db.refresh(attempt)
 
     # Server-authoritative timestamp & severity
     server_now = datetime.now(timezone.utc)
@@ -169,6 +202,121 @@ def record_student_proctoring_event(
         reviewed_at=None,
     )
     db.add(event)
+
+    # Terminate on 4th qualifying warning (after persisting the event)
+    if is_qualifying and attempt.warning_count >= 4:
+        _finalize_attempt(
+            db, attempt_id, student_id, AttemptStatus.terminated_by_warnings,
+            server_now,
+        )
+
     db.commit()
+    db.refresh(event)
+    db.refresh(attempt)
+
+    if is_qualifying and attempt.warning_count >= 4:
+        raise HTTPException(
+            status_code=status.HTTP_409_CONFLICT,
+            detail={
+                "message": "Examination terminated due to excessive warnings",
+                "warning_count": attempt.warning_count,
+            },
+        )
+
+    return event
+
+
+def list_proctoring_events(
+    db: Session,
+    attempt_id: int,
+    current_user_id: int,
+    is_admin: bool,
+) -> list[ProctoringEvent]:
+    """Return proctoring events for an attempt, ordered chronologically.
+
+    Authorization (ownership) is enforced by the caller/router; this function
+    only loads and orders events. Raises 404 if the attempt does not exist.
+    """
+    attempt = db.get(Attempt, attempt_id)
+    if not attempt:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="Attempt not found",
+        )
+
+    # Ownership check: attempt -> test -> created_by
+    from app.models.test import Test
+
+    test = db.get(Test, attempt.test_id)
+    if not test:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="Attempt not found",
+        )
+    if not is_admin and test.created_by != current_user_id:
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="Insufficient permissions",
+        )
+
+    events = db.exec(
+        select(ProctoringEvent)
+        .where(ProctoringEvent.attempt_id == attempt_id)
+        .order_by(ProctoringEvent.timestamp, ProctoringEvent.id)
+    ).all()
+    return list(events)
+
+
+def review_proctoring_event(
+    db: Session,
+    attempt_id: int,
+    event_id: int,
+    current_user_id: int,
+    is_admin: bool,
+    review_status: ReviewStatus,
+    reviewer_notes: Optional[str],
+) -> ProctoringEvent:
+    attempt = db.get(Attempt, attempt_id)
+    if not attempt:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Attempt not found")
+
+    from app.models.test import Test
+
+    test = db.get(Test, attempt.test_id)
+    if not test or (not is_admin and test.created_by != current_user_id):
+        raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Insufficient permissions")
+
+    from app.models.proctoring_event import ProctoringEvent, ProctoringReviewAudit
+
+    event = db.get(ProctoringEvent, event_id)
+    if not event or event.attempt_id != attempt_id:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Event not found")
+
+    previous_status = event.review_status
+    previous_notes = event.reviewer_notes
+
+    event.review_status = review_status
+    event.reviewer_id = current_user_id
+    event.reviewer_notes = reviewer_notes
+    now = datetime.now(timezone.utc)
+    event.reviewed_at = now
+
+    audit = ProctoringReviewAudit(
+        proctoring_event_id=event.id,
+        reviewer_id=current_user_id,
+        previous_review_status=previous_status,
+        new_review_status=review_status,
+        previous_reviewer_notes=previous_notes,
+        new_reviewer_notes=reviewer_notes,
+        reviewed_at=now,
+    )
+
+    db.add(event)
+    db.add(audit)
+    try:
+        db.commit()
+    except Exception:
+        db.rollback()
+        raise
     db.refresh(event)
     return event

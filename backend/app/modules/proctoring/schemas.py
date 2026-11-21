@@ -32,5 +32,29 @@ class ProctoringEventResponse(BaseModel):
     description: Optional[str] = None
     duration_seconds: Optional[float] = None
     review_status: ReviewStatus
+    warning_count: int = 0
 
     model_config = {"from_attributes": True}
+
+
+class ProctoringEventDetailResponse(BaseModel):
+    id: int
+    attempt_id: int
+    event_type: EventType
+    severity: str
+    timestamp: datetime
+    description: Optional[str] = None
+    duration_seconds: Optional[float] = None
+    review_status: ReviewStatus
+    reviewer_id: Optional[int] = None
+    reviewer_notes: Optional[str] = None
+    reviewed_at: Optional[datetime] = None
+
+    model_config = {"from_attributes": True}
+
+
+class ProctoringEventReviewRequest(BaseModel):
+    review_status: ReviewStatus
+    reviewer_notes: Optional[str] = Field(default=None, max_length=2000)
+
+    model_config = {"extra": "forbid"}

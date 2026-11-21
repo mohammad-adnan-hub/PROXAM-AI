@@ -9,6 +9,7 @@ class AttemptStatus(str, Enum):
     in_progress = "in_progress"
     submitted = "submitted"
     timed_out = "timed_out"
+    terminated_by_warnings = "terminated_by_warnings"
 
 
 class Attempt(SQLModel, table=True):
@@ -25,4 +26,5 @@ class Attempt(SQLModel, table=True):
     submitted_at: Optional[datetime] = Field(default=None)
     time_limit_ends_at: Optional[datetime] = Field(default=None)
     identity_verified: bool = Field(default=False)
+    warning_count: int = Field(default=0)
     created_at: Optional[datetime] = Field(default=None)

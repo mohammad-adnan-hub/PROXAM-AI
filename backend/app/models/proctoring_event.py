@@ -14,6 +14,7 @@ class EventType(str, Enum):
     microphone_unavailable = "microphone_unavailable"
     network_interrupted = "network_interrupted"
     identity_check_failed = "identity_check_failed"
+    phone_detected = "phone_detected"
 
 
 class ReviewStatus(str, Enum):
@@ -22,6 +23,19 @@ class ReviewStatus(str, Enum):
     reviewed = "reviewed"
     no_concern = "no_concern"
     requires_further_review = "requires_further_review"
+
+
+class ProctoringReviewAudit(SQLModel, table=True):
+    __tablename__ = "proctoring_review_audits"
+
+    id: Optional[int] = Field(default=None, primary_key=True)
+    proctoring_event_id: int = Field(foreign_key="proctoring_events.id", index=True, ondelete="RESTRICT")
+    reviewer_id: int = Field(foreign_key="users.id", index=True, ondelete="RESTRICT")
+    previous_review_status: ReviewStatus
+    new_review_status: ReviewStatus
+    previous_reviewer_notes: Optional[str] = Field(default=None, max_length=2000)
+    new_reviewer_notes: Optional[str] = Field(default=None, max_length=2000)
+    reviewed_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
 
 
 class ProctoringEvent(SQLModel, table=True):

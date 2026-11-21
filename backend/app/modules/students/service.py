@@ -355,7 +355,7 @@ def start_attempt(db: Session, student_id: int, attempt_id: int) -> Attempt:
     if attempt.status == AttemptStatus.in_progress:
         return attempt
 
-    if attempt.status in (AttemptStatus.submitted, AttemptStatus.timed_out):
+    if attempt.status in (AttemptStatus.submitted, AttemptStatus.timed_out, AttemptStatus.terminated_by_warnings):
         raise ValueError("Attempt cannot be started again")
 
     # Phase 5.7: require successful identity-photo submission before exam start.
@@ -600,7 +600,7 @@ def submit_attempt(
     if attempt.status == AttemptStatus.created:
         raise ValueError("Attempt has not been started")
 
-    if attempt.status in (AttemptStatus.submitted, AttemptStatus.timed_out):
+    if attempt.status in (AttemptStatus.submitted, AttemptStatus.timed_out, AttemptStatus.terminated_by_warnings):
         return attempt
 
     now = datetime.now(timezone.utc)

@@ -94,6 +94,9 @@ export default function TeacherTestDetailsPage() {
               </div>
             </div>
             <div className="flex gap-2">
+              <Link to={ROUTES.TEACHER_ATTEMPTS.replace(':testId', test.id)}>
+                <Button variant="secondary">Review Attempts</Button>
+              </Link>
               <Button variant="secondary" onClick={handleCopy}>
                 Copy code
               </Button>

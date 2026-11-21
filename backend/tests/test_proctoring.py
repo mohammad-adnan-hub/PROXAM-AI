@@ -434,7 +434,7 @@ def test_event_flooding_protection(client: TestClient, session: Session):
 
     login_user(client, "student11@test.edu")
 
-    payload = {"event_type": "looking_away"}
+    payload = {"event_type": "network_interrupted"}
 
     # Default rate limit is 5 events per 10 seconds for same (attempt_id, event_type)
     for i in range(5):
@@ -655,18 +655,18 @@ def test_rate_limit_category_isolation(client: TestClient, session: Session):
 
     login_user(client, "student16@test.edu")
 
-    # 1. Exhaust allowed number of events for Category A (looking_away: 5 events)
+    # 1. Exhaust allowed number of events for Category A (network_interrupted: 5 events)
     for _ in range(5):
         resp = client.post(
             f"/api/student/attempts/{attempt.id}/proctoring-events",
-            json={"event_type": "looking_away"},
+            json={"event_type": "network_interrupted"},
         )
         assert resp.status_code == 201
 
-    # Confirm Category A is now rate-limited
+    # 6th request for Category A must be rate limited
     resp_blocked = client.post(
         f"/api/student/attempts/{attempt.id}/proctoring-events",
-        json={"event_type": "looking_away"},
+        json={"event_type": "network_interrupted"},
     )
     assert resp_blocked.status_code == 429
 
@@ -680,3 +680,86 @@ def test_rate_limit_category_isolation(client: TestClient, session: Session):
     assert resp_other_category.json()["event_type"] == "fullscreen_exited"
 
 
+
+
+
+# ---------------------------------------------------------------------------
+# Four-Warning Termination Sequence
+# ---------------------------------------------------------------------------
+
+def test_four_qualifying_warnings_terminate_attempt(client: TestClient, session: Session):
+    teacher = create_user(session, "teacher99@test.edu", UserRole.teacher)
+    student = create_user(session, "student99@test.edu", UserRole.student)
+    test = create_active_test(session, "Warning Test", "PXAM-WRN99", teacher.id)
+
+    login_user(client, "student99@test.edu")
+    attempt = create_attempt(session, student.id, test.id, AttemptStatus.in_progress)
+
+    # 1st qualifying warning
+    r1 = client.post(
+        f"/api/student/attempts/{attempt.id}/proctoring-events",
+        json={"event_type": "looking_away"},
+    )
+    assert r1.status_code == 201
+    assert r1.json()["warning_count"] == 1
+
+    # 2nd qualifying warning
+    r2 = client.post(
+        f"/api/student/attempts/{attempt.id}/proctoring-events",
+        json={"event_type": "looking_away"},
+    )
+    assert r2.status_code == 201
+    assert r2.json()["warning_count"] == 2
+
+    # 3rd qualifying warning
+    r3 = client.post(
+        f"/api/student/attempts/{attempt.id}/proctoring-events",
+        json={"event_type": "looking_away"},
+    )
+    assert r3.status_code == 201
+    assert r3.json()["warning_count"] == 3
+
+    # 4th qualifying warning -> termination
+    r4 = client.post(
+        f"/api/student/attempts/{attempt.id}/proctoring-events",
+        json={"event_type": "looking_away"},
+    )
+    assert r4.status_code == 409
+    assert r4.json()["detail"]["warning_count"] == 4
+
+    # Verify attempt is terminated
+    session.refresh(attempt)
+    assert attempt.status == AttemptStatus.terminated_by_warnings
+    assert attempt.warning_count == 4
+
+    # Verify 4th event persisted in history
+    events = session.exec(
+        select(ProctoringEvent).where(ProctoringEvent.attempt_id == attempt.id)
+    ).all()
+    assert len(events) == 4
+
+    # Verify no further qualifying events accepted
+    r5 = client.post(
+        f"/api/student/attempts/{attempt.id}/proctoring-events",
+        json={"event_type": "looking_away"},
+    )
+    assert r5.status_code == 409
+
+    # Verify count unchanged
+    session.refresh(attempt)
+    assert attempt.warning_count == 4
+
+    # Verify answer save blocked
+    q = Question(test_id=test.id, question_text="Q", marks=1.0, order_index=0)
+    session.add(q)
+    session.commit()
+    session.refresh(q)
+    opt = Option(question_id=q.id, option_text="A", label="A", is_correct=True)
+    session.add(opt)
+    session.commit()
+    session.refresh(opt)
+    ans_resp = client.put(
+        f"/api/student/attempts/{attempt.id}/answers/{q.id}",
+        json={"selected_option_id": opt.id, "is_marked_for_review": False},
+    )
+    assert ans_resp.status_code == 409

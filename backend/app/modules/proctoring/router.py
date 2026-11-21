@@ -2,6 +2,7 @@ from fastapi import APIRouter, Depends, status
 from sqlmodel import Session
 
 from app.dependencies import get_db, require_student
+from app.models.attempt import Attempt
 from app.models.user import User
 from app.modules.proctoring.schemas import ProctoringEventCreate, ProctoringEventResponse
 from app.modules.proctoring import service
@@ -31,4 +32,8 @@ def record_student_proctoring_event(
         attempt_id=attempt_id,
         payload=payload,
     )
-    return ProctoringEventResponse.model_validate(event)
+    # Get the current warning count from the attempt
+    attempt = db.get(Attempt, attempt_id)
+    response = ProctoringEventResponse.model_validate(event)
+    response.warning_count = attempt.warning_count if attempt else 0
+    return response

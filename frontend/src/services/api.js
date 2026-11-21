@@ -22,7 +22,9 @@ api.interceptors.response.use(
       message = error.message
     }
 
-    return Promise.reject(new Error(message))
+    const err = new Error(message)
+    err.response = error.response
+    return Promise.reject(err)
   }
 )
 

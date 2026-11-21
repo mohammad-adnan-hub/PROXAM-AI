@@ -1,8 +1,18 @@
 import { Link } from 'react-router-dom'
 import Button from '../components/shared/Button'
 import { ROUTES } from '../utils/constants'
+import { useAuth } from '../context/AuthContext'
 
 export default function NotFoundPage() {
+  const { user, loading } = useAuth()
+
+  let homePath = ROUTES.HOME
+  if (!loading && user) {
+    if (user.role === 'teacher') homePath = ROUTES.TEACHER_DASHBOARD
+    else if (user.role === 'student') homePath = ROUTES.STUDENT_DASHBOARD
+    else if (user.role === 'admin') homePath = '/admin'
+  }
+
   return (
     <div className="min-h-screen bg-[var(--color-background)] flex items-center justify-center px-4">
       <div className="text-center max-w-sm bg-[var(--color-surface)] p-8 rounded-xl border border-[var(--color-border)] shadow-card">
@@ -14,9 +24,13 @@ export default function NotFoundPage() {
         <p className="text-xs text-[var(--color-text-secondary)] mb-6">
           The link you followed may be incorrect, expired, or relocated to an archived testing session.
         </p>
-        <Link to={ROUTES.HOME}>
-          <Button fullWidth>Return to Home</Button>
-        </Link>
+        {loading ? (
+          <Button fullWidth disabled>Return to Home</Button>
+        ) : (
+          <Link to={homePath}>
+            <Button fullWidth>Return to Home</Button>
+          </Link>
+        )}
       </div>
     </div>
   )

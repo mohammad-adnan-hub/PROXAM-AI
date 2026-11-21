@@ -23,6 +23,8 @@ const StudentExaminationPage = lazy(() => import('../pages/student/StudentExamin
 const TeacherDashboard = lazy(() => import('../pages/teacher/TeacherDashboard'))
 const TeacherTestsPage = lazy(() => import('../pages/teacher/TeacherTestsPage'))
 const TeacherTestDetailsPage = lazy(() => import('../pages/teacher/TeacherTestDetailsPage'))
+const TeacherAttemptsPage = lazy(() => import('../pages/teacher/TeacherAttemptsPage'))
+const TeacherAttemptReviewPage = lazy(() => import('../pages/teacher/TeacherAttemptReviewPage'))
 const CreateTestDetailsPage = lazy(() => import('../pages/teacher/CreateTestDetailsPage'))
 const CreateTestQuestionsPage = lazy(() => import('../pages/teacher/CreateTestQuestionsPage'))
 const CreateTestPreviewPage = lazy(() => import('../pages/teacher/CreateTestPreviewPage'))
@@ -96,6 +98,8 @@ export default function AppRoutes() {
           </Route>
           <Route path="tests/:testId/created" element={<TestCreatedSuccessPage />} />
           <Route path="tests/:testId" element={<TeacherTestDetailsPage />} />
+          <Route path="tests/:testId/attempts" element={<TeacherAttemptsPage />} />
+          <Route path="attempts/:attemptId/review" element={<TeacherAttemptReviewPage />} />
         </Route>
 
         <Route
