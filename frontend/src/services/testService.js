@@ -62,6 +62,17 @@ export const testService = {
   },
 
   /**
+   * Get audit history for a proctoring event (teacher).
+   * @param {number|string} attemptId
+   * @param {number|string} eventId
+   * @returns {Promise<Array>} List of audit records
+   */
+  async getProctoringEventAudit(attemptId, eventId) {
+    const response = await api.get(`/proctoring/attempts/${attemptId}/events/${eventId}/audit`)
+    return response.data
+  },
+
+  /**
    * Get proctoring events for an attempt (teacher).
    * @param {number|string} attemptId
    * @returns {Promise<Array>} List of proctoring events

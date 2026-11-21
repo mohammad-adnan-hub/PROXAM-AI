@@ -320,3 +320,33 @@ def review_proctoring_event(
         raise
     db.refresh(event)
     return event
+
+
+def list_proctoring_review_audits(
+    db: Session,
+    attempt_id: int,
+    event_id: int,
+    current_user_id: int,
+    is_admin: bool,
+) -> list:
+    from app.models.proctoring_event import ProctoringEvent, ProctoringReviewAudit
+    from app.models.test import Test
+
+    attempt = db.get(Attempt, attempt_id)
+    if not attempt:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Attempt not found")
+
+    test = db.get(Test, attempt.test_id)
+    if not test or (not is_admin and test.created_by != current_user_id):
+        raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Insufficient permissions")
+
+    event = db.get(ProctoringEvent, event_id)
+    if not event or event.attempt_id != attempt_id:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Event not found")
+
+    audits = db.exec(
+        select(ProctoringReviewAudit)
+        .where(ProctoringReviewAudit.proctoring_event_id == event_id)
+        .order_by(ProctoringReviewAudit.reviewed_at, ProctoringReviewAudit.id)
+    ).all()
+    return list(audits)

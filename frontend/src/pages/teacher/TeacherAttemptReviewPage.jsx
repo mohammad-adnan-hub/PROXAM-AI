@@ -39,7 +39,9 @@ export default function TeacherAttemptReviewPage() {
   // per-event editing state
   const [edits, setEdits] = useState({}) // eventId -> { status, notes }
   const [saving, setSaving] = useState({}) // eventId -> bool
-  const [saveErrors, setSaveErrors] = useState({}) // eventId -> string
+  const [auditData, setAuditData] = useState({}) // eventId -> array
+  const [auditLoading, setAuditLoading] = useState({}) // eventId -> bool
+  const [auditError, setAuditError] = useState({}) // eventId -> string
 
   const load = async () => {
     setLoading(true)
@@ -67,8 +69,22 @@ export default function TeacherAttemptReviewPage() {
     }
   }
 
-  useEffect(() => { load() }, [attemptId])
+  const loadAudit = async (eventId) => {
+    setAuditLoading((prev) => ({ ...prev, [eventId]: true }))
+    setAuditError((prev) => ({ ...prev, [eventId]: '' }))
+    try {
+      const res = await testService.getProctoringEventAudit(attemptId, eventId)
+      setAuditData((prev) => ({ ...prev, [eventId]: Array.isArray(res) ? res : [] }))
+    } catch (err) {
+      setAuditError((prev) => ({ ...prev, [eventId]: err.message || 'Unable to load audit history.' }))
+    } finally {
+      setAuditLoading((prev) => ({ ...prev, [eventId]: false }))
+    }
+  }
   useEffect(() => { loadEvents() }, [attemptId])
+  useEffect(() => {
+    events.forEach((ev) => loadAudit(ev.id))
+  }, [events])
 
   const getEdit = (ev) => edits[ev.id] || { status: ev.review_status, notes: ev.reviewer_notes || '' }
 
@@ -101,6 +117,7 @@ export default function TeacherAttemptReviewPage() {
         return next
       })
       toast.success('Review saved.')
+      loadAudit(ev.id)
     } catch (err) {
       const msg = err.message || 'Unable to save review.'
       let display = msg
@@ -220,6 +237,30 @@ export default function TeacherAttemptReviewPage() {
                       >
                         {saving[ev.id] ? 'Saving…' : 'Save Review'}
                       </Button>
+                    </div>
+
+                    <div className="pt-2 border-t border-[var(--color-border)]">
+                      <p className="text-xs font-semibold mb-1">Audit History</p>
+                      {auditLoading[ev.id] && <Spinner />}
+                      {auditError[ev.id] && (
+                        <div className="space-y-1">
+                          <p className="text-xs text-red-600">{auditError[ev.id]}</p>
+                          <Button variant="secondary" size="sm" onClick={() => loadAudit(ev.id)}>Retry</Button>
+                        </div>
+                      )}
+                      {!auditLoading[ev.id] && !auditError[ev.id] && (auditData[ev.id] || []).length === 0 && (
+                        <p className="text-xs text-[var(--color-text-muted)]">No audit history.</p>
+                      )}
+                      {!auditLoading[ev.id] && !auditError[ev.id] && (auditData[ev.id] || []).length > 0 && (
+                        <ul className="space-y-1">
+                          {(auditData[ev.id] || []).map((a) => (
+                            <li key={a.id} className="text-xs text-[var(--color-text-muted)]">
+                              {new Date(a.reviewed_at).toLocaleString()} — {REVIEW_STATUS_LABELS[a.previous_review_status] || a.previous_review_status} → {REVIEW_STATUS_LABELS[a.new_review_status] || a.new_review_status} (reviewer {a.reviewer_id})
+                              {a.new_reviewer_notes && <span> — {a.new_reviewer_notes}</span>}
+                            </li>
+                          ))}
+                        </ul>
+                      )}
                     </div>
                   </li>
                 )

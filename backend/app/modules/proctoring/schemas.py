@@ -58,3 +58,16 @@ class ProctoringEventReviewRequest(BaseModel):
     reviewer_notes: Optional[str] = Field(default=None, max_length=2000)
 
     model_config = {"extra": "forbid"}
+
+
+class ProctoringReviewAuditResponse(BaseModel):
+    id: int
+    proctoring_event_id: int
+    reviewer_id: int
+    previous_review_status: ReviewStatus
+    new_review_status: ReviewStatus
+    previous_reviewer_notes: Optional[str] = None
+    new_reviewer_notes: Optional[str] = None
+    reviewed_at: datetime
+
+    model_config = {"from_attributes": True}

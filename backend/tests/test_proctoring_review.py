@@ -293,3 +293,88 @@ def test_audit_unauthenticated(client, session):
     assert r.status_code in (401, 403)
     audits = session.exec(select(ProctoringReviewAudit).where(ProctoringReviewAudit.proctoring_event_id == ev.id)).all()
     assert len(audits) == 0
+
+# ---------------------------------------------------------------------------
+# Audit history GET tests
+# ---------------------------------------------------------------------------
+
+def test_audit_history_get_authorized(client, session):
+    t = create_user(session, "t@test.edu", UserRole.teacher)
+    s = create_user(session, "s@test.edu", UserRole.student)
+    test, att, ev = setup_attempt(session, t, s)
+    login(client, "t@test.edu")
+    client.put(f"/api/proctoring/attempts/{att.id}/events/{ev.id}", json={"review_status": "reviewed", "reviewer_notes": "n"})
+    r = client.get(f"/api/proctoring/attempts/{att.id}/events/{ev.id}/audit")
+    assert r.status_code == 200
+    data = r.json()
+    assert len(data) == 1
+    assert data[0]["reviewer_id"] == t.id
+    assert data[0]["new_review_status"] == "reviewed"
+
+
+def test_audit_history_chronological(client, session):
+    t = create_user(session, "t@test.edu", UserRole.teacher)
+    s = create_user(session, "s@test.edu", UserRole.student)
+    test, att, ev = setup_attempt(session, t, s)
+    login(client, "t@test.edu")
+    client.put(f"/api/proctoring/attempts/{att.id}/events/{ev.id}", json={"review_status": "reviewed", "reviewer_notes": None})
+    client.put(f"/api/proctoring/attempts/{att.id}/events/{ev.id}", json={"review_status": "no_concern", "reviewer_notes": "x"})
+    r = client.get(f"/api/proctoring/attempts/{att.id}/events/{ev.id}/audit")
+    assert r.status_code == 200
+    data = r.json()
+    assert len(data) == 2
+    assert data[0]["new_review_status"] == "reviewed"
+    assert data[1]["new_review_status"] == "no_concern"
+
+
+def test_audit_history_empty(client, session):
+    t = create_user(session, "t@test.edu", UserRole.teacher)
+    s = create_user(session, "s@test.edu", UserRole.student)
+    test, att, ev = setup_attempt(session, t, s)
+    login(client, "t@test.edu")
+    r = client.get(f"/api/proctoring/attempts/{att.id}/events/{ev.id}/audit")
+    assert r.status_code == 200
+    assert r.json() == []
+
+
+def test_audit_history_unauthorized(client, session):
+    t = create_user(session, "t@test.edu", UserRole.teacher)
+    s = create_user(session, "s@test.edu", UserRole.student)
+    test, att, ev = setup_attempt(session, t, s)
+    r = client.get(f"/api/proctoring/attempts/{att.id}/events/{ev.id}/audit")
+    assert r.status_code in (401, 403)
+
+
+def test_audit_history_other_teacher(client, session):
+    t1 = create_user(session, "t1@test.edu", UserRole.teacher)
+    t2 = create_user(session, "t2@test.edu", UserRole.teacher)
+    s = create_user(session, "s@test.edu", UserRole.student)
+    test, att, ev = setup_attempt(session, t1, s)
+    login(client, "t2@test.edu")
+    r = client.get(f"/api/proctoring/attempts/{att.id}/events/{ev.id}/audit")
+    assert r.status_code == 403
+
+
+def test_audit_history_event_other_attempt(client, session):
+    t = create_user(session, "t@test.edu", UserRole.teacher)
+    s = create_user(session, "s@test.edu", UserRole.student)
+    s2 = create_user(session, "s2@test.edu", UserRole.student)
+    test, att, ev = setup_attempt(session, t, s)
+    att2 = Attempt(student_id=s2.id, test_id=test.id, status=AttemptStatus.in_progress, started_at=datetime.now(timezone.utc), time_limit_ends_at=datetime.now(timezone.utc)+timedelta(minutes=30), created_at=datetime.now(timezone.utc))
+    session.add(att2); session.commit(); session.refresh(att2)
+    login(client, "t@test.edu")
+    r = client.get(f"/api/proctoring/attempts/{att2.id}/events/{ev.id}/audit")
+    assert r.status_code == 404
+
+
+def test_audit_history_admin(client, session):
+    t = create_user(session, "t@test.edu", UserRole.teacher)
+    admin = create_user(session, "a@test.edu", UserRole.admin)
+    s = create_user(session, "s@test.edu", UserRole.student)
+    test, att, ev = setup_attempt(session, t, s)
+    login(client, "t@test.edu")
+    client.put(f"/api/proctoring/attempts/{att.id}/events/{ev.id}", json={"review_status": "reviewed", "reviewer_notes": None})
+    login(client, "a@test.edu")
+    r = client.get(f"/api/proctoring/attempts/{att.id}/events/{ev.id}/audit")
+    assert r.status_code == 200
+    assert len(r.json()) == 1
