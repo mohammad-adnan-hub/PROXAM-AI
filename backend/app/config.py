@@ -11,6 +11,9 @@ class Settings(BaseSettings):
         extra="ignore",
     )
 
+    # Docs
+    docs_enabled: bool = True
+
     # Database
     database_url: str = "sqlite:///./proxam_ai.db"
 
@@ -26,6 +29,8 @@ class Settings(BaseSettings):
             raise ValueError("SECRET_KEY must be set via environment variable or .env file")
         if v == "proxam-ai-super-secret-jwt-key-minimum-32-chars-2026":
             raise ValueError("SECRET_KEY must not use the hardcoded development value")
+        if len(v) < 32:
+            raise ValueError("SECRET_KEY must be at least 32 characters")
         return v
 
     # Cookie
@@ -57,6 +62,15 @@ class Settings(BaseSettings):
     # Authentication rate limiting (requests per minute per IP)
     auth_rate_limit_requests: int = 5
     auth_rate_limit_window_seconds: int = 60
+
+    @model_validator(mode="after")
+    def validate_production_settings(self) -> "Settings":
+        if not self.dev_mode:
+            if "sqlite" in self.database_url.lower():
+                raise ValueError("DATABASE_URL must use PostgreSQL in production")
+            if "localhost" in self.frontend_url or "127.0.0.1" in self.frontend_url:
+                raise ValueError("FRONTEND_URL must be a production origin")
+        return self
 
     @model_validator(mode="after")
     def validate_production_cookie_security(self) -> "Settings":

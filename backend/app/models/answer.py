@@ -1,10 +1,13 @@
 from datetime import datetime, timezone
 from typing import Optional
-from sqlmodel import Field, SQLModel
+from sqlmodel import Field, SQLModel, UniqueConstraint
 
 
 class Answer(SQLModel, table=True):
     __tablename__ = "answers"
+    __table_args__ = (
+        UniqueConstraint("attempt_id", "question_id", name="uq_answers_attempt_question"),
+    )
 
     id: Optional[int] = Field(default=None, primary_key=True)
     attempt_id: int = Field(foreign_key="attempts.id", index=True)

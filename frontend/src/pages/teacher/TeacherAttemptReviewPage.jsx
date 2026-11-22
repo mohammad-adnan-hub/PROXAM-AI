@@ -31,6 +31,7 @@ export default function TeacherAttemptReviewPage() {
   const [data, setData] = useState(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState('')
+  const [saveErrors, setSaveErrors] = useState({})
 
   const [events, setEvents] = useState([])
   const [eventsLoading, setEventsLoading] = useState(true)
@@ -81,6 +82,7 @@ export default function TeacherAttemptReviewPage() {
       setAuditLoading((prev) => ({ ...prev, [eventId]: false }))
     }
   }
+  useEffect(() => { load() }, [attemptId])
   useEffect(() => { loadEvents() }, [attemptId])
   useEffect(() => {
     events.forEach((ev) => loadAudit(ev.id))
