@@ -200,4 +200,12 @@ def get_identity_verification_image(
             status_code=status.HTTP_404_NOT_FOUND, detail="Identity verification image not found"
         )
 
-    return FileResponse(str(resolved_path), media_type=content_type)
+    return FileResponse(
+        str(resolved_path),
+        media_type=content_type,
+        headers={
+            "Cache-Control": "no-store, no-cache, must-revalidate, max-age=0",
+            "Pragma": "no-cache",
+            "Expires": "0",
+        },
+    )
