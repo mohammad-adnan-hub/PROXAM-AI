@@ -121,6 +121,7 @@ def get_identity_verification_for_teacher(
         "reviewer_id": verification.reviewer_id,
         "reviewer_notes": verification.reviewer_notes,
         "image_path": verification.image_path,
+        "image_data": verification.image_data,
         "content_type": verification.content_type,
         "file_size_bytes": verification.file_size_bytes,
     }
