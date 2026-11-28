@@ -11,7 +11,7 @@ All endpoints require teacher authentication and enforce examination ownership.
 from typing import Optional
 
 from fastapi import APIRouter, Depends, HTTPException, status
-from fastapi.responses import FileResponse
+from fastapi.responses import FileResponse, Response
 from sqlmodel import Session
 
 from app.dependencies import get_db, require_teacher
@@ -181,6 +181,24 @@ def get_identity_verification_image(
             status_code=status.HTTP_400_BAD_REQUEST, detail=detail
         )
 
+    image_data = record.get("image_data")
+    content_type = (record.get("content_type") or "").split(";")[0].strip().lower()
+
+    if image_data:
+        if content_type not in SUPPORTED_IDENTITY_IMAGE_TYPES:
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND, detail="Identity verification image not found"
+            )
+        return Response(
+            content=image_data,
+            media_type=content_type,
+            headers={
+                "Cache-Control": "no-store, no-cache, must-revalidate, max-age=0",
+                "Pragma": "no-cache",
+                "Expires": "0",
+            },
+        )
+
     image_path = record.get("image_path")
     if not image_path:
         raise HTTPException(
@@ -194,7 +212,6 @@ def get_identity_verification_image(
             status_code=status.HTTP_404_NOT_FOUND, detail="Identity verification image not found"
         )
 
-    content_type = (record.get("content_type") or "").split(";")[0].strip().lower()
     if content_type not in SUPPORTED_IDENTITY_IMAGE_TYPES:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND, detail="Identity verification image not found"

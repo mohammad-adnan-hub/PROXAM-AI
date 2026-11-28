@@ -143,7 +143,7 @@ def test_submit_identity_jpeg_success_sets_pending(client: TestClient, session: 
     assert record is not None
     assert record.status == IdentityVerificationStatus.pending
     assert record.student_id == student.id
-    assert record.image_path is not None
+    assert record.image_data is not None
     assert record.content_type == "image/jpeg"
     assert record.file_size_bytes == len(MINIMAL_JPEG)
     assert record.reviewer_id is None
@@ -499,14 +499,15 @@ def test_storage_failure_leaves_no_db_record(client: TestClient, session: Sessio
     login(client, "student@test.edu")
     attempt_id = create_attempt_via_api(client, test.id)
 
-    from app.modules.students import service as student_service
+    original_commit = session.commit
 
-    def boom(*args, **kwargs):
-        raise OSError("disk full")
+    def failing_commit():
+        raise RuntimeError("db failure")
 
-    monkeypatch.setattr(student_service, "save_identity_image", boom)
-    resp = submit_identity(client, attempt_id)
-    assert resp.status_code in (400, 500)
+    monkeypatch.setattr(session, "commit", failing_commit)
+    with pytest.raises(RuntimeError):
+        submit_identity(client, attempt_id)
+    session.rollback()
     record = session.exec(select(AttemptIdentityVerification).where(AttemptIdentityVerification.attempt_id == attempt_id)).first()
     assert record is None
 

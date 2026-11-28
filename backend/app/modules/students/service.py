@@ -720,20 +720,19 @@ def submit_identity_verification_photo(
     except IdentityImageStorageError as exc:
         raise ValueError(str(exc))
 
-    # Save new image before DB mutation so validation/storage failures cannot create incomplete DB records.
-    try:
-        relative_path, saved_path = save_identity_image(content, attempt_id, student_id, actual_mime, ext)
-    except (OSError, IdentityImageStorageError) as exc:
-        raise ValueError("Failed to store identity image securely.") from exc
-
+    # Store uploaded image bytes directly in PostgreSQL (BYTEA). Do not write
+    # new files to Render's local filesystem.
+    relative_path = None
+    saved_path = None
     previous_path = existing.image_path if existing else None
     now = datetime.now(timezone.utc)
 
     try:
         if existing:
-            # Resubmission allowed only after rejection; replace image/metadata and return to pending.
+            # Resubmission allowed only after rejection; replace image bytes/metadata and return to pending.
             existing.status = IdentityVerificationStatus.pending
-            existing.image_path = relative_path
+            existing.image_data = content
+            existing.image_path = None
             existing.original_filename = (filename or "")[:255] or None
             existing.content_type = actual_mime
             existing.file_size_bytes = len(content)
@@ -748,7 +747,8 @@ def submit_identity_verification_photo(
                 attempt_id=attempt.id,
                 student_id=student_id,
                 status=IdentityVerificationStatus.pending,
-                image_path=relative_path,
+                image_data=content,
+                image_path=None,
                 original_filename=(filename or "")[:255] or None,
                 content_type=actual_mime,
                 file_size_bytes=len(content),
@@ -764,12 +764,6 @@ def submit_identity_verification_photo(
         db.refresh(record)
     except IntegrityError:
         db.rollback()
-        # Cleanup newly stored file; DB state remains unchanged or consistent.
-        try:
-            if saved_path.exists():
-                saved_path.unlink()
-        except OSError:
-            pass
         existing_after = get_identity_verification(db, attempt_id)
         if existing_after and existing_after.status in (
             IdentityVerificationStatus.pending,
@@ -779,15 +773,10 @@ def submit_identity_verification_photo(
         raise
     except Exception:
         db.rollback()
-        try:
-            if saved_path.exists():
-                saved_path.unlink()
-        except OSError:
-            pass
         raise
 
     # Best-effort cleanup of replaced rejected photo after successful commit.
-    if previous_path and previous_path != relative_path:
+    if previous_path:
         delete_identity_image(previous_path)
 
     return record

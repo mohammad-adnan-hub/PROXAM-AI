@@ -2,6 +2,7 @@ from datetime import datetime, timezone
 from enum import Enum
 from typing import Optional
 
+from sqlalchemy import Column, LargeBinary
 from sqlmodel import Field, SQLModel, UniqueConstraint
 
 
@@ -22,6 +23,7 @@ class AttemptIdentityVerification(SQLModel, table=True):
     attempt_id: int = Field(foreign_key="attempts.id", index=True)
     student_id: int = Field(foreign_key="users.id", index=True)
     status: IdentityVerificationStatus = Field(default=IdentityVerificationStatus.not_submitted)
+    image_data: Optional[bytes] = Field(default=None, sa_column=Column("image_data", LargeBinary, nullable=True))
     image_path: Optional[str] = Field(default=None, max_length=500)
     original_filename: Optional[str] = Field(default=None, max_length=255)
     content_type: Optional[str] = Field(default=None, max_length=100)
